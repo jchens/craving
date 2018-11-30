@@ -1,15 +1,11 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { StyleSheet,
+import React from 'react';
+import {
+  StyleSheet,
   View,
-  Button,
-  TextInput,
-  TouchableOpacity,
-  Keyboard,
+  Text,
   Dimensions,
-  ScrollView} from 'react-native'
-import { Metrics, Colors } from '../Themes'
-
+  ScrollView,
+} from 'react-native';
 import MapView, { Marker, ProviderPropType } from 'react-native-maps';
 
 const { width, height } = Dimensions.get('window');
@@ -20,7 +16,8 @@ const LONGITUDE = -122.4324;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-class TruckMap extends Component {
+export default class TruckMap extends React.Component {
+
   constructor(props) {
     super(props);
 
@@ -118,3 +115,5 @@ const styles = StyleSheet.create({
     height: 250,
   },
 });
+
+export default TruckMap;
