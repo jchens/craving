@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types' //consider using this!
 import { StyleSheet, SafeAreaView, View, FlatList, Text, Linking, ActivityIndicator, TouchableOpacity, Image } from 'react-native'
 import { Metrics, Colors, Images } from '../Themes'
-
 import {profilesList} from '../Themes/Profiles.js'
 
-export default class Tracking extends Component {
+export default class Favorited extends Component {
   constructor() {
     super();
     let arr = []
@@ -76,7 +75,7 @@ export default class Tracking extends Component {
                         <TouchableOpacity onPress={() => this.updatedState(item.key)}>
                           <Image
                             style={this.state.fav[item.key] ? styles.star_filled : styles.star}
-                            source={Images.star}/>
+                            source={require('../Images/Icons/icons_star.png')}/>
                         </TouchableOpacity>
                       </View>
 
