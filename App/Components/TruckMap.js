@@ -34,7 +34,12 @@ export default class TruckMap extends React.Component {
     };
   }
 
-
+  onMarkerClick(e) {
+    this.map.fitToCoordinates(e.nativeEvent.coordinate, e.nativeEvent.coordinate], {
+      edgePadding: { top: 100, right: 100, bottom: 100, left: 100 },
+      animated: true,
+    })
+  }
 
   setProfile = async (identifier) => {
     var newProfile = Profiles.identifier;
@@ -68,6 +73,7 @@ export default class TruckMap extends React.Component {
           loadingBackgroundColor="#eeeeee"
         >
           <Marker
+            onPress={e => this.onMarkerClick(e.nativeEvent)}
             coordinate={{
               latitude: LATITUDE + SPACE,
               longitude: LONGITUDE + SPACE,
@@ -79,6 +85,7 @@ export default class TruckMap extends React.Component {
           </Marker>
 
           <Marker
+            onPress={e => this.onMarkerClick(e)}
             coordinate={{
               latitude: LATITUDE - SPACE,
               longitude: LONGITUDE - SPACE,
