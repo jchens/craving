@@ -1,6 +1,7 @@
-]import React, { Component } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types' //consider using this!
 import { StyleSheet, SafeAreaView, View, FlatList, Text, Linking, ActivityIndicator, TouchableOpacity, Image } from 'react-native'
+import { material } from 'react-native-typography'
 
 import {profilesList} from '../Themes/Profiles.js'
 
@@ -48,9 +49,9 @@ export default class Tracking extends Component {
                     <View style={styles.info}>
                       <Image source={item.image} style={styles.image}/>
                       <View style={styles.text}>
-                        <Text style={styles.name}> {item.name} </Text>
-                        <Text style={styles.cuisine}> {item.cuisine} </Text>
-                        <Text style={styles.description}> {item.description} </Text>
+                        <Text style={material.title}> {item.name} </Text>
+                        <Text style={material.caption}> {item.cuisine} </Text>
+                        <Text style={material.body1}> {item.description} </Text>
 
                         <View style={styles.bottom}>
                           <View style={styles.bottom_button_left}>
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
   },
   list_container: {
     flex: 1,
-    backgroundColor: 'blue',
+    backgroundColor: 'white',
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
   },
   list_item: {
   flex: 0.5,
-  backgroundColor: 'blue',
+  backgroundColor: 'white',
   paddingBottom: 20,
   },
   visit: {
@@ -146,21 +147,21 @@ const styles = StyleSheet.create({
   description: {
     color: '#828282',
     flexWrap: 'wrap',
-    backgroundColor: 'yellow'
+    backgroundColor: 'white'
   },
   button: {
     backgroundColor: '#F2F2F2',
     alignItems: 'center',
     justifyContent: 'center',
-    height: 80,
-    width: 80,
-    borderRadius: 40
+    height: 50,
+    width: 50,
+    borderRadius: 25
 
   },
   star: {
     backgroundColor: '#F2F2F2',
-    height: 50,
-    width: 50,
+    height: 30,
+    width: 30,
   },
   button_filled: {
     backgroundColor: '#FFD046',
@@ -180,31 +181,34 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   bottom_button_left: {
-    backgroundColor: 'white',
+    backgroundColor: '#FF4D00',
     alignItems: 'center',
     justifyContent: 'center',
     height: 50,
-    width: 140,
+    width: 120,
     borderRadius: 40,
     borderWidth: 2,
     borderColor: '#FF4D00',
+    marginRight: 10,
+    marginTop: 20,
   },
   bottom_button_right: {
-    backgroundColor: 'white',
+    backgroundColor: '#0496FF',
     alignItems: 'center',
     justifyContent: 'center',
     height: 50,
-    width: 140,
+    width: 120,
     borderRadius: 40,
     borderWidth: 2,
     borderColor: '#0496FF',
+    marginTop: 20,
   },
   bottom_text_left: {
-    color: '#FF4D00',
+    color: 'white',
 
   },
   bottom_text_right: {
-    color: '#0496FF',
+    color: 'white',
 
   }
 
