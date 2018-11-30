@@ -45,7 +45,7 @@ const APIRequest = {
 
   requestCategoryPosts: async(category) => {
     try {
-      let parameters = {'api-key': AppConfig.apiKey};
+      let parameters = {'access-token': AppConfig.accesstoken};
       parameters = queryString.stringify(parameters);
       console.log('Searching using parameters: ' + parameters);
 
