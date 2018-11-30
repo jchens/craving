@@ -1,14 +1,14 @@
-
 import React from 'react';
 import {
-  StyleSheet,
+  Text,
   View,
   Dimensions,
-  TouchableOpacity,
-  Text,
+  StyleSheet,
+  Image,
 } from 'react-native';
 
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, Callout, ProviderPropType } from 'react-native-maps';
+import flagImg from '../Images/Icons/icons_pin_orange.png';
 
 const { width, height } = Dimensions.get('window');
 
@@ -19,88 +19,69 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const SPACE = 0.01;
 
-function createMarker(modifier = 1) {
-  return {
-    latitude: LATITUDE - (SPACE * modifier),
-    longitude: LONGITUDE - (SPACE * modifier),
-  };
-}
+export default class TruckMap extends React.Component {
+  constructor(props) {
+    super(props);
 
-const MARKERS = [
-  createMarker(),
-  createMarker(2),
-  createMarker(3),
-  createMarker(4),
-];
-
-const DEFAULT_PADDING = { top: 40, right: 40, bottom: 40, left: 40 };
-
-class FitToCoordinates extends React.Component {
-  fitPadding() {
-    this.map.fitToCoordinates([MARKERS[2], MARKERS[3]], {
-      edgePadding: { top: 100, right: 100, bottom: 100, left: 100 },
-      animated: true,
-    });
-  }
-
-  fitBottomTwoMarkers() {
-    this.map.fitToCoordinates([MARKERS[2], MARKERS[3]], {
-      edgePadding: DEFAULT_PADDING,
-      animated: true,
-    });
-  }
-
-  fitAllMarkers() {
-    this.map.fitToCoordinates(MARKERS, {
-      edgePadding: DEFAULT_PADDING,
-      animated: true,
-    });
+    this.state = {
+      region: {
+        latitude: LATITUDE,
+        longitude: LONGITUDE,
+        latitudeDelta: LATITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA,
+      },
+    };
   }
 
   render() {
     return (
       <View style={styles.container}>
         <MapView
-          ref={ref => { this.map = ref; }}
+          provider={this.props.provider}
           style={styles.map}
-          initialRegion={{
-            latitude: LATITUDE,
-            longitude: LONGITUDE,
-            latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA,
-          }}
+          initialRegion={this.state.region}
+          onPress={this.onMapPress}
+          loadingEnabled
+          loadingIndicatorColor="#666666"
+          loadingBackgroundColor="#eeeeee"
         >
-          {MARKERS.map((marker, i) => (
-            <Marker
-              key={i}
-              coordinate={marker}
-            />
-          ))}
+          <Marker
+            coordinate={{
+              latitude: LATITUDE + SPACE,
+              longitude: LONGITUDE + SPACE,
+            }}
+            anchor={{ x: 0.5, y: 1 }}
+          >
+          <Image source={require('../Images/Icons/icons_pin_orange.png')} style={{ width: 40, height: 40 }} />
+          </Marker>
+
+          <Marker
+            coordinate={{
+              latitude: LATITUDE - SPACE,
+              longitude: LONGITUDE - SPACE,
+            }}
+            anchor={{ x: 0.5, y: 1 }}
+          >
+            <Callout>
+              <View>
+                <Text>This is a plain view</Text>
+              </View>
+            </Callout>
+          </Marker>
         </MapView>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={() => this.fitPadding()}
-            style={[styles.bubble, styles.button]}
-          >
-            <Text>Fit Bottom Two Markers with Padding</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.fitBottomTwoMarkers()}
-            style={[styles.bubble, styles.button]}
-          >
-            <Text>Fit Bottom Two Markers</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.fitAllMarkers()}
-            style={[styles.bubble, styles.button]}
-          >
-            <Text>Fit All Markers</Text>
-          </TouchableOpacity>
+          <View style={styles.bubble}>
+            <Text>Map with Loading</Text>
+          </View>
         </View>
       </View>
     );
   }
 }
+
+TruckMap.propTypes = {
+  provider: ProviderPropType,
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -117,17 +98,9 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 20,
   },
-  button: {
-    marginTop: 12,
-    paddingHorizontal: 12,
-    alignItems: 'center',
-    marginHorizontal: 10,
-  },
   buttonContainer: {
-    flexDirection: 'column',
+    flexDirection: 'row',
     marginVertical: 20,
     backgroundColor: 'transparent',
   },
 });
-
-export default FitToCoordinates;
