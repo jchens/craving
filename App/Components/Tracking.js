@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types' //consider using this!
 import { StyleSheet, SafeAreaView, View, FlatList, Text, Linking, ActivityIndicator, TouchableOpacity, Image } from 'react-native'
-import { material } from 'react-native-typography'
+import { Metrics, Colors, Images } from '../Themes'
 
 import {profilesList} from '../Themes/Profiles.js'
 
@@ -76,7 +76,7 @@ export default class Tracking extends Component {
                         <TouchableOpacity onPress={() => this.updatedState(item.key)}>
                           <Image
                             style={this.state.fav[item.key] ? styles.star_filled : styles.star}
-                            source={require('../Images/Icons/icons_star.png')}/>
+                            source={Images.star}/>
                         </TouchableOpacity>
                       </View>
 
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   paddingBottom: 20,
   },
   visit: {
-    color: '#0496FF',
+    color: Colors.blue,
   },
   info: {
     flexDirection: 'row',
@@ -138,19 +138,19 @@ const styles = StyleSheet.create({
 
   },
   name: {
-    color: '#333333',
+    color: Colors.gray1,
 
   },
   cuisine: {
-    color: '#BDBDBD',
+    color: Colors.gray4,
   },
   description: {
-    color: '#828282',
+    color: Colors.gray3,
     flexWrap: 'wrap',
     backgroundColor: 'white'
   },
   button: {
-    backgroundColor: '#F2F2F2',
+    backgroundColor: Colors.gray6,
     alignItems: 'center',
     justifyContent: 'center',
     height: 50,
@@ -159,12 +159,12 @@ const styles = StyleSheet.create({
 
   },
   star: {
-    backgroundColor: '#F2F2F2',
-    height: 30,
-    width: 30,
+    backgroundColor: Colors.gray6,
+    height: 50,
+    width: 50,
   },
   button_filled: {
-    backgroundColor: '#FFD046',
+    backgroundColor: Colors.yellow,
     alignItems: 'center',
     justifyContent: 'center',
     height: 80,
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
 
   },
   star_filled: {
-    backgroundColor: '#FFD046',
+    backgroundColor: Colors.yellow,
     height: 50,
     width: 50,
   },
@@ -204,11 +204,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   bottom_text_left: {
-    color: 'white',
+    color: Colors.orange,
 
   },
   bottom_text_right: {
-    color: 'white',
+    color: Colors.blue,
 
   }
 

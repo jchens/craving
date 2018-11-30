@@ -47,13 +47,14 @@ export default class TruckMap extends React.Component {
   }
 
   render() {
-    var newProfile = Profiles.random();
+    const profile = this.props;
     this.setState({
-      name: newProfile.name,
-      cuisine: newProfile.cuisine,
-      description: newProfile.description,
-      fave: newProfile.fave,
+      name: profile.name,
+      cuisine: profile.cuisine,
+      description: profile.description,
+      fave: profile.fave,
     });
+
     return (
 
       <View style={styles.container}>
@@ -93,7 +94,12 @@ export default class TruckMap extends React.Component {
           </Marker>
         </MapView>
 
-        <View style={styles.buttonContainer}>
+        <View style={styles.card}>
+          <View style={styles.text}>
+            <Text style={styles.name}> {item.name} </Text>
+            <Text style={styles.cuisine}> {item.cuisine} </Text>
+            <Text style={styles.description}> {item.description} </Text>
+          </View>
 
         </View>
       </View>
@@ -120,10 +126,35 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 20,
   },
-  buttonContainer: {
+  card: {
     flex: 0.25,
     flexDirection: 'row',
-    marginVertical: 20,
-    backgroundColor: 'transparent',
+    backgroundColor: Colors.white,
+    padding: 20,
   },
+  text: {
+    width: 200,
+    marginLeft: 30,
+    marginRight: 30,
+
+  },
+  name: {
+    fontFamily: 'Helvetica',
+    fontSize: 24,
+    color: Colors.gray1,
+
+  },
+  cuisine: {
+    fontFamily: 'Helvetica',
+    fontSize: 14,
+    color: Colors.gray4,
+  },
+  description: {
+    fontFamily: 'Helvetica',
+    fontSize: 14,
+    color: Colors.gray3,
+    flexWrap: 'wrap',
+    backgroundColor: 'yellow'
+  },
+
 });

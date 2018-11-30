@@ -9,6 +9,7 @@ import {
 
 import MapView, { Marker, Callout, ProviderPropType } from 'react-native-maps';
 import flagImg from '../Images/Icons/icons_pin_orange.png';
+import {profilesList} from '../Themes/Profiles.js'
 
 const { width, height } = Dimensions.get('window');
 
@@ -33,8 +34,29 @@ export default class TruckMap extends React.Component {
     };
   }
 
+
+
+  setProfile = async (identifier) => {
+    var newProfile = Profiles.identifier;
+    this.setState({
+      name: newProfile.name,
+      cuisine: newProfile.cuisine,
+      description: newProfile.description,
+      fave: newProfile.fave,
+    })
+  }
+
   render() {
+    const profile = this.props;
+    this.setState({
+      name: profile.name,
+      cuisine: profile.cuisine,
+      description: profile.description,
+      fave: profile.fave,
+    });
+
     return (
+
       <View style={styles.container}>
         <MapView
           provider={this.props.provider}
@@ -50,6 +72,7 @@ export default class TruckMap extends React.Component {
               latitude: LATITUDE + SPACE,
               longitude: LONGITUDE + SPACE,
             }}
+            identifier = {"Los Tolucas"}
             anchor={{ x: 0.5, y: 1 }}
           >
           <Image source={require('../Images/Icons/icons_pin_orange.png')} style={{ width: 40, height: 40 }} />
@@ -60,6 +83,7 @@ export default class TruckMap extends React.Component {
               latitude: LATITUDE - SPACE,
               longitude: LONGITUDE - SPACE,
             }}
+            identifier = {"Twister"}
             anchor={{ x: 0.5, y: 1 }}
           >
             <Callout>
@@ -67,12 +91,17 @@ export default class TruckMap extends React.Component {
                 <Text>This is a plain view</Text>
               </View>
             </Callout>
+            <Image source={require('../Images/Icons/icons_pin_orange.png')} style={{ width: 40, height: 40 }} />
           </Marker>
         </MapView>
-        <View style={styles.buttonContainer}>
-          <View style={styles.bubble}>
-            <Text>Map with Loading</Text>
+
+        <View style={styles.card}>
+          <View style={styles.text}>
+            <Text style={styles.name}> {this.state.name} </Text>
+            <Text style={styles.cuisine}> {this.state.cuisine} </Text>
+            <Text style={styles.description}> {this.state.description} </Text>
           </View>
+
         </View>
       </View>
     );
@@ -87,7 +116,7 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
-    alignItems: 'center',
+    alignItems: 'stretch',
   },
   map: {
     ...StyleSheet.absoluteFillObject,
@@ -98,9 +127,35 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 20,
   },
-  buttonContainer: {
+  card: {
+    flex: 0.25,
     flexDirection: 'row',
-    marginVertical: 20,
-    backgroundColor: 'transparent',
+    backgroundColor: Colors.white,
+    padding: 20,
   },
+  text: {
+    width: 200,
+    marginLeft: 30,
+    marginRight: 30,
+
+  },
+  name: {
+    fontFamily: 'Helvetica',
+    fontSize: 24,
+    color: Colors.gray1,
+
+  },
+  cuisine: {
+    fontFamily: 'Helvetica',
+    fontSize: 14,
+    color: Colors.gray4,
+  },
+  description: {
+    fontFamily: 'Helvetica',
+    fontSize: 14,
+    color: Colors.gray3,
+    flexWrap: 'wrap',
+    backgroundColor: 'yellow'
+  },
+
 });
