@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "packagerPort": null,
-  "packagerPid": null,
+  "packagerPort": 19001,
+  "packagerPid": 64512,
   "expoServerNgrokUrl": "https://yq-6nn.anonymous.craving-app.exp.direct",
   "packagerNgrokUrl": "https://packager.yq-6nn.anonymous.craving-app.exp.direct",
-  "ngrokPid": 61272
+  "ngrokPid": 64546
 }

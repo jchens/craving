@@ -9,7 +9,7 @@ import {
 
 import MapView, { Marker, Callout, ProviderPropType } from 'react-native-maps';
 import flagImg from '../Images/Icons/icons_pin_orange.png';
-import {profilesList} from '../Themes/Profiles.js'
+import Colors from '../Themes/Colors.js'
 
 const { width, height } = Dimensions.get('window');
 
@@ -41,24 +41,8 @@ export default class TruckMap extends React.Component {
     })
   }
 
-  setProfile = async (identifier) => {
-    var newProfile = Profiles.identifier;
-    this.setState({
-      name: newProfile.name,
-      cuisine: newProfile.cuisine,
-      description: newProfile.description,
-      fave: newProfile.fave,
-    })
-  }
 
   render() {
-    const profile = this.props;
-    this.setState({
-      name: profile.name,
-      cuisine: profile.cuisine,
-      description: profile.description,
-      fave: profile.fave,
-    });
 
     return (
 
@@ -73,7 +57,7 @@ export default class TruckMap extends React.Component {
           loadingBackgroundColor="#eeeeee"
         >
           <Marker
-            onPress={e => this.onMarkerClick(e.nativeEvent)}
+            onPress={e => console.log(e.nativeEvent)}
             coordinate={{
               latitude: LATITUDE + SPACE,
               longitude: LONGITUDE + SPACE,
@@ -85,7 +69,7 @@ export default class TruckMap extends React.Component {
           </Marker>
 
           <Marker
-            onPress={e => this.onMarkerClick(e)}
+            onPress={e => console.log(e.nativeEvent)}
             coordinate={{
               latitude: LATITUDE - SPACE,
               longitude: LONGITUDE - SPACE,
@@ -103,12 +87,6 @@ export default class TruckMap extends React.Component {
         </MapView>
 
         <View style={styles.card}>
-          <View style={styles.text}>
-            <Text style={styles.name}> Name </Text>
-            <Text style={styles.cuisine}> Cuisine </Text>
-            <Text style={styles.description}> Description </Text>
-          </View>
-
         </View>
       </View>
     );

@@ -10,6 +10,7 @@ import {
 import MapView, { Marker, Callout, ProviderPropType } from 'react-native-maps';
 import flagImg from '../Images/Icons/icons_pin_orange.png';
 import {profilesList} from '../Themes/Profiles.js'
+import Colors from '../Themes/Colors.js'
 
 const { width, height } = Dimensions.get('window');
 
@@ -35,7 +36,7 @@ export default class TruckMap extends React.Component {
   }
 
   onMarkerClick(e) {
-    this.map.fitToCoordinates(e.nativeEvent.coordinate, e.nativeEvent.coordinate], {
+    this.map.fitToCoordinates([e.nativeEvent.coordinate, e.nativeEvent.coordinate], {
       edgePadding: { top: 100, right: 100, bottom: 100, left: 100 },
       animated: true,
     })
