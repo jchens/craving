@@ -1,12 +1,15 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import TruckMap from './App/Components/TruckMap';
+import Tracking from './App/Components/Tracking';
+
+
 
 export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <TruckMap />
+        <Tracking />
       </View>
     );
   }

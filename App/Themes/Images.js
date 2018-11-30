@@ -7,7 +7,7 @@ const images = {
   pin-orange: require('../Images/Icons/icons_pin_orange.png'),
   search: require('../Images/Icons/icons_search.png'),
   star: require('../Images/Icons/icons_star.png'),
-  3jeet-food-truck: require('../Images/FTProfiles/trijeet.jpeg'),
+  sanjeet-food-truck: require('../Images/FTProfiles/trijeet.jpeg'),
   akita-gourmet: require('../Images/FTProfiles/akita_gourmet.png'),
   capelos-barbecue: require('../Images/FTProfiles/capelos_barbecue.jpeg'),
   i-love-cheesesteak: require('../Images/FTProfiles/i_love_cheesesteak.jpg'),
