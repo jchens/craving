@@ -9,6 +9,7 @@ import {
 
 import MapView, { Marker, Callout, ProviderPropType } from 'react-native-maps';
 import flagImg from '../Images/Icons/icons_pin_orange.png';
+import {profilesList} from '../Themes/Profiles.js'
 
 const { width, height } = Dimensions.get('window');
 
@@ -33,8 +34,28 @@ export default class TruckMap extends React.Component {
     };
   }
 
+
+
+  setProfile = async (identifier) => {
+    var newProfile = Profiles.identifier;
+    this.setState({
+      name: newProfile.name,
+      cuisine: newProfile.cuisine,
+      description: newProfile.description,
+      fave: newProfile.fave,
+    })
+  }
+
   render() {
+    var newProfile = Profiles.random();
+    this.setState({
+      name: newProfile.name,
+      cuisine: newProfile.cuisine,
+      description: newProfile.description,
+      fave: newProfile.fave,
+    });
     return (
+
       <View style={styles.container}>
         <MapView
           provider={this.props.provider}
@@ -50,6 +71,7 @@ export default class TruckMap extends React.Component {
               latitude: LATITUDE + SPACE,
               longitude: LONGITUDE + SPACE,
             }}
+            identifier = {"Los Tolucas"}
             anchor={{ x: 0.5, y: 1 }}
           >
           <Image source={require('../Images/Icons/icons_pin_orange.png')} style={{ width: 40, height: 40 }} />
@@ -60,6 +82,7 @@ export default class TruckMap extends React.Component {
               latitude: LATITUDE - SPACE,
               longitude: LONGITUDE - SPACE,
             }}
+            identifier = {"Twister"}
             anchor={{ x: 0.5, y: 1 }}
           >
             <Callout>
@@ -69,10 +92,9 @@ export default class TruckMap extends React.Component {
             </Callout>
           </Marker>
         </MapView>
+
         <View style={styles.buttonContainer}>
-          <View style={styles.bubble}>
-            <Text>Map with Loading</Text>
-          </View>
+
         </View>
       </View>
     );
@@ -87,7 +109,7 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
-    alignItems: 'center',
+    alignItems: 'stretch',
   },
   map: {
     ...StyleSheet.absoluteFillObject,
@@ -99,6 +121,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   buttonContainer: {
+    flex: 0.25,
     flexDirection: 'row',
     marginVertical: 20,
     backgroundColor: 'transparent',
