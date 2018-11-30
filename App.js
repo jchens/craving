@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import TruckMap from './App/Components/TruckMap';
 import Tracking from './App/Components/Tracking';
-import Profiles from '../Themes/Profiles.js'
+import Profiles from './App/Themes/Profiles.js'
 
 
 

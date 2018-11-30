@@ -95,6 +95,11 @@ export default class TruckMap extends React.Component {
         </MapView>
 
         <View style={styles.card}>
+          <View style={styles.text}>
+            <Text style={styles.name}> {item.name} </Text>
+            <Text style={styles.cuisine}> {item.cuisine} </Text>
+            <Text style={styles.description}> {item.description} </Text>
+          </View>
 
         </View>
       </View>
@@ -127,4 +132,29 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     padding: 20,
   },
+  text: {
+    width: 200,
+    marginLeft: 30,
+    marginRight: 30,
+
+  },
+  name: {
+    fontFamily: 'Helvetica',
+    fontSize: 24,
+    color: Colors.gray1,
+
+  },
+  cuisine: {
+    fontFamily: 'Helvetica',
+    fontSize: 14,
+    color: Colors.gray4,
+  },
+  description: {
+    fontFamily: 'Helvetica',
+    fontSize: 14,
+    color: Colors.gray3,
+    flexWrap: 'wrap',
+    backgroundColor: 'yellow'
+  },
+
 });
