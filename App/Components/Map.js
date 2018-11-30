@@ -15,11 +15,14 @@ import { MapView, Marker } from 'react-native-maps';
 
 
 
-export default class Search extends Component {
+export default class Map extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { text: 'Search for News' };
+  }
+
+  state = {
+    markers
   }
 
 
@@ -45,13 +48,6 @@ export default class Search extends Component {
         region={this.state.region}
         onRegionChange={this.onRegionChange}
       >
-        {this.state.markers.map(marker => (
-          <Marker
-            coordinate={marker.latlng}
-            title={marker.title}
-            description={marker.description}
-          />
-        ))}
       </MapView>
     );
   }
