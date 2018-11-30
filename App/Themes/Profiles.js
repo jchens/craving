@@ -1,31 +1,27 @@
 
 const profilesList = [
-  {image: require('../Images/Profiles/harold.jpg'), name: "Harold", age:"65", occupation: "Internet meme"},
-  {image: require('../Images/Profiles/barbara.jpg'), name: "Barbara", age:"24", occupation: "Designer"},
-  {image: require('../Images/Profiles/james.jpg'), name: "James", age:"25", occupation: "MD Student"},
-  {image: require('../Images/Profiles/john.jpg'), name: "John", age:"23", occupation: "Engineer"},
-  {image: require('../Images/Profiles/linda.jpg'), name: "Linda", age:"23", occupation: "Software engineer"},
-  {image: require('../Images/Profiles/liz.jpg'), name: "Liz", age:"25", occupation: "Photographer"},
-  {image: require('../Images/Profiles/mary.jpg'), name: "Mary", age:"24", occupation: "High school teacher"},
-  {image: require('../Images/Profiles/michael.jpg'), name: "Michael", age:"27", occupation: "Freelancer"},
-  {image: require('../Images/Profiles/patricia.jpg'), name: "Patricia", age:"26", occupation: "Engineer"},
-  {image: require('../Images/Profiles/robert.jpg'), name: "Robert", age:"30", occupation: "Physician"},
+  {image: require('../Images/FTProfiles/los_tolucas.jpg'), name: "Los Tolucas", cuisine:"Mexican", description: "Authentic Mexican street food", time: "11:00am - 2:00pm", address: "S Service Rd, Stanford, CA 94305", fave: true, reminder: true},
+  {image: require('../Images/FTProfiles/capelos_barbecue.jpeg'), name: "Capelo's Barbecue", cuisine:"Southern Barbecue", description: "Pitmaster John Capelo brings Southern Barbecue to the San Francisco Bay Area", time: "5:00pm - 9:00pm", address: "935 Washington St, San Carlos, CA 94070", fave: false, reminder: false},
+  {image: require('../Images/FTProfiles/twister.png'), name: "Twister", cuisine:"Chinese", description: "Based in the Bay Area and serving over 100 different places with our delicious Chinese style cuisine", time: "11:00am - 2:00pm", address: "401 Via Ortega, Stanford, CA 94305", fave: false, reminder: false},
+  {image: require('../Images/FTProfiles/i_love_cheesesteak.jpg'), name: "I Love Cheesesteak", cuisine:"Cheesesteaks", description: "Fresh Cheesesteaks with an Asian Twist", time: "1:30pm - 3:30pm", address: "Stanford Stadium, 601 Nelson Rd, Stanford, CA 94305", fave: true, reminder: false},
+  {image: require('../Images/FTProfiles/the_waffle_roost.png'), name: "The Waffle Roost", cuisine:"Southern", description: "Chicken and waffles is what we do!", time: "11:00am - 1:00pm", address: "3251 Hillview Ave, Palo Alto, CA 94304", fave: false, reminder: true},
+  {image: require('../Images/FTProfiles/oaxacan_kitchen_mobile.jpg'), name: "Oaxacan Kitchen Mobile", cuisine:"Mexican", description: "Auténtica Comida Mexicana - Oaxacan Street Food at its best", time: "10:30am - 1:30pm", address: "Nordstrom, 550 Stanford Shopping Center, Palo Alto, CA 94304", fave: true, reminder: true},
+  {image: require('../Images/FTProfiles/akita_gourmet.png'), name: "Akita Gourmet", cuisine:"Sushi", description: "We completely satisfy all sushi lovers' hearts with our quality", time: "11:30am - 1:30pm", address: "600 W California Ave, Sunnyvale, CA 94086", fave: false, reminder: true},
+  {image: require('../Images/FTProfiles/trijeet.jpeg'), name: "3jeet Food Truck", cuisine:"UI/UX", description: "Serving custom, hand-crafted user experiences, with a side of 'what-are-rubrics?'", time: "12:30pm - 2:20pm", address: "260-002, Pigott Hall, Stanford, CA 94305", fave: true, reminder: true},
 ]
 
 const profiles = {
-  harold: profilesList[0],
-  barbara: profilesList[1],
-  james: profilesList[2],
-  john: profilesList[3],
-  linda: profilesList[4],
-  liz: profilesList[5],
-  mary: profilesList[6],
-  michael: profilesList[7],
-  patricia: profilesList[8],
-  robert: profilesList[9],
+  los_tolucas: profilesList[0],
+  capelos_barbecue: profilesList[1],
+  twister: profilesList[2],
+  i_love_cheesesteak: profilesList[3],
+  the_waffle_roost: profilesList[4],
+  oaxacan_kitchen_mobile: profilesList[5],
+  akita_gourmet: profilesList[6],
+  3jeet_food_truck: profilesList[7],
 
   random: () => {
-    return profilesList[Math.floor(Math.random() * 10)]
+    return profilesList[Math.floor(Math.random() * 8)]
   }
 
 }
