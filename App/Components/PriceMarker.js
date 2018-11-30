@@ -91,14 +91,15 @@ export default class TruckMap extends React.Component {
                 <Text>This is a plain view</Text>
               </View>
             </Callout>
+            <Image source={require('../Images/Icons/icons_pin_orange.png')} style={{ width: 40, height: 40 }} />
           </Marker>
         </MapView>
 
         <View style={styles.card}>
           <View style={styles.text}>
-            <Text style={styles.name}> {item.name} </Text>
-            <Text style={styles.cuisine}> {item.cuisine} </Text>
-            <Text style={styles.description}> {item.description} </Text>
+            <Text style={styles.name}> {this.state.name} </Text>
+            <Text style={styles.cuisine}> {this.state.cuisine} </Text>
+            <Text style={styles.description}> {this.state.description} </Text>
           </View>
 
         </View>
