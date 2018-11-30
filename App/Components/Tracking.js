@@ -1,10 +1,31 @@
-import React, { Component } from 'react'
+]import React, { Component } from 'react'
 import PropTypes from 'prop-types' //consider using this!
 import { StyleSheet, SafeAreaView, View, FlatList, Text, Linking, ActivityIndicator, TouchableOpacity, Image } from 'react-native'
 
 import {profilesList} from '../Themes/Profiles.js'
 
 export default class Tracking extends Component {
+  constructor() {
+    super();
+    let arr = []
+    for(let i = 0; i < 7; i++) {
+      arr.push(false);
+    }
+    this.state = {
+      fav: arr,
+    };
+  }
+
+  updatedState = (key) => {
+    console.log("im here");
+    console.log(key);
+    let temp = this.state.fav;
+    temp[key] = !temp[key];
+    console.log(temp);
+    this.setState({
+        fav: temp,
+    })
+  }
 
 
   render () {
@@ -50,10 +71,10 @@ export default class Tracking extends Component {
                       </View>
 
 
-                      <View style={styles.button}>
-                        <TouchableOpacity>
+                      <View style={this.state.fav[item.key] ? styles.button_filled : styles.button}>
+                        <TouchableOpacity onPress={() => this.updatedState(item.key)}>
                           <Image
-                            style={styles.star}
+                            style={this.state.fav[item.key] ? styles.star_filled : styles.star}
                             source={require('../Images/Icons/icons_star.png')}/>
                         </TouchableOpacity>
                       </View>
@@ -140,7 +161,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#F2F2F2',
     height: 50,
     width: 50,
+  },
+  button_filled: {
+    backgroundColor: '#FFD046',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 80,
+    width: 80,
+    borderRadius: 40
 
+  },
+  star_filled: {
+    backgroundColor: '#FFD046',
+    height: 50,
+    width: 50,
   },
   bottom: {
     flexDirection: 'row',
