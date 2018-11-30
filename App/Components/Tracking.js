@@ -1,4 +1,4 @@
-]import React, { Component } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types' //consider using this!
 import { StyleSheet, SafeAreaView, View, FlatList, Text, Linking, ActivityIndicator, TouchableOpacity, Image } from 'react-native'
 
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   paddingBottom: 20,
   },
   visit: {
-    color: '#0496FF',
+    color: Colors.blue,
   },
   info: {
     flexDirection: 'row',
@@ -137,19 +137,19 @@ const styles = StyleSheet.create({
 
   },
   name: {
-    color: '#333333',
+    color: Colors.gray1,
 
   },
   cuisine: {
-    color: '#BDBDBD',
+    color: Colors.gray4,
   },
   description: {
-    color: '#828282',
+    color: Colors.gray3,
     flexWrap: 'wrap',
     backgroundColor: 'yellow'
   },
   button: {
-    backgroundColor: '#F2F2F2',
+    backgroundColor: Colors.gray6,
     alignItems: 'center',
     justifyContent: 'center',
     height: 80,
@@ -158,12 +158,12 @@ const styles = StyleSheet.create({
 
   },
   star: {
-    backgroundColor: '#F2F2F2',
+    backgroundColor: Colors.gray6,
     height: 50,
     width: 50,
   },
   button_filled: {
-    backgroundColor: '#FFD046',
+    backgroundColor: Colors.yellow,
     alignItems: 'center',
     justifyContent: 'center',
     height: 80,
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
 
   },
   star_filled: {
-    backgroundColor: '#FFD046',
+    backgroundColor: Colors.yellow,
     height: 50,
     width: 50,
   },
@@ -200,11 +200,11 @@ const styles = StyleSheet.create({
     borderColor: '#0496FF',
   },
   bottom_text_left: {
-    color: '#FF4D00',
+    color: Colors.orange,
 
   },
   bottom_text_right: {
-    color: '#0496FF',
+    color: Colors.blue,
 
   }
 
