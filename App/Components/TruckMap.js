@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react'
 import {
   Text,
   View,
@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-
 import MapView, { Marker, Callout, ProviderPropType } from 'react-native-maps';
 import flagImg from '../Images/Icons/icons_pin_orange.png';
 import Colors from '../Themes/Colors.js'
@@ -20,7 +19,7 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const SPACE = 0.01;
 
-export default class TruckMap extends React.Component {
+export default class HomeMap extends React.Component {
   constructor(props) {
     super(props);
 
@@ -34,7 +33,7 @@ export default class TruckMap extends React.Component {
     };
   }
 
-  onMarkerClick(e) {
+  onMarkerClick() {
     this.map.fitToCoordinates([e.nativeEvent.coordinate, e.nativeEvent.coordinate], {
       edgePadding: { top: 100, right: 100, bottom: 100, left: 100 },
       animated: true,
@@ -57,7 +56,7 @@ export default class TruckMap extends React.Component {
           loadingBackgroundColor="#eeeeee"
         >
           <Marker
-            onPress={e => console.log(e.nativeEvent)}
+            onPress={e => this.onMarkerClick(e)}
             coordinate={{
               latitude: LATITUDE + SPACE,
               longitude: LONGITUDE + SPACE,
@@ -69,7 +68,7 @@ export default class TruckMap extends React.Component {
           </Marker>
 
           <Marker
-            onPress={e => console.log(e.nativeEvent)}
+            onPress={e => this.onMarkerClick(e)}
             coordinate={{
               latitude: LATITUDE - SPACE,
               longitude: LONGITUDE - SPACE,
@@ -93,7 +92,7 @@ export default class TruckMap extends React.Component {
   }
 }
 
-TruckMap.propTypes = {
+HomeMap.propTypes = {
   provider: ProviderPropType,
 };
 

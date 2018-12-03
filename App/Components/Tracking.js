@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types' //consider using this!
 import { StyleSheet, SafeAreaView, View, FlatList, Text, Linking, ActivityIndicator, TouchableOpacity, Image } from 'react-native'
 import { Metrics, Colors, Images } from '../Themes'
-
 import {profilesList} from '../Themes/Profiles.js'
+
+import { material } from 'react-native-typography'
 
 export default class Tracking extends Component {
   constructor() {

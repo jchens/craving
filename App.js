@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react'
 import { StyleSheet, Text, View } from 'react-native';
-import TruckMap from './App/Components/TruckMap';
 import Tracking from './App/Components/Tracking';
+import HomeMap from './App/Components/HomeMap';
 
 
 
@@ -9,7 +9,7 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <TruckMap />
+        <HomeMap />
       </View>
     );
   }
