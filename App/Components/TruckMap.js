@@ -35,7 +35,12 @@ export default class HomeMap extends React.Component {
 
   onMarkerClick() {
     this.map.fitToCoordinates([e.nativeEvent.coordinate, e.nativeEvent.coordinate], {
-      edgePadding: { top: 100, right: 100, bottom: 100, left: 100 },
+      edgePadding: {
+        right: (width / 20),
+        bottom: (height / 20),
+        left: (width / 20),
+        top: (height / 20),
+      }
       animated: true,
     })
   }

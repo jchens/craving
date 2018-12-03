@@ -9,7 +9,9 @@ const profilesList = [
     address: "S Service Rd, Stanford, CA 94305",
     fave: true,
     reminder: true,
-    visit: "TODAY"
+    visit: "TODAY",
+    latitude: 37.4275,
+    longitude: -122.1697,
   },
 
   {
@@ -21,7 +23,9 @@ const profilesList = [
     address: "401 Via Ortega, Stanford, CA 94305",
     fave: false,
     reminder: false,
-    visit: "YESTERDAY"
+    visit: "YESTERDAY",
+    latitude: 37.4375,
+    longitude: -122.1797,
   },
   {
     image: require('../Images/FTProfiles/i_love_cheesesteak.jpg'),
@@ -32,7 +36,9 @@ const profilesList = [
     address: "Stanford Stadium, 601 Nelson Rd, Stanford, CA 94305",
     fave: true,
     reminder: false,
-    visit: "3 DAYS AGO"
+    visit: "3 DAYS AGO",
+    latitude: 37.4475,
+    longitude: -122.1897,
   },
   {
     image: require('../Images/FTProfiles/the_waffle_roost.png'),
@@ -43,7 +49,9 @@ const profilesList = [
     address: "3251 Hillview Ave, Palo Alto, CA 94304",
     fave: false,
     reminder: true,
-    visit: "4 DAYS AGO"
+    visit: "4 DAYS AGO",
+    latitude: 37.4175,
+    longitude: -122.1597,
   },
   {
     image: require('../Images/FTProfiles/oaxacan_kitchen_mobile.jpg'),
@@ -54,7 +62,9 @@ const profilesList = [
     address: "Nordstrom, 550 Stanford Shopping Center, Palo Alto, CA 94304",
     fave: true,
     reminder: true,
-    visit: "2 WEEKS AGO"
+    visit: "2 WEEKS AGO",
+    latitude: 37.42,
+    longitude: -122.1710,
   },
   {
     image: require('../Images/FTProfiles/akita_gourmet.png'),
@@ -65,7 +75,9 @@ const profilesList = [
     address: "600 W California Ave, Sunnyvale, CA 94086",
     fave: false,
     reminder: true,
-    visit: "2 WEEKS AGO"
+    visit: "2 WEEKS AGO",
+    latitude: 37.41,
+    longitude: -122.18,
   },
   {
     image: require('../Images/FTProfiles/trijeet.jpeg'),
@@ -76,7 +88,9 @@ const profilesList = [
     address: "260-002, Pigott Hall, Stanford, CA 94305",
     fave: true,
     reminder: true,
-    visit: "1 MONTH AGO"
+    visit: "1 MONTH AGO",
+    latitude: 37.4275,
+    longitude: -122.172,
   },
 ]
 

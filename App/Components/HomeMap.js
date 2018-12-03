@@ -5,23 +5,29 @@ import {
   Dimensions,
   TouchableOpacity,
   Text,
+  Image,
 } from 'react-native';
-
 import MapView, { Marker } from 'react-native-maps';
+import { Images, Profiles } from '../Themes';
+import Colors from '../Themes/Colors.js'
+import markerImg from '../Images/Icons/icons_pin_orange.png';
+import {profilesList} from '../Themes/Profiles.js'
 
 const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
-const LATITUDE = 37.78825;
-const LONGITUDE = -122.4324;
+const LATITUDE = 37.4275;
+const LONGITUDE = -122.1697;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const SPACE = 0.01;
 
 function createMarker(modifier = 1) {
   return {
-    latitude: LATITUDE - (SPACE * modifier),
-    longitude: LONGITUDE - (SPACE * modifier),
+    // latitude: LATITUDE - (SPACE * modifier),
+    // longitude: LONGITUDE - (SPACE * modifier),
+    latitude: profilesList[modifier].latitude,
+    longitude: profilesList[modifier].longitude,
   };
 }
 
@@ -32,12 +38,17 @@ const MARKERS = [
   createMarker(4),
 ];
 
-const DEFAULT_PADDING = { top: 40, right: 40, bottom: 40, left: 40 };
+const DEFAULT_PADDING = { top: 400, right: 400, bottom: 400, left: 400 };
 
 class FitToCoordinates extends React.Component {
   fitPadding() {
     this.map.fitToCoordinates([MARKERS[2], MARKERS[3]], {
-      edgePadding: { top: 100, right: 100, bottom: 100, left: 100 },
+      edgePadding: {
+        right: (width / 20),
+        bottom: (height / 20),
+        left: (width / 20),
+        top: (height / 20),
+      },
       animated: true,
     });
   }
@@ -80,27 +91,18 @@ class FitToCoordinates extends React.Component {
               key={i}
               coordinate={marker}
               onPress={e => this.onMarkerClick(e)}
-            />
+              anchor={{ x: 0.5, y: 1 }}
+            >
+            <Image source={markerImg} style={{ width: 40, height: 40 }} />
+            </Marker>
           ))}
         </MapView>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            onPress={() => this.fitPadding()}
-            style={[styles.bubble, styles.button]}
-          >
-            <Text>Fit Bottom Two Markers with Padding</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.fitBottomTwoMarkers()}
-            style={[styles.bubble, styles.button]}
-          >
-            <Text>Fit Bottom Two Markers</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
             onPress={() => this.fitAllMarkers()}
             style={[styles.bubble, styles.button]}
           >
-            <Text>Fit All Markers</Text>
+            <Text>View all markers</Text>
           </TouchableOpacity>
         </View>
       </View>
