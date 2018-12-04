@@ -14,13 +14,13 @@ export default class Rewards extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.reward}>
-          <Text style={styles.title}> Rewards</Text>
+          <Text style={styles.titleRewards}> Rewards</Text>
         </View>
         <View style={styles.craving}>
-          <Text style={styles.title}> TODAYS CRAVING </Text>
+          <Text style={styles.titleCraving}> TODAYS CRAVING </Text>
 
           <View style={styles.goals}>
-            <View style={styles.card}>
+            <View style={styles.card1}>
 
               <View style={styles.symbol}>
                 <View style={styles.circle}>
@@ -34,7 +34,7 @@ export default class Rewards extends Component {
               <Text style={styles.text}> FIND A FOOD TRUCK NEARBY </Text>
             </View>
 
-            <View style={styles.card}>
+            <View style={styles.card2}>
 
               <View style={styles.symbol}>
                 <View style={styles.circle}>
@@ -49,7 +49,7 @@ export default class Rewards extends Component {
 
 
             </View>
-            <View style={styles.card}>
+            <View style={styles.card3}>
 
               <View style={styles.symbol}>
                 <View style={styles.circle}>
@@ -78,40 +78,59 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  title: {
-    marginLeft: 25,
+  titleRewards: {
+    marginLeft: 35,
+    marginTop: 25,
+  },
+  titleCraving: {
+    marginLeft: 35,
   },
   reward: {
     flex: 2,
-    backgroundColor: 'green',
   },
   craving: {
     flex: 8,
-    backgroundColor: 'blue',
     justifyContent: 'space-between'
   },
   goals: {
     flex: 1,
-    backgroundColor: 'yellow',
     flexDirection: 'column',
     alignItems: 'center'
   },
-  card: {
-    backgroundColor: 'red',
+  card1: {
+    backgroundColor: '#0496FF',
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 15,
     width: 330,
     height: 117,
-    margin: 20,
+    margin: 15,
+  },
+  card2: {
+    backgroundColor: '#FF4D00',
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 15,
+    width: 330,
+    height: 117,
+    margin: 15,
+  },
+  card3: {
+    backgroundColor: '#FFD046',
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 15,
+    width: 330,
+    height: 117,
+    margin: 15,
   },
   symbol: {
     flexDirection: 'column',
     alignItems: 'center',
-    marginLeft: 20,
+    marginLeft: 30,
   },
   circle: {
-    backgroundColor: 'blue',
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
     height: 50,
