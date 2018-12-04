@@ -47,7 +47,7 @@ export default class Tracking extends Component {
                   <View style={styles.list_item}>
                     <Text style={styles.visit}> {item.visit} </Text>
 
-                    <View style={styles.info}>
+                  <View style={styles.info}>
                       <Image source={item.image} style={styles.image}/>
                       <View style={styles.text}>
                         <Text style={material.title}> {item.name} </Text>

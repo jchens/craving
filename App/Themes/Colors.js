@@ -1,6 +1,9 @@
 const colors = {
   background: '#1F0808',
   clear: 'rgba(0,0,0,0)',
+  frosty: 'rgba(255,255,255,0.5)',
+  inactive: 'rgba(0,0,0,0.25)',
+  black: '#000000',
   white: '#FFFFFF',
   orange: '#FF4D00',
   yellow: '#FFD046',

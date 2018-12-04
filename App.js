@@ -4,10 +4,7 @@ import Tracking from './App/Components/Tracking';
 import HomeMap from './App/Components/HomeMap';
 import Rewards from './App/Components/Rewards';
 
-import BottomNavigation, {
-  IconTab,
-  Badge
-} from 'react-native-material-bottom-navigation'
+
 import Icon from '@expo/vector-icons/MaterialCommunityIcons'
 
 
