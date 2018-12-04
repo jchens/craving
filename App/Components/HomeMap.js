@@ -12,6 +12,7 @@ import { Images, Profiles } from '../Themes';
 import Colors from '../Themes/Colors.js'
 import markerImg from '../Images/Icons/icons_pin_orange.png';
 import {profilesList} from '../Themes/Profiles.js'
+import { material } from 'react-native-typography'
 
 const { width, height } = Dimensions.get('window');
 
@@ -21,6 +22,9 @@ const LONGITUDE = -122.1697;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const SPACE = 0.01;
+
+
+
 
 function createMarker(modifier = 1) {
   return {
@@ -41,24 +45,17 @@ const MARKERS = [
 const DEFAULT_PADDING = { top: 400, right: 400, bottom: 400, left: 400 };
 
 class FitToCoordinates extends React.Component {
-  fitPadding() {
-    this.map.fitToCoordinates([MARKERS[2], MARKERS[3]], {
-      edgePadding: {
-        right: (width / 20),
-        bottom: (height / 20),
-        left: (width / 20),
-        top: (height / 20),
-      },
-      animated: true,
-    });
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: profilesList[0].name,
+      cuisine: profilesList[0].cuisine,
+      description: profilesList[0].description,
+      image: profilesList[0].image,
+    };
   }
 
-  fitBottomTwoMarkers() {
-    this.map.fitToCoordinates([MARKERS[2], MARKERS[3]], {
-      edgePadding: DEFAULT_PADDING,
-      animated: true,
-    });
-  }
 
   fitAllMarkers() {
     this.map.fitToCoordinates(MARKERS, {
@@ -68,8 +65,17 @@ class FitToCoordinates extends React.Component {
   }
   onMarkerClick(e) {
     this.map.fitToCoordinates([e.nativeEvent.coordinate, e.nativeEvent.coordinate], {
-      edgePadding: DEFAULT_PADDING,
       animated: true,
+    });
+    console.log(e.nativeEvent);
+    var index = (parseInt(e.nativeEvent.id));
+
+    this.setState({
+      name: profilesList[index].name,
+      cuisine: profilesList[index].cuisine,
+      description: profilesList[index].description,
+      image: profilesList[index].image,
+
     });
   }
 
@@ -89,6 +95,7 @@ class FitToCoordinates extends React.Component {
           {MARKERS.map((marker, i) => (
             <Marker
               key={i}
+              identifier={i.toString()}
               coordinate={marker}
               onPress={e => this.onMarkerClick(e)}
               anchor={{ x: 0.5, y: 1 }}
@@ -105,6 +112,19 @@ class FitToCoordinates extends React.Component {
             <Text>View all markers</Text>
           </TouchableOpacity>
         </View>
+        <View style={styles.card}>
+          <View style={styles.info}>
+
+            <Image source={this.state.image} style={styles.image}/>
+
+            <View style={styles.text}>
+              <Text style={material.title}> {this.state.name} </Text>
+              <Text style={material.caption}> {this.state.cuisine} </Text>
+              <Text style={material.body1}> {this.state.description} </Text>
+            </View>
+          </View>
+
+        </View>
       </View>
     );
   }
@@ -114,7 +134,8 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
-    alignItems: 'center',
+    alignItems: 'stretch',
+    flexDirection: 'column',
   },
   map: {
     ...StyleSheet.absoluteFillObject,
@@ -135,6 +156,44 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     marginVertical: 20,
     backgroundColor: 'transparent',
+  },
+  card: {
+    flex: 0.3,
+    flexDirection: 'column',
+    backgroundColor: Colors.white,
+    padding: 40,
+  },
+  info: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'flex-start',
+    padding: 20,
+    backgroundColor: Colors.blue,
+  },
+  image: {
+    height: 100,
+    width: 100,
+    padding: 0,
+    backgroundColor: Colors.orange,
+  },
+  text: {
+    width: 200,
+    marginLeft: 30,
+    marginRight: 30,
+    backgroundColor: Colors.yellow,
+
+  },
+  name: {
+    color: Colors.gray1,
+
+  },
+  cuisine: {
+    color: Colors.gray4,
+  },
+  description: {
+    color: Colors.gray3,
+    flexWrap: 'wrap',
+    backgroundColor: 'white'
   },
 });
 

@@ -1,111 +1,137 @@
-import React, { Component } from 'react'
+import React from 'react';
 import {
-  Text,
+  StyleSheet,
   View,
   Dimensions,
-  StyleSheet,
+  TouchableOpacity,
+  Text,
   Image,
 } from 'react-native';
-import MapView, { Marker, Callout, ProviderPropType } from 'react-native-maps';
-import flagImg from '../Images/Icons/icons_pin_orange.png';
+import MapView, { Marker } from 'react-native-maps';
+import { Images, Profiles } from '../Themes';
 import Colors from '../Themes/Colors.js'
+import markerImg from '../Images/Icons/icons_pin_orange.png';
+import {profilesList} from '../Themes/Profiles.js'
 
 const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
-const LATITUDE = 37.78825;
-const LONGITUDE = -122.4324;
+const LATITUDE = 37.4275;
+const LONGITUDE = -122.1697;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const SPACE = 0.01;
 
-export default class HomeMap extends React.Component {
+
+
+
+function createMarker(modifier = 1) {
+  return {
+    // latitude: LATITUDE - (SPACE * modifier),
+    // longitude: LONGITUDE - (SPACE * modifier),
+    latitude: profilesList[modifier].latitude,
+    longitude: profilesList[modifier].longitude,
+  };
+}
+
+const MARKERS = [
+  createMarker(),
+  createMarker(2),
+  createMarker(3),
+  createMarker(4),
+];
+
+const DEFAULT_PADDING = { top: 400, right: 400, bottom: 400, left: 400 };
+
+export default class FitToCoordinates extends React.Component {
   constructor(props) {
     super(props);
 
+    var truckProfile = this.props.randomProfile();
     this.state = {
-      region: {
-        latitude: LATITUDE,
-        longitude: LONGITUDE,
-        latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA,
-      },
+      name: truckProfile.name,
     };
   }
 
-  onMarkerClick() {
-    this.map.fitToCoordinates([e.nativeEvent.coordinate, e.nativeEvent.coordinate], {
+  fitPadding() {
+    this.map.fitToCoordinates([MARKERS[2], MARKERS[3]], {
       edgePadding: {
         right: (width / 20),
         bottom: (height / 20),
         left: (width / 20),
         top: (height / 20),
-      }
+      },
       animated: true,
-    })
+    });
   }
 
+  fitBottomTwoMarkers() {
+    this.map.fitToCoordinates([MARKERS[2], MARKERS[3]], {
+      edgePadding: DEFAULT_PADDING,
+      animated: true,
+    });
+  }
+
+  fitAllMarkers() {
+    this.map.fitToCoordinates(MARKERS, {
+      edgePadding: DEFAULT_PADDING,
+      animated: true,
+    });
+  }
+  onMarkerClick(e) {
+    this.map.fitToCoordinates([e.nativeEvent.coordinate, e.nativeEvent.coordinate], {
+      edgePadding: DEFAULT_PADDING,
+      animated: true,
+    });
+  }
 
   render() {
-
+    const {truckProfile} = this.props;
     return (
-
       <View style={styles.container}>
         <MapView
-          provider={this.props.provider}
+          ref={ref => { this.map = ref; }}
           style={styles.map}
-          initialRegion={this.state.region}
-          onPress={this.onMapPress}
-          loadingEnabled
-          loadingIndicatorColor="#666666"
-          loadingBackgroundColor="#eeeeee"
+          initialRegion={{
+            latitude: LATITUDE,
+            longitude: LONGITUDE,
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA,
+          }}
         >
-          <Marker
-            onPress={e => this.onMarkerClick(e)}
-            coordinate={{
-              latitude: LATITUDE + SPACE,
-              longitude: LONGITUDE + SPACE,
-            }}
-            identifier = {"Los Tolucas"}
-            anchor={{ x: 0.5, y: 1 }}
-          >
-          <Image source={require('../Images/Icons/icons_pin_orange.png')} style={{ width: 40, height: 40 }} />
-          </Marker>
-
-          <Marker
-            onPress={e => this.onMarkerClick(e)}
-            coordinate={{
-              latitude: LATITUDE - SPACE,
-              longitude: LONGITUDE - SPACE,
-            }}
-            identifier = {"Twister"}
-            anchor={{ x: 0.5, y: 1 }}
-          >
-            <Callout>
-              <View>
-                <Text>This is a plain view</Text>
-              </View>
-            </Callout>
-            <Image source={require('../Images/Icons/icons_pin_orange.png')} style={{ width: 40, height: 40 }} />
-          </Marker>
+          {MARKERS.map((marker, i) => (
+            <Marker
+              key={i}
+              coordinate={marker}
+              onPress={e => this.onMarkerClick(e)}
+              anchor={{ x: 0.5, y: 1 }}
+            >
+            <Image source={markerImg} style={{ width: 40, height: 40 }} />
+            </Marker>
+          ))}
         </MapView>
-
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={() => this.fitAllMarkers()}
+            style={[styles.bubble, styles.button]}
+          >
+            <Text>View all markers</Text>
+          </TouchableOpacity>
+        </View>
         <View style={styles.card}>
+          <Text>{truckProfile.name}</Text>
         </View>
       </View>
     );
   }
 }
 
-HomeMap.propTypes = {
-  provider: ProviderPropType,
-};
-
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
     alignItems: 'stretch',
+    flexDirection: 'column',
   },
   map: {
     ...StyleSheet.absoluteFillObject,
@@ -116,35 +142,21 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 20,
   },
+  button: {
+    marginTop: 12,
+    paddingHorizontal: 12,
+    alignItems: 'center',
+    marginHorizontal: 10,
+  },
+  buttonContainer: {
+    flexDirection: 'column',
+    marginVertical: 20,
+    backgroundColor: 'transparent',
+  },
   card: {
-    flex: 0.25,
-    flexDirection: 'row',
+    flex: 0.3,
+    flexDirection: 'column',
     backgroundColor: Colors.white,
     padding: 20,
   },
-  text: {
-    width: 200,
-    marginLeft: 30,
-    marginRight: 30,
-
-  },
-  name: {
-    fontFamily: 'Helvetica',
-    fontSize: 24,
-    color: Colors.gray1,
-
-  },
-  cuisine: {
-    fontFamily: 'Helvetica',
-    fontSize: 14,
-    color: Colors.gray4,
-  },
-  description: {
-    fontFamily: 'Helvetica',
-    fontSize: 14,
-    color: Colors.gray3,
-    flexWrap: 'wrap',
-    backgroundColor: 'yellow'
-  },
-
 });
