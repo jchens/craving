@@ -52,40 +52,45 @@ export default class Rewards extends Component {
               </View>
             <View>
 
-              <View style={styles.bar}>
+            <View style={styles.bar}>
 
 
-                <ProgressBarAnimated
-                  {...progressCustomStyles}
-                  width={barWidth}
-                  value={this.state.progressWithOnComplete}
-                  onComplete={() => {
-                    Alert.alert('Hey!', 'onComplete event fired!');
-                  }}
+              <ProgressBarAnimated
+                {...progressCustomStyles}
+                width={barWidth}
+                value={this.state.progressWithOnComplete}
+                onComplete={() => {
+                  Alert.alert('Hey!', 'onComplete event fired!');
+                }}
+              />
+            </View>
+
+            <View style={styles.buttonContainer}>
+              <View style={styles.buttonInner}>
+                <Button
+                  title="Increase 25%"
+                  onPress={this.increase.bind(this, 'progressWithOnComplete', 25)}
                 />
               </View>
-              <View style={styles.buttonContainer}>
-                <View style={styles.buttonInner}>
-                  <Button
-                    title="Increase 25%"
-                    onPress={this.increase.bind(this, 'progressWithOnComplete', 25)}
-                  />
-                </View>
-              </View>
             </View>
+
           </View>
+
+        </View>
 
 
         <View style={styles.craving}>
           <Text style={styles.titleCraving}> TODAYS CRAVING </Text>
           <View style={styles.goals}>
+
             <View style={styles.card1}>
 
               <View style={styles.symbol}>
                 <View style={styles.circle}>
                   <Image
                     style={styles.star}
-                    source={Images.star}/>
+                    source={Images.star}
+                  />
                 </View>
                 <Text style={styles.points}> + 10 PTS </Text>
               </View>
@@ -94,37 +99,36 @@ export default class Rewards extends Component {
             </View>
 
             <View style={styles.card2}>
-
               <View style={styles.symbol}>
                 <View style={styles.circle}>
                   <Image
                     style={styles.star}
-                    source={Images.star}/>
+                    source={Images.star}
+                  />
                 </View>
                 <Text style={styles.points}> + 10 PTS </Text>
               </View>
-
               <Text style={styles.text}> VISIT A FOOD TRUCK </Text>
-
-
             </View>
+
             <View style={styles.card3}>
 
               <View style={styles.symbol}>
                 <View style={styles.circle}>
                   <Image
                     style={styles.star}
-                    source={Images.star}/>
+                    source={Images.star}
+                  />
                 </View>
                 <Text style={styles.points}> + 10 PTS </Text>
               </View>
-
               <Text style={styles.text}> LEAVE A REVIEW </Text>
             </View>
 
-
           </View>
+
         </View>
+
       </View>
 
     );
