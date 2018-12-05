@@ -5,6 +5,8 @@ import { Metrics, Colors, Images } from '../Themes'
 import {profilesList} from '../Themes/Profiles.js'
 
 import { material } from 'react-native-typography'
+import { Feather, MaterialIcons, FontAwesome } from '@expo/vector-icons';
+import { Overlay, Button } from 'react-native-elements';
 
 export default class Tracking extends Component {
   constructor() {
@@ -43,47 +45,153 @@ export default class Tracking extends Component {
                 keyExtractor= {(item) => item.name}
                 renderItem={({item}) =>
 
+                <View style={[styles.card, styles.shadow]}>
 
-                  <View style={styles.list_item}>
+                  {/* info: holding photo, info, and star*/}
+                  <View style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'space-evenly',
+                    alignItems: 'flex-start',
+                    paddingHorizontal: Metrics.pad * 1.5,
+                  }}>
+
+                    {/* day you visited*/}
                     <Text style={styles.visit}> {item.visit} </Text>
 
-                  <View style={styles.info}>
-                      <Image source={item.image} style={styles.image}/>
-                      <View style={styles.text}>
-                        <Text style={material.title}> {item.name} </Text>
-                        <Text style={material.caption}> {item.cuisine} </Text>
-                        <Text style={material.body1}> {item.description} </Text>
+                    {/* view to hold image for shadow*/}
+                    <View style={{
+                      shadowColor: Colors.black,
+                      shadowOffset: { width: 0, height: 4 },
+                      shadowOpacity: Metrics.shadow,
+                      shadowRadius: 10,
+                    }}>
+                      <Image source={item.image} resizeMode='contain' style={{
+                        flex: 1.25,
+                        aspectRatio: 1,
+                        borderRadius: Metrics.curve,
 
-                        <View style={styles.bottom}>
-                          <View style={styles.bottom_button_left}>
-                            <TouchableOpacity>
-                              <Text style={styles.bottom_text_left}> Find on Map </Text>
-                            </TouchableOpacity>
-                          </View>
-
-
-                          <View style={styles.bottom_button_right}>
-                            <TouchableOpacity>
-                              <Text style={styles.bottom_text_right}> Check In </Text>
-                            </TouchableOpacity>
-                          </View>
-                        </View>
-
-
-                      </View>
-
-
-                      <View style={this.state.fav[item.key] ? styles.button_filled : styles.button}>
-                        <TouchableOpacity onPress={() => this.updatedState(item.key)}>
-                          <Image
-                            style={this.state.fav[item.key] ? styles.star_filled : styles.star}
-                            source={Images.star}/>
-                        </TouchableOpacity>
-                      </View>
-
-
+                        width: 40,
+                        height: 40,
+                        //borderWidth: 4,
+                        borderColor: Colors.white,
+                      }}/>
                     </View>
+
+                    <View style={{
+                      flex: 2,
+                      paddingHorizontal: Metrics.padSmall,
+                      // width: 200,
+                      // marginLeft: 30,
+                      // marginRight: 30,
+                    }}>
+                      <Text style={material.title}> {item.name} </Text>
+                      <Text style={material.caption}> {item.cuisine} </Text>
+                      <Text style={{
+                        color: Colors.gray3,
+                        flexWrap: 'wrap',
+                        textAlign: 'left',
+                        fontSize: Metrics.fontSmall,
+                        paddingTop: Metrics.pad / 2 ,
+                      }}> {item.description} </Text>
+                    </View>
+
+
+                    <Button
+                      buttonStyle={[styles.circleButton, styles.glow, style={backgroundColor: Colors.yellow}]}
+                      containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.yellow}]}
+                      titleStyle={{
+                        color: Colors.white
+                      }}
+                      title=''
+                      icon={
+                        <FontAwesome
+                          name='star'
+                          size={Metrics.button/2}
+                          color='white'
+                        />
+                      }
+                    />
                   </View>
+
+                  <View style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'space-evenly',
+                    alignItems: 'center',
+
+                    //backgroundColor: Colors.orange,
+                  }}>
+
+                    <View style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-evenly',
+                      alignItems: 'center',
+                      backgroundColor: Colors.white,
+                      borderColor: Colors.orange,
+                      borderWidth: 1,
+                      borderRadius: Metrics.button
+                    }}>
+                      <Text
+                        style={{
+                          paddingHorizontal: Metrics.pad,
+                          color: Colors.orange,
+                          fontSize: Metrics.fontMed,
+                        }}>
+                        1.1 mi
+                      </Text>
+                      <Button
+                        onPress={console.log('should run this.goToTruck')}
+                        buttonStyle={[styles.button, style={backgroundColor: Colors.orange, paddingLeft: Metrics.pad}]}
+                        containerStyle={{
+                          backgroundColor: Colors.orange,
+                          borderTopRightRadius: Metrics.button,
+                          borderBottomRightRadius: Metrics.button,
+                        }}
+                        titleStyle={{
+                          color: Colors.white
+                        }}
+                        title=''
+                        icon={
+                          <MaterialIcons
+                            name='directions-run'
+                            size={20}
+                            color='white'
+                          />
+                        }
+                        iconRight
+                      />
+                    </View>
+
+                    {/* view to hold right button */}
+                    <View style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-evenly',
+                      alignItems: 'center',
+                    }}>
+                      <Button
+                        buttonStyle={[styles.button, style={backgroundColor: Colors.blue}]}
+                        containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.blue}]}
+                        titleStyle={{
+                          color: Colors.white
+                        }}
+                        title='Profile'
+                        icon={
+                          <Feather
+                            name='truck'
+                            size={20}
+                            color='white'
+                          />
+                        }
+                      />
+                    </View>
+
+                  </View>
+
+                </View>
+
+
+
                 }
               />
             </View>
@@ -114,51 +222,50 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
-  list_item: {
-  flex: 0.5,
-  backgroundColor: 'white',
-  paddingBottom: 20,
+
+  listItem: {
+    paddingTop: Metrics.pad * 1.5,
+    paddingBottom: Metrics.pad * 0.5,
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+    backgroundColor: Colors.white,
   },
+  shadow: {
+    shadowColor: Colors.black,
+    shadowOpacity: Metrics.glow / 4,
+    shadowRadius: 20,
+  },
+
   visit: {
     color: Colors.blue,
   },
-  info: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'flex-start',
-    padding: 20,
-  },
-  image: {
-    height: 100,
-    width: 100,
-  },
-  text: {
-    width: 200,
-    marginLeft: 30,
-    marginRight: 30,
 
-  },
-  name: {
-    color: Colors.gray1,
-
-  },
-  cuisine: {
-    color: Colors.gray4,
-  },
-  description: {
-    color: Colors.gray3,
-    flexWrap: 'wrap',
-    backgroundColor: 'white'
-  },
-  button: {
-    backgroundColor: Colors.gray6,
-    alignItems: 'center',
+  circleButton: {
+    borderRadius: Metrics.button,
+    height: Metrics.button,
+    width: Metrics.button,
     justifyContent: 'center',
-    height: 50,
-    width: 50,
-    borderRadius: 25
-
+    alignItems: 'center',
   },
+  glow: {
+    shadowColor: Colors.yellow,
+    shadowOpacity: Metrics.glow,
+    shadowRadius: 10,
+  },
+
+  button: {
+    borderRadius: Metrics.button,
+    height: Metrics.button,
+    paddingLeft: Metrics.button / 2,
+    paddingRight: Metrics.pad,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  buttonContainer: {
+    borderRadius: Metrics.button,
+  },
+
   star: {
     backgroundColor: Colors.gray6,
     height: 50,
