@@ -9,3 +9,12 @@ Used `npm install yarn add react-native-typography` to use [React Native typogra
 Used `npm install --save react-native-modal-datetime-picker` to [pick a date & time](https://github.com/mmazzarolo/react-native-modal-datetime-picker).
 
 Allow usage of location from instructions [here](https://stackoverflow.com/questions/48157185/info-plist-file-for-react-native-ios-app-using-expo-sdk?noredirect=1&lq=1).
+
+## Instructions
+
+Navigate to the folder containing the project:
+`npm install react-native-maps --save`
+`npm install --save react-native-elements@beta`
+`npm install yarn add react-native-typography`
+`npm install --save react-native-modal-datetime-picker`
+`expo start`
