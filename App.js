@@ -5,6 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 //import TruckMap from './App/Components/TruckMap';
 //import Rewards from './App/Components/Rewards';
 import { Font } from 'expo';
+import { Metrics, Colors, Images } from './App/Themes'
 
 
 
