@@ -14,7 +14,11 @@ Allow usage of location from instructions [here](https://stackoverflow.com/quest
 
 Navigate to the folder containing the project:
 `npm install react-native-maps --save
+
 npm install --save react-native-elements@beta
+
 npm install yarn add react-native-typography
+
 npm install --save react-native-modal-datetime-picker
+
 expo start`
