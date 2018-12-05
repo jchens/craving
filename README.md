@@ -7,3 +7,5 @@ Used `npm install --save react-native-elements@beta` to use [React Native Elemen
 Used `npm install yarn add react-native-typography` to use [React Native typography](https://github.com/hectahertz/react-native-typography).
 
 Used `npm install --save react-native-modal-datetime-picker` to [pick a date & time](https://github.com/mmazzarolo/react-native-modal-datetime-picker).
+
+Allow usage of location from instructions [here](https://stackoverflow.com/questions/48157185/info-plist-file-for-react-native-ios-app-using-expo-sdk?noredirect=1&lq=1).
