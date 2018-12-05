@@ -230,6 +230,7 @@ class FitToCoordinates extends React.Component {
 
         </MapView>
 
+        {/* TODO: overlapping w buttons for long descriptions */}
         <View style={[styles.card, styles.shadow]}>
 
           {/* info: holding photo, info, and star*/}

@@ -36,16 +36,25 @@ export default class Tracking extends Component {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}> Visted</Text>
 
-            <View style={styles.list_container}>
+            <View style={styles.titleContainer}>
+              <Text style={styles.title}> Visted</Text>
+            </View>
+
+            <View style={styles.listContainer}>
 
               <FlatList
                 data={profilesList}
                 keyExtractor= {(item) => item.name}
                 renderItem={({item}) =>
 
-                <View style={[styles.card, styles.shadow]}>
+                <View style={[styles.listItem]}>
+
+                  {/* day you visited*/}
+                  <Text style={{
+                    color: Colors.blue,
+                    paddingHorizontal: Metrics.pad,
+                  }}> {item.visit} </Text>
 
                   {/* info: holding photo, info, and star*/}
                   <View style={{
@@ -54,10 +63,9 @@ export default class Tracking extends Component {
                     justifyContent: 'space-evenly',
                     alignItems: 'flex-start',
                     paddingHorizontal: Metrics.pad * 1.5,
+                    paddingVertical: Metrics.padSmall,
                   }}>
 
-                    {/* day you visited*/}
-                    <Text style={styles.visit}> {item.visit} </Text>
 
                     {/* view to hold image for shadow*/}
                     <View style={{
@@ -67,14 +75,10 @@ export default class Tracking extends Component {
                       shadowRadius: 10,
                     }}>
                       <Image source={item.image} resizeMode='contain' style={{
-                        flex: 1.25,
-                        aspectRatio: 1,
                         borderRadius: Metrics.curve,
 
                         width: 40,
                         height: 40,
-                        //borderWidth: 4,
-                        borderColor: Colors.white,
                       }}/>
                     </View>
 
@@ -114,13 +118,13 @@ export default class Tracking extends Component {
                     />
                   </View>
 
+                  {/* buttonRow */}
                   <View style={{
                     flex: 1,
                     flexDirection: 'row',
                     justifyContent: 'space-evenly',
                     alignItems: 'center',
-
-                    //backgroundColor: Colors.orange,
+                    paddingTop: 5,
                   }}>
 
                     <View style={{
@@ -209,35 +213,45 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'stretch',
+    backgroundColor: Colors.white,
   },
   title: {
-    flex: 0.1,
-
+    color: Colors.gray1,
+    fontSize: 36,
   },
-  list_container: {
+  titleContainer: {
     flex: 1,
+    color: Colors.blue,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+
+  listContainer: {
+    flex: 7,
     backgroundColor: 'white',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 20,
+    alignItems: 'stretch',
+
+    // TODO: change this to reveal some cool illustration
+    backgroundColor: Colors.purple,
   },
 
   listItem: {
     paddingTop: Metrics.pad * 1.5,
-    paddingBottom: Metrics.pad * 0.5,
+    paddingBottom: Metrics.padBig,
     flexDirection: 'column',
     justifyContent: 'space-evenly',
     backgroundColor: Colors.white,
+
+    borderColor: Colors.gray5,
+    borderBottomWidth: 1,
   },
   shadow: {
     shadowColor: Colors.black,
     shadowOpacity: Metrics.glow / 4,
     shadowRadius: 20,
-  },
-
-  visit: {
-    color: Colors.blue,
   },
 
   circleButton: {
