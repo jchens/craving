@@ -15,7 +15,7 @@ import { Overlay, Button } from 'react-native-elements';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { Font } from 'expo';
 
-export default class Tracking extends Component {
+export default class Followed extends Component {
   constructor() {
     super();
     let arr = []
@@ -24,13 +24,14 @@ export default class Tracking extends Component {
     }
     let remind = []
     for(let i = 0; i < 7; i++) {
-      remind.push(false);
+      remind.push('None');
     }
+
     this.state = {
       starArray: arr,
       remindArray: remind,
+      activeReminderIndex: 0,
 
-      date: 'None',
       isVisible: false,
       isDateTimePickerVisible: false,
 
@@ -69,26 +70,13 @@ export default class Tracking extends Component {
     })
   }
 
-  toggleArrayRemind = (item) => {
+  toggleRemindArray = (item) => {
     console.log(profilesList.indexOf(item));
 
-    let temp = this.state.remindArray;
-    temp[profilesList.indexOf(item)] = !temp[profilesList.indexOf(item)]
     this.setState({
-        remindArray: temp,
+        activeReminderIndex: profilesList.indexOf(item),
         isVisible: !this.state.isVisible,
     })
-
-    console.log('overlay visibility set to: ' + this.state.isVisible);
-
-  }
-
-  toggleOverlay = () => {
-    this.setState({
-      isVisible: !this.state.isVisible,
-    });
-    console.log('toggled!' + this.state.isVisible);
-
   }
 
   _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
@@ -96,11 +84,15 @@ export default class Tracking extends Component {
   _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
 
   _handleDatePicked = (date) => {
-    console.log('A time has been picked: ', date.toLocaleTimeString());
-    this._hideDateTimePicker();
+    let temp = this.state.remindArray;
+    temp[this.state.activeReminderIndex] = date.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
     this.setState({
-      date: date.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'})
-    });
+        remindArray: temp,
+        isVisible: !this.state.isVisible,
+    })
+    console.log('A time has been picked: ', this.state.remindArray[this.state.activeReminderIndex]);
+
+    this._hideDateTimePicker();
   };
 
   render () {
@@ -112,7 +104,9 @@ export default class Tracking extends Component {
           {/* Remind Overlay */}
           <Overlay
             isVisible={this.state.isVisible}
-            onBackdropPress={this.toggleOverlay}
+            onBackdropPress={() => this.setState({
+              isVisible: !this.state.isVisible
+            })}
             windowBackgroundColor='rgba(0,0,0,0.25)'
             containerStyle={styles.overlayContainer}
             overlayStyle={[styles.overlay, styles.shadow]}
@@ -126,7 +120,6 @@ export default class Tracking extends Component {
                   fontFamily: 'lato-regular',
                   fontSize: Metrics.font3,
                   textAlign: 'center',
-                  paddingBottom: Metrics.pad / 2,
                 }}>Set a reminder</Text>
               ) : null
             }
@@ -146,7 +139,6 @@ export default class Tracking extends Component {
               flexDirection: 'row',
               justifyContent: 'space-evenly'
             }}>
-              {/*TODO: will people try to click on time directly, not button?*/}
               <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-evenly',
@@ -166,7 +158,7 @@ export default class Tracking extends Component {
                         fontFamily: 'lato-regular',
                         fontSize: Metrics.font3,
                       }}>
-                      {this.state.date}
+                      {this.state.remindArray[this.state.activeReminderIndex]}
                     </Text>
                   ) : null
                 }
@@ -348,14 +340,14 @@ export default class Tracking extends Component {
                   </View>
 
                   <Button
-                    onPress={() => this.toggleArrayRemind(item)}
+                    onPress={() => this.toggleRemindArray(item)}
                     buttonStyle={
-                      this.state.remindArray[profilesList.indexOf(item)]
+                      ((this.state.remindArray[profilesList.indexOf(item)]) && (this.state.remindArray[profilesList.indexOf(item)].localeCompare('None') !== 0))
                         ? [styles.circleButton, style={backgroundColor: Colors.blue}]
                         : [styles.circleButton, style={
                           backgroundColor: Colors.gray5,
                           borderWidth: 1,
-                          borderColor: Colors.gray6
+                          borderColor: Colors.gray6,
                         }]
                     }
                     containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.blue}]}
@@ -402,10 +394,6 @@ export default class Tracking extends Component {
               ]}
               keyExtractor={(item, index) => item + index}
             />
-
-            {/* bottom nav */}
-            <View style={[styles.nav, styles.shadow]}>
-            </View>
 
           </View>
 
@@ -535,12 +523,13 @@ const styles = StyleSheet.create({
   },
 
   overlay: {
-    flex: 0.11,
+    flex: 0.15,
     justifyContent: 'space-evenly',
     alignItems: 'center',
     backgroundColor: Colors.white,
 
-    padding: Metrics.pad * 1.25,
+    paddingBottom: Metrics.nav * 1.5,
+
   },
 
   nav: {

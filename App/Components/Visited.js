@@ -186,9 +186,6 @@ export default class Visited extends Component {
                 keyExtractor={(item, index) => item + index}
               />
 
-              {/* bottom nav */}
-              <View style={[styles.nav, styles.shadow]}>
-              </View>
 
             </View>
 
