@@ -20,7 +20,7 @@ export default class Followed extends Component {
     super();
     let arr = []
     for(let i = 0; i < 7; i++) {
-      arr.push(false);
+      arr.push(true);
     }
     let remind = []
     for(let i = 0; i < 7; i++) {
@@ -358,7 +358,7 @@ export default class Followed extends Component {
                     title=''
                     icon={
                       <MaterialCommunityIcons
-                        name='reminder'
+                        name='bell'
                         size={18}
                         color='white'
                       />

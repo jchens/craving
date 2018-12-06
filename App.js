@@ -18,12 +18,14 @@ const TabNavigator = createBottomTabNavigator(
     HomeMap: {
       screen: HomeMap,
       navigationOptions: {
-        tabBarIcon:
+        tabBarIcon: ({tintColor}) => (
           <Feather
             name='map-pin'
+            color={tintColor}
             size={20}
-          />,
-          tabBarLabel: 'Map',
+          />
+        ),
+        tabBarLabel: 'Map',
       },
     },
     //Rewards: Rewards,
@@ -31,35 +33,41 @@ const TabNavigator = createBottomTabNavigator(
     Rewards: {
       screen: Followed,
       navigationOptions: {
-        tabBarIcon:
+        tabBarIcon: ({tintColor}) => (
           <Feather
             name='award'
+            color={tintColor}
             size={20}
-          />,
+          />
+        ),
       },
     },
 
     Followed: {
       screen: Followed,
       navigationOptions: {
-        tabBarIcon:
+        tabBarIcon: ({tintColor}) => (
           <Feather
             name='star'
+            color={tintColor}
             size={20}
-          />,
-          tabBarLabel: 'Followed',
+          />
+        ),
+        tabBarLabel: 'Followed',
       },
     },
 
     Visited: {
       screen: Visited,
       navigationOptions: {
-        tabBarIcon:
+        tabBarIcon: ({tintColor}) => (
           <Feather
             name='clock'
+            color={tintColor}
             size={20}
-          />,
-          tabBarLabel: 'Followed',
+          />
+        ),
+        tabBarLabel: 'Followed',
       },
     },
 
@@ -73,21 +81,23 @@ const TabNavigator = createBottomTabNavigator(
       showLabel: false,
       activeTintColor: Colors.orange,
       inactiveTintColor: Colors.gray1,
-      activeBackgroundColor: Colors.gray6,
+      //activeBackgroundColor: Colors.gray6,
       tabStyle: {
         //paddingBottom: Metrics.padSmall, // note: idk if this is needed, but the Android bar is in the way
+        borderTopWidth: 1,
+        borderColor: Colors.gray5,
       },
       style: {
         flexDirection: 'row',
         height: Metrics.nav,
-        backgroundColor: Colors.white,
-        justifyContent: 'space-evenly',
-        alignItems: 'center',
+        backgroundColor: Colors.gray7,
 
-        shadowColor: Colors.black,
-        shadowOpacity: Metrics.shadow / 2,
-        shadowRadius: 5,
-        shadowOffset: {width: 0, height: 2},
+        // shadowColor: Colors.black,
+        // shadowOpacity: Metrics.glow / 10,
+        // shadowRadius: 8,
+        // shadowOffset: {width: 0, height: -5},
+
+        zIndex: 1,
       },
     },
     animationEnabled: false, // idk what this does lol

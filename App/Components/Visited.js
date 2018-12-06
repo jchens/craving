@@ -214,6 +214,8 @@ const styles = StyleSheet.create({
 
     borderBottomWidth: 1,
     borderColor: Colors.gray5,
+
+    zIndex: 1,
   },
 
   title: {

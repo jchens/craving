@@ -436,7 +436,7 @@ class FitToCoordinates extends React.Component {
               title=''
               icon={
                 <MaterialCommunityIcons
-                  name='reminder'
+                  name='bell'
                   size={18}
                   color='white'
                 />
@@ -447,7 +447,7 @@ class FitToCoordinates extends React.Component {
 
         </View>
 
-        {/* Choose Time Overlay */}
+        {/* Choose timeToSearch Overlay */}
         <Overlay
           isVisible={this.state.isTimeOverlayVisible}
           onBackdropPress={() => this.setState({
@@ -465,6 +465,7 @@ class FitToCoordinates extends React.Component {
                 fontFamily: 'lato-regular',
                 fontSize: Metrics.font3,
                 textAlign: 'center',
+                paddingBottom: Metrics.pad / 2,
               }}>Set when to find trucks</Text>
             ) : null
           }
@@ -535,8 +536,8 @@ class FitToCoordinates extends React.Component {
             isReminderOverlayVisible: !this.state.isReminderOverlayVisible,
           })}
           windowBackgroundColor='rgba(0,0,0,0.25)'
-          containerStyle={styles.remind_overlayContainer}
-          overlayStyle={[styles.remind_overlay, styles.shadow]}
+          containerStyle={styles.overlayContainer}
+          overlayStyle={[styles.overlay, styles.shadow]}
           fullScreen={true}
           >
 
@@ -637,7 +638,7 @@ const styles = StyleSheet.create({
 
   zoomButton: {
     borderRadius: Metrics.button,
-    height: Metrics.button + Metrics.pad/2,
+    height: Metrics.button,
     width: Metrics.button + Metrics.pad/2,
     alignItems: 'center',
     justifyContent: 'center',
@@ -648,8 +649,10 @@ const styles = StyleSheet.create({
     paddingTop: Metrics.padSmall,
     height: Metrics.button * 2,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     justifyContent: 'center',
+
+    // backgroundColor: Colors.yellow
 
   },
 
@@ -699,33 +702,13 @@ const styles = StyleSheet.create({
   },
 
   overlay: {
-    flex: 0.3,
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    backgroundColor: Colors.white,
-
-    paddingBottom: Metrics.nav * 1.5,
-
-  },
-
-
-  remind_overlayContainer: {
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-    backgroundColor: Colors.inactive,
-    alignItems: 'center',
-
-    zIndex: 1,
-  },
-
-  remind_overlay: {
     flex: 0.11,
     justifyContent: 'space-evenly',
     alignItems: 'center',
     backgroundColor: Colors.white,
     padding: Metrics.pad * 1.25,
-
     paddingBottom: Metrics.nav * 1.5,
+
   },
 
   card: {
