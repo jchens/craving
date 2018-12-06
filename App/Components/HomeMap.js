@@ -62,19 +62,22 @@ class FitToCoordinates extends React.Component {
     }
     let remind = []
     for(let i = 0; i < 7; i++) {
-      remind.push(false);
+      remind.push('None');
     }
 
     this.state = {
       starArray: arr,
       remindArray: remind,
+      activeReminderIndex: 0,
+
       profile: profilesList[0],
 
       text: '',
-      isTimeVisible: false,
-      isVisible: false,
+      isTimeOverlayVisible: false,
+      isReminderOverlayVisible: false,
+
       isDateTimePickerVisible: false,
-      date: 'Now',
+      timeToSearch: 'Now',
       fontLoaded: false,
     };
   }
@@ -137,17 +140,14 @@ class FitToCoordinates extends React.Component {
     })
   }
 
-  toggleArrayRemind = (item) => {
+  toggleRemindArray = (item) => {
     console.log(profilesList.indexOf(item));
-
-    let temp = this.state.remindArray;
-    temp[profilesList.indexOf(item)] = !temp[profilesList.indexOf(item)]
     this.setState({
-        remindArray: temp,
-        isVisible: !this.state.isVisible,
+        activeReminderIndex: profilesList.indexOf(item),
+        isReminderOverlayVisible: !this.state.isReminderOverlayVisible,
     })
 
-    console.log('overlay visibility set to: ' + this.state.isVisible);
+    console.log('overlay visibility set to: ' + this.state.isReminderOverlayVisible);
 
   }
 
@@ -168,12 +168,26 @@ class FitToCoordinates extends React.Component {
 
   _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
 
-  _handleDatePicked = (date) => {
-    console.log('A time has been picked: ', date.toLocaleTimeString());
+  _handleTimePicked = (time) => {
+    console.log('A time has been picked: ', time.toLocaleTimeString());
     this._hideDateTimePicker();
     this.setState({
-      date: date.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'})
+      timeToSearch: time.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'})
     });
+  };
+
+  _handleReminderPicked = (time) => {
+    console.log('A reminder time has been picked: ', time.toLocaleTimeString());
+
+    let temp = this.state.remindArray;
+    temp[this.state.activeReminderIndex] = time.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
+    this.setState({
+        remindArray: temp,
+        isReminderOverlayVisible: !this.state.isReminderOverlayVisible,
+    })
+    console.log('A time has been picked: ', this.state.remindArray[this.state.activeReminderIndex]);
+
+    this._hideDateTimePicker();
   };
 
   render() {
@@ -237,7 +251,7 @@ class FitToCoordinates extends React.Component {
                     color: Colors.gray3,
                     fontSize: Metrics.font4,
                   }}
-                  title={this.state.date}
+                  title={this.state.timeToSearch}
                   icon={
                     <Feather
                       name='clock'
@@ -246,7 +260,7 @@ class FitToCoordinates extends React.Component {
                     />
                   }
                   onPress={() => this.setState({
-                    isTimeVisible: !this.state.isTimeVisible,
+                    isTimeOverlayVisible: !this.state.isTimeOverlayVisible,
                   })}
                 />
 
@@ -291,7 +305,6 @@ class FitToCoordinates extends React.Component {
                 shadowOffset: {width: 0, height: 4},
               }]}>
                 <Image source={this.state.profile.image} resizeMode='contain' style={{
-                  //borderRadius: Metrics.curve,
                   aspectRatio: 1,
                   width: undefined,
                   height: undefined,
@@ -405,14 +418,14 @@ class FitToCoordinates extends React.Component {
             </View>
 
             <Button
-              onPress={() => this.toggleArrayRemind(this.state.profile)}
+              onPress={() => this.toggleRemindArray(this.state.profile)}
               buttonStyle={
-                this.state.remindArray[profilesList.indexOf(this.state.profile)]
+                ((this.state.remindArray[profilesList.indexOf(this.state.profile)]) && (this.state.remindArray[profilesList.indexOf(this.state.profile)].localeCompare('None') !== 0))
                   ? [styles.circleButton, style={backgroundColor: Colors.blue}]
                   : [styles.circleButton, style={
                     backgroundColor: Colors.gray5,
                     borderWidth: 1,
-                    borderColor: Colors.gray6
+                    borderColor: Colors.gray6,
                   }]
               }
               containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.blue}]}
@@ -434,84 +447,11 @@ class FitToCoordinates extends React.Component {
 
         </View>
 
-        <View style={[styles.nav, styles.shadowSmall]}>
-          <Button
-            buttonStyle={[styles.nav, style={height: Metrics.nav}]}
-            containerStyle={[styles.nav, style={flex: 1}]}
-            titleStyle={{
-              color: Colors.white
-            }}
-            title=''
-            icon={
-              <Feather
-                name='map-pin'
-                size={20}
-                color={Colors.orange}
-              />
-            }
-          />
-
-          <Button
-            buttonStyle={[styles.nav, style={height: Metrics.nav}]}
-            containerStyle={[styles.nav, style={flex: 1}]}
-            titleStyle={{
-              color: Colors.white
-            }}
-            title=''
-            icon={
-              <Feather
-                name='award'
-                size={20}
-                color={Colors.gray1}
-              />
-            }
-          />
-
-          <Button
-            buttonStyle={[styles.nav, style={height: Metrics.nav}]}
-            containerStyle={[styles.nav, style={flex: 1}]}
-            titleStyle={{
-              color: Colors.white
-            }}
-            title=''
-            icon={
-              <Feather
-                name='star'
-                size={20}
-                color={Colors.gray1}
-              />
-            }
-          />
-
-          <Button
-            buttonStyle={[styles.nav, style={height: Metrics.nav}]}
-            containerStyle={[styles.nav, style={flex: 1}]}
-            titleStyle={{
-              color: Colors.white
-            }}
-            title=''
-            icon={
-              <Feather
-                name='clock'
-                size={20}
-                color={Colors.gray1}
-              />
-            }
-          />
-        </View>
-
-
-
-
-
-
-
-
         {/* Choose Time Overlay */}
         <Overlay
-          isVisible={this.state.isTimeVisible}
+          isVisible={this.state.isTimeOverlayVisible}
           onBackdropPress={() => this.setState({
-            isTimeVisible: !this.state.isTimeVisible,
+            isTimeOverlayVisible: !this.state.isTimeOverlayVisible,
           })}
           windowBackgroundColor='rgba(0,0,0,0.25)'
           containerStyle={styles.overlayContainer}
@@ -525,14 +465,14 @@ class FitToCoordinates extends React.Component {
                 fontFamily: 'lato-regular',
                 fontSize: Metrics.font3,
                 textAlign: 'center',
-              }}>Set time to find trucks</Text>
+              }}>Set when to find trucks</Text>
             ) : null
           }
 
           {/* Set time options*/}
           <DateTimePicker
             isVisible={this.state.isDateTimePickerVisible}
-            onConfirm={this._handleDatePicked}
+            onConfirm={this._handleTimePicked}
             onCancel={this._hideDateTimePicker}
             mode='datetime'
             titleIOS='Pick a time to find trucks'
@@ -540,7 +480,6 @@ class FitToCoordinates extends React.Component {
 
 
 
-          {/*TODO: will people try to click on time directly, not button?*/}
           <View style={{
             flexDirection: 'row',
             justifyContent: 'space-evenly',
@@ -560,7 +499,7 @@ class FitToCoordinates extends React.Component {
                     fontFamily: 'lato-regular',
                     fontSize: Metrics.font3,
                   }}>
-                  {this.state.date}
+                  {this.state.timeToSearch}
                 </Text>
               ) : null
             }
@@ -587,36 +526,13 @@ class FitToCoordinates extends React.Component {
             />
           </View>
 
-
-          {/*TODO: too visually heavy with 2 buttons? or stick w button conventions? */}
-          <Button
-            onPress={() => this.setState({
-              isTimeVisible: !this.state.isTimeVisible,
-            })}
-            buttonStyle={[styles.circleButton, style={backgroundColor: Colors.blue}]}
-            containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.blue}]}
-            titleStyle={{
-              color: Colors.white
-            }}
-            title=''
-            titleStyle={{
-              fontSize: Metrics.font3,
-            }}
-            icon={
-              <Feather
-                name='search'
-                size={20}
-                color={Colors.white}
-              />
-            }
-          />
         </Overlay>
 
-        {/* Remind Overlay */}
+        {/* Reminder Overlay */}
         <Overlay
-          isVisible={this.state.isVisible}
+          isVisible={this.state.isReminderOverlayVisible}
           onBackdropPress={() => this.setState({
-            isVisible: !this.state.isVisible,
+            isReminderOverlayVisible: !this.state.isReminderOverlayVisible,
           })}
           windowBackgroundColor='rgba(0,0,0,0.25)'
           containerStyle={styles.remind_overlayContainer}
@@ -639,7 +555,7 @@ class FitToCoordinates extends React.Component {
           {/* Set time options*/}
           <DateTimePicker
             isVisible={this.state.isDateTimePickerVisible}
-            onConfirm={this._handleDatePicked}
+            onConfirm={this._handleReminderPicked}
             onCancel={this._hideDateTimePicker}
             mode='datetime'
             titleIOS='Pick a time to find trucks'
@@ -649,7 +565,6 @@ class FitToCoordinates extends React.Component {
             flexDirection: 'row',
             justifyContent: 'space-evenly'
           }}>
-            {/*TODO: will people try to click on time directly, not button?*/}
             <View style={{
               flexDirection: 'row',
               justifyContent: 'space-evenly',
@@ -669,7 +584,7 @@ class FitToCoordinates extends React.Component {
                       fontFamily: 'lato-regular',
                       fontSize: Metrics.font3,
                     }}>
-                    {this.state.date}
+                    {this.state.remindArray[this.state.activeReminderIndex]}
                   </Text>
                 ) : null
               }
@@ -689,7 +604,7 @@ class FitToCoordinates extends React.Component {
                 title=''
                 icon={
                   <Feather
-                    name='clock'
+                    name='edit'
                     size={20}
                     color={Colors.white}
                   />
@@ -732,7 +647,6 @@ const styles = StyleSheet.create({
   searchContainer: {
     paddingTop: Metrics.padSmall,
     height: Metrics.button * 2,
-    //backgroundColor: Colors.frosty,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -754,9 +668,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: Metrics.glow / 4,
     shadowRadius: 20,
-
-    // borderColor: Colors.gray5,
-    // borderWidth: 1,
   },
 
   searchIcon: {
@@ -792,6 +703,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     backgroundColor: Colors.white,
+
+    paddingBottom: Metrics.nav * 1.5,
+
   },
 
 
@@ -809,8 +723,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     backgroundColor: Colors.white,
-
     padding: Metrics.pad * 1.25,
+
+    paddingBottom: Metrics.nav * 1.5,
   },
 
   card: {
