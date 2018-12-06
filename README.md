@@ -10,7 +10,7 @@ Used `npm install --save react-native-modal-datetime-picker` to [pick a date & t
 
 Used `npm install --save react-native-modal-datetime-picker` to [implement the bottom navbar](https://github.com/react-navigation/react-navigation).
 
-Used `npm install --save react-native-snap-carousel` to [implement the photo carousel](https://www.npmjs.com/package/react-native-snap-carousel.
+Used `npm install --save react-native-snap-carousel` to [implement the photo carousel](https://www.npmjs.com/package/react-native-snap-carousel).
 
 Used `npm i -S react-native-multiple-tags` to [implement the review tags](https://github.com/caleb-tolu/react-native-multiple-tags).
 
