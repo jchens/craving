@@ -22,7 +22,6 @@ export default class Tracking extends Component {
     for(let i = 0; i < 7; i++) {
       arr.push(false);
     }
-
     let remind = []
     for(let i = 0; i < 7; i++) {
       remind.push(false);
@@ -30,7 +29,9 @@ export default class Tracking extends Component {
     this.state = {
       starArray: arr,
       remindArray: remind,
-      isVisible: false,
+
+      date: 'None',
+      isVisible: true,
       isDateTimePickerVisible: false,
 
     };
@@ -75,7 +76,7 @@ export default class Tracking extends Component {
     temp[profilesList.indexOf(item)] = !temp[profilesList.indexOf(item)]
     this.setState({
         remindArray: temp,
-        isVisible: true,
+        isVisible: !this.state.isVisible,
     })
 
     console.log('overlay visibility set to: ' + this.state.isVisible);
@@ -86,8 +87,7 @@ export default class Tracking extends Component {
     this.setState({
       isVisible: !this.state.isVisible,
     });
-
-    console.log('toggled!');
+    console.log('toggled!' + this.state.isVisible);
 
   }
 
@@ -109,15 +109,92 @@ export default class Tracking extends Component {
 
         <View style={styles.container}>
 
-          {/* Overlay */}
+          {/* Remind Overlay */}
           <Overlay
-            isVisible={true}
+            isVisible={this.state.isVisible}
             onBackdropPress={this.toggleOverlay}
             windowBackgroundColor='rgba(0,0,0,0.25)'
             containerStyle={styles.overlayContainer}
             overlayStyle={[styles.overlay, styles.shadow]}
             fullScreen={true}
             >
+
+
+            {
+              this.state.fontLoaded ? (
+                <Text style={{
+                  fontFamily: 'lato-regular',
+                  fontSize: Metrics.font3,
+                  textAlign: 'center',
+                  paddingBottom: Metrics.pad / 2,
+                }}>Set a reminder</Text>
+              ) : null
+            }
+
+            {/* Set time options*/}
+            <DateTimePicker
+              isVisible={this.state.isDateTimePickerVisible}
+              onConfirm={this._handleDatePicked}
+              onCancel={this._hideDateTimePicker}
+              mode='datetime'
+              titleIOS='Set a reminder for this truck'
+            />
+
+
+
+            <View style={{
+              flexDirection: 'row',
+              justifyContent: 'space-evenly'
+            }}>
+              {/*TODO: will people try to click on time directly, not button?*/}
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-evenly',
+                alignItems: 'center',
+                backgroundColor: Colors.white,
+                borderColor: Colors.orange,
+                borderWidth: 1,
+                borderRadius: Metrics.button
+              }}>
+
+                {
+                  this.state.fontLoaded ? (
+                    <Text
+                      style={{
+                        paddingHorizontal: Metrics.pad,
+                        color: Colors.orange,
+                        fontFamily: 'lato-regular',
+                        fontSize: Metrics.font3,
+                      }}>
+                      {this.state.date}
+                    </Text>
+                  ) : null
+                }
+
+                <Button
+                  onPress={this._showDateTimePicker}
+                  buttonStyle={[styles.circleButton, style={backgroundColor: Colors.orange, paddingHorizontal: Metrics.smallPad}]}
+                  containerStyle={[styles.buttonContainer], style={
+                    backgroundColor: Colors.orange,
+                    borderTopRightRadius: Metrics.button,
+                    borderBottomRightRadius: Metrics.button,
+                    paddingHorizontal: Metrics.pad / 2,
+                  }}
+                  titleStyle={{
+                    color: Colors.white
+                  }}
+                  title=''
+                  icon={
+                    <Feather
+                      name='edit'
+                      size={20}
+                      color='white'
+                    />
+                  }
+                />
+              </View>
+            </View>
+
           </Overlay>
 
           <View style={[styles.titleContainer]}>
@@ -400,7 +477,7 @@ const styles = StyleSheet.create({
 
   shadow: {
     shadowColor: Colors.black,
-    shadowOpacity: Metrics.glow / 4,
+    shadowOpacity: Metrics.glow / 2,
     shadowRadius: 20,
     shadowOffset: {width: 0, height: 4}
   },
@@ -453,13 +530,17 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     backgroundColor: Colors.inactive,
     alignItems: 'center',
+
+    zIndex: 1,
   },
 
   overlay: {
-    flex: 0.3,
+    flex: 0.11,
     justifyContent: 'space-evenly',
     alignItems: 'center',
     backgroundColor: Colors.white,
+
+    padding: Metrics.pad * 1.25,
   },
 
   nav: {

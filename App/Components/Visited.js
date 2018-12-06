@@ -240,7 +240,6 @@ const styles = StyleSheet.create({
     },
 
     listItem: {
-      paddingVertical: Metrics.pad * 1.25,
       flexDirection: 'row',
       justifyContent: 'space-evenly',
       backgroundColor: Colors.white,
@@ -248,7 +247,7 @@ const styles = StyleSheet.create({
       borderColor: Colors.gray6,
       borderBottomWidth: 1,
 
-      paddingHorizontal: Metrics.pad * 1.25,
+      padding: Metrics.pad * 1.25,
 
     },
 
