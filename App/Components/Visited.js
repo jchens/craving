@@ -12,7 +12,7 @@ import { Overlay, Button } from 'react-native-elements';
 export default class Visited extends Component {
   constructor() {
     super();
-    let arr = []
+    let arr = [];
     for(let i = 0; i < 7; i++) {
       arr.push(false);
     }
@@ -23,19 +23,18 @@ export default class Visited extends Component {
     }
 
     this.state = {
-      fav: arr,
+      starArray: arr,
       sectionListData: listData,
     };
   }
 
-  updatedState = (key) => {
-    console.log("im here");
-    console.log(key);
-    let temp = this.state.fav;
-    temp[key] = !temp[key];
-    console.log(temp);
+  toggleArray = (item) => {
+    console.log(profilesList.indexOf(item));
+
+    let temp = this.state.starArray;
+    temp[profilesList.indexOf(item)] = !temp[profilesList.indexOf(item)]
     this.setState({
-        fav: temp,
+        starArray: temp,
     })
   }
 
@@ -53,7 +52,7 @@ export default class Visited extends Component {
 
               {/* flatlist */}
               <SectionList
-                renderItem={({item}) =>
+                renderItem={({item, index}) =>
 
                 <View style={[styles.listItem]}>
 
@@ -64,9 +63,18 @@ export default class Visited extends Component {
                     {/* view to hold image for shadow*/}
                     <View style={[styles.shadowSmall, style={
                       flex: 1,
+                      backgroundColor: Colors.white,
+                      //borderRadius: Metrics.curve,
+                      borderWidth: 4,
+                      borderColor: Colors.white,
+
+                      shadowColor: Colors.black,
+                      shadowOpacity: Metrics.shadow * 0.75,
+                      shadowRadius: 5,
+                      shadowOffset: {width: 0, height: 4},
                     }]}>
-                      <Image source={item.image} resizeMode='cover' style={{
-                        borderRadius: Metrics.curve,
+                      <Image source={item.image} resizeMode='contain' style={{
+                        //borderRadius: Metrics.curve,
                         aspectRatio: 1,
                         width: undefined,
                         height: undefined,
@@ -80,6 +88,7 @@ export default class Visited extends Component {
                     }}>
                       <Text style={{
                         fontSize: Metrics.font3,
+                        fontWeight: 'bold',
                       }}> {item.name} </Text>
                       <Text style={{
                         color: Colors.gray3,
@@ -94,21 +103,64 @@ export default class Visited extends Component {
                     </View>
 
 
-                    <Button
-                      buttonStyle={[styles.circleButton, styles.glow, style={backgroundColor: Colors.yellow}]}
-                      containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.yellow}]}
-                      titleStyle={{
-                        color: Colors.white,
-                      }}
-                      title=''
-                      icon={
-                        <FontAwesome
-                          name='star'
-                          size={Metrics.button/2}
-                          color='white'
-                        />
-                      }
-                    />
+
+                    {/* buttom column */}
+                    <View style={{
+                      flexDirection: 'column',
+                      justifyContent: 'flex-start',
+                    }}>
+
+                      <Button
+                        key={index}
+                        buttonStyle={
+                          this.state.starArray[profilesList.indexOf(item)]
+                            ? [styles.circleButton, styles.glow, style={backgroundColor: Colors.yellow}]
+                            : [styles.circleButton, style={
+                              backgroundColor: Colors.gray5,
+                              borderWidth: 1,
+                              borderColor: Colors.gray6
+                            }]
+                        }
+                        containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.yellow}]}
+                        titleStyle={{
+                          color: Colors.white,
+                        }}
+                        onPress={() => this.toggleArray(item)}
+                        title=''
+                        icon={
+                          <FontAwesome
+                            name='star'
+                            size={Metrics.button/2}
+                            color= {Colors.white}
+                          />
+                        }
+                      />
+
+                      {/* for sake of padding in button column */}
+                      <View style={{
+                        height: Metrics.pad / 2,
+                      }}>
+                      </View>
+
+                      <Button
+                        onPress={() => console.log('should run this.goToTruck')}
+                        buttonStyle={[styles.circleButton, style={backgroundColor: Colors.orange}]}
+                        containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.orange}]}
+                        titleStyle={{
+                          color: Colors.white,
+                          fontSize: Metrics.font4,
+                        }}
+                        title=''
+                        icon={
+                          <Feather
+                            name='map-pin'
+                            size={18}
+                            color='white'
+                          />
+                        }
+                      />
+                    </View>
+
                   </View>
 
                 </View>
@@ -121,10 +173,7 @@ export default class Visited extends Component {
                     justifyContent: 'center',
                     paddingHorizontal: Metrics.pad,
 
-                    shadowColor: Colors.black,
-                    shadowOpacity: Metrics.shadow / 2,
-                    shadowRadius: 5,
-                    shadowOffset: {width: 0, height: 0},
+
                   }]}>
                     <Text style={{
                       fontWeight: 'bold',
@@ -174,6 +223,8 @@ const styles = StyleSheet.create({
     color: Colors.black,
     fontSize: Metrics.font3,
     paddingBottom: Metrics.pad / 2,
+    fontWeight: 'bold',
+
   },
 
 
@@ -189,13 +240,15 @@ const styles = StyleSheet.create({
     },
 
     listItem: {
-      paddingVertical: Metrics.pad * 1.25,
-      flexDirection: 'column',
+      flexDirection: 'row',
       justifyContent: 'space-evenly',
       backgroundColor: Colors.white,
 
       borderColor: Colors.gray6,
       borderBottomWidth: 1,
+
+      padding: Metrics.pad * 1.25,
+
     },
 
     info: {
@@ -203,9 +256,6 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-evenly',
       alignItems: 'flex-start',
-      paddingHorizontal: Metrics.pad * 1.5,
-
-      backgroundColor: Colors.white,
     },
 
     shadow: {
@@ -219,7 +269,7 @@ const styles = StyleSheet.create({
       shadowColor: Colors.black,
       shadowOpacity: Metrics.shadow / 2,
       shadowRadius: 5,
-      shadowOffset: {width: 0, height: 2},
+      shadowOffset: {width: 0, height: 0},
     },
 
     circleButton: {
@@ -232,7 +282,7 @@ const styles = StyleSheet.create({
     },
     glow: {
       shadowColor: Colors.yellow,
-      shadowOpacity: Metrics.glow,
+      shadowOpacity: Metrics.glow / 2,
       shadowRadius: 10,
     },
 

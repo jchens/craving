@@ -10,8 +10,10 @@ import { Metrics, Colors, Images } from '../Themes'
 import {profilesList} from '../Themes/Profiles.js'
 
 import { material } from 'react-native-typography'
-import { Feather, MaterialIcons, FontAwesome } from '@expo/vector-icons';
+import { Feather, MaterialIcons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Overlay, Button } from 'react-native-elements';
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import { Font } from 'expo';
 
 export default class Tracking extends Component {
   constructor() {
@@ -20,9 +22,30 @@ export default class Tracking extends Component {
     for(let i = 0; i < 7; i++) {
       arr.push(false);
     }
+    let remind = []
+    for(let i = 0; i < 7; i++) {
+      remind.push(false);
+    }
     this.state = {
-      fav: arr,
+      starArray: arr,
+      remindArray: remind,
+
+      date: 'None',
+      isVisible: false,
+      isDateTimePickerVisible: false,
+
     };
+  }
+
+  async componentDidMount() {
+    await Font.loadAsync({
+      'lato-regular': require('../../assets/fonts/Lato-Regular.ttf'),
+      'lato-bold': require('../../assets/fonts/Lato-Bold.ttf'),
+      'lato-light': require('../../assets/fonts/Lato-Light.ttf'),
+
+    });
+
+    this.setState({ fontLoaded: true });
   }
 
   updatedState = (key) => {
@@ -36,41 +59,181 @@ export default class Tracking extends Component {
     })
   }
 
+  toggleArray = (item) => {
+    console.log(profilesList.indexOf(item));
+
+    let temp = this.state.starArray;
+    temp[profilesList.indexOf(item)] = !temp[profilesList.indexOf(item)]
+    this.setState({
+        starArray: temp,
+    })
+  }
+
+  toggleArrayRemind = (item) => {
+    console.log(profilesList.indexOf(item));
+
+    let temp = this.state.remindArray;
+    temp[profilesList.indexOf(item)] = !temp[profilesList.indexOf(item)]
+    this.setState({
+        remindArray: temp,
+        isVisible: !this.state.isVisible,
+    })
+
+    console.log('overlay visibility set to: ' + this.state.isVisible);
+
+  }
+
+  toggleOverlay = () => {
+    this.setState({
+      isVisible: !this.state.isVisible,
+    });
+    console.log('toggled!' + this.state.isVisible);
+
+  }
+
+  _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
+
+  _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
+
+  _handleDatePicked = (date) => {
+    console.log('A time has been picked: ', date.toLocaleTimeString());
+    this._hideDateTimePicker();
+    this.setState({
+      date: date.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'})
+    });
+  };
 
   render () {
 
     return (
+
         <View style={styles.container}>
 
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}>{'Followed'}</Text>
+          {/* Remind Overlay */}
+          <Overlay
+            isVisible={this.state.isVisible}
+            onBackdropPress={this.toggleOverlay}
+            windowBackgroundColor='rgba(0,0,0,0.25)'
+            containerStyle={styles.overlayContainer}
+            overlayStyle={[styles.overlay, styles.shadow]}
+            fullScreen={true}
+            >
+
+
+            {
+              this.state.fontLoaded ? (
+                <Text style={{
+                  fontFamily: 'lato-regular',
+                  fontSize: Metrics.font3,
+                  textAlign: 'center',
+                  paddingBottom: Metrics.pad / 2,
+                }}>Set a reminder</Text>
+              ) : null
+            }
+
+            {/* Set time options*/}
+            <DateTimePicker
+              isVisible={this.state.isDateTimePickerVisible}
+              onConfirm={this._handleDatePicked}
+              onCancel={this._hideDateTimePicker}
+              mode='datetime'
+              titleIOS='Set a reminder for this truck'
+            />
+
+
+
+            <View style={{
+              flexDirection: 'row',
+              justifyContent: 'space-evenly'
+            }}>
+              {/*TODO: will people try to click on time directly, not button?*/}
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-evenly',
+                alignItems: 'center',
+                backgroundColor: Colors.white,
+                borderColor: Colors.orange,
+                borderWidth: 1,
+                borderRadius: Metrics.button
+              }}>
+
+                {
+                  this.state.fontLoaded ? (
+                    <Text
+                      style={{
+                        paddingHorizontal: Metrics.pad,
+                        color: Colors.orange,
+                        fontFamily: 'lato-regular',
+                        fontSize: Metrics.font3,
+                      }}>
+                      {this.state.date}
+                    </Text>
+                  ) : null
+                }
+
+                <Button
+                  onPress={this._showDateTimePicker}
+                  buttonStyle={[styles.circleButton, style={backgroundColor: Colors.orange, paddingHorizontal: Metrics.smallPad}]}
+                  containerStyle={[styles.buttonContainer], style={
+                    backgroundColor: Colors.orange,
+                    borderTopRightRadius: Metrics.button,
+                    borderBottomRightRadius: Metrics.button,
+                    paddingHorizontal: Metrics.pad / 2,
+                  }}
+                  titleStyle={{
+                    color: Colors.white
+                  }}
+                  title=''
+                  icon={
+                    <Feather
+                      name='edit'
+                      size={20}
+                      color='white'
+                    />
+                  }
+                />
+              </View>
             </View>
 
-            <View style={styles.listContainer}>
+          </Overlay>
 
-              {/* flatlist / sectionlist */}
-              <SectionList
-                renderItem={({item, index, section}) =>
+          <View style={[styles.titleContainer]}>
+            <Text style={styles.title}>{'Followed'}</Text>
+          </View>
 
-                <View style={[styles.listItem]}>
+          <View style={styles.listContainer}>
 
-                  {/* info: holding photo, info, and star*/}
-                  <View style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'space-evenly',
-                    alignItems: 'flex-start',
-                    paddingHorizontal: Metrics.pad * 1.5,
-                    paddingBottom: Metrics.padSmall,
-                  }}>
+            {/* flatlist / sectionlist */}
+            <SectionList
+              renderItem={({item, index}) =>
 
+              <View style={[styles.listItem]}>
+
+              {/* hold photo, info, and address (to the right is the button column)*/}
+                <View style={{
+                  flex: 1,
+                  flexDirection: 'column',
+                  justifyContent: 'flex-start',
+                }}>
+
+                  {/* info: holding photo, info*/}
+                  <View style={styles.info}>
 
                     {/* view to hold image for shadow*/}
                     <View style={[styles.shadowSmall, style={
                       flex: 1,
+                      backgroundColor: Colors.white,
+                      //borderRadius: Metrics.curve,
+                      borderWidth: 4,
+                      borderColor: Colors.white,
+
+                      shadowColor: Colors.black,
+                      shadowOpacity: Metrics.shadow * 0.75,
+                      shadowRadius: 5,
+                      shadowOffset: {width: 0, height: 4},
                     }]}>
-                      <Image source={item.image} resizeMode='cover' style={{
-                        borderRadius: Metrics.curve,
+                      <Image source={item.image} resizeMode='contain' style={{
+                        //borderRadius: Metrics.curve,
                         aspectRatio: 1,
                         width: undefined,
                         height: undefined,
@@ -84,6 +247,7 @@ export default class Tracking extends Component {
                     }}>
                       <Text style={{
                         fontSize: Metrics.font3,
+                        fontWeight: 'bold',
                       }}> {item.name} </Text>
                       <Text style={{
                         color: Colors.gray3,
@@ -97,115 +261,154 @@ export default class Tracking extends Component {
                       }}> {item.description} </Text>
                     </View>
 
-
-                    <Button
-                      buttonStyle={[styles.circleButton, styles.glow, style={backgroundColor: Colors.yellow}]}
-                      containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.yellow}]}
-                      titleStyle={{
-                        color: Colors.white
-                      }}
-                      title=''
-                      icon={
-                        <FontAwesome
-                          name='star'
-                          size={Metrics.button/2}
-                          color='white'
-                        />
-                      }
-                    />
                   </View>
 
-                  {/* button Row */}
-                  <View style={styles.buttonRow}>
-
-                    <View style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-evenly',
-                      alignItems: 'center',
-                      backgroundColor: Colors.white,
-                      borderColor: Colors.orange,
-                      borderWidth: 1,
-                      borderRadius: Metrics.button,
-                    }}>
-                      <Button
-                        onPress={console.log('should run this.goToTruck')}
-                        buttonStyle={[styles.button, style={backgroundColor: Colors.orange}]}
-                        containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.orange}]}
-                        titleStyle={{
-                          color: Colors.white,
-                          fontSize: Metrics.font4,
-                        }}
-                        title='Find on map'
-                        icon={
-                          <Feather
-                            name='map-pin'
-                            size={18}
-                            color='white'
-                          />
-                        }
-                      />
-                    </View>
-
-                    {/* view to hold right button */}
-                    <View style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-evenly',
-                      alignItems: 'center',
-                    }}>
-                      <Button
-                        buttonStyle={[styles.button, style={backgroundColor: Colors.blue}]}
-                        containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.blue}]}
-                        titleStyle={{
-                          color: Colors.white,
-                          fontSize: Metrics.font4,
-                        }}
-                        title='Profile'
-                        icon={
-                          <Feather
-                            name='truck'
-                            size={17}
-                            color='white'
-                          />
-                        }
-                      />
-                    </View>
-
+                  {/* address, time*/}
+                  <View style={{
+                    paddingTop: Metrics.padSmall,
+                  }}>
+                    <Text style={{
+                      fontWeight: 'bold',
+                      flexWrap: 'wrap',
+                    }}>{item.time}</Text>
+                    <Text style={{
+                      flexWrap: 'wrap',
+                    }}>{item.address}</Text>
                   </View>
 
                 </View>
-              }
-                renderSectionHeader={({section: {title}}) => (
-                  <View style={[styles.shadowSmall, style={
-                    backgroundColor: Colors.white,
-                    height: Metrics.button,
-                    justifyContent: 'center',
-                    paddingHorizontal: Metrics.pad,
 
-                    shadowColor: Colors.black,
-                    shadowOpacity: Metrics.shadow / 2,
-                    shadowRadius: 5,
-                    shadowOffset: {width: 0, height: 0},
-                  }]}>
-                    <Text style={{
-                      fontWeight: 'bold',
-                      color: Colors.gray1,
-                    }}>{title}</Text>
+
+                {/* fake button column)*/}
+                <View style={{
+                  width: Metrics.padSmall / 2,
+                  backgroundColor: Colors.white,
+                }}>
+                </View>
+
+                {/* button column)*/}
+                <View style={{
+                  flexDirection: 'column',
+                  justifyContent: 'flex-start',
+                }}>
+
+                <Button
+                  buttonStyle={
+                    this.state.starArray[profilesList.indexOf(item)]
+                      ? [styles.circleButton, styles.glow, style={backgroundColor: Colors.yellow}]
+                      : [styles.circleButton, style={
+                        backgroundColor: Colors.gray5,
+                        borderWidth: 1,
+                        borderColor: Colors.gray6
+                      }]
+                  }
+                  containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.yellow}]}
+                  titleStyle={{
+                    color: Colors.white,
+                  }}
+                  onPress={() => this.toggleArray(item)}
+                  title=''
+                  icon={
+                    <FontAwesome
+                      name='star'
+                      size={Metrics.button/2}
+                      color= {Colors.white}
+                    />
+                  }
+                />
+
+                  {/* for spacing between buttons in button column */}
+                  <View style={{
+                    height: Metrics.pad / 2,
+                  }}>
                   </View>
-                )}
-                sections={[
-                  {title: 'TODAY', data: [profilesList[5]]},
-                  {title: 'SATURDAY', data: [profilesList[6], profilesList[1], profilesList[2]]},
-                  {title: 'SUNDAY', data: [profilesList[0], profilesList[3]]},
-                  {title: 'MONDAY', data: [profilesList[4], profilesList[6]]},
-                ]}
-                keyExtractor={(item, index) => item + index}
-              />
 
-              {/* bottom nav */}
-              <View style={[styles.nav, styles.shadow]}>
+                  <Button
+                    onPress={() => console.log('should run this.goToTruck')}
+                    buttonStyle={[styles.circleButton, style={backgroundColor: Colors.orange}]}
+                    containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.orange}]}
+                    titleStyle={{
+                      color: Colors.white,
+                      fontSize: Metrics.font4,
+                    }}
+                    title=''
+                    icon={
+                      <Feather
+                        name='map-pin'
+                        size={18}
+                        color='white'
+                      />
+                    }
+                  />
+
+                  {/* for spacing between buttons in button column */}
+                  <View style={{
+                    height: Metrics.pad / 2,
+                  }}>
+                  </View>
+
+                  <Button
+                    onPress={() => this.toggleArrayRemind(item)}
+                    buttonStyle={
+                      this.state.remindArray[profilesList.indexOf(item)]
+                        ? [styles.circleButton, style={backgroundColor: Colors.blue}]
+                        : [styles.circleButton, style={
+                          backgroundColor: Colors.gray5,
+                          borderWidth: 1,
+                          borderColor: Colors.gray6
+                        }]
+                    }
+                    containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.blue}]}
+                    titleStyle={{
+                      color: Colors.white,
+                      fontSize: Metrics.font4,
+                    }}
+                    title=''
+                    icon={
+                      <MaterialCommunityIcons
+                        name='reminder'
+                        size={18}
+                        color='white'
+                      />
+                    }
+                  />
+                </View>
+
               </View>
+            }
+              renderSectionHeader={({section: {title}}) => (
+                <View style={[styles.shadowSmall, style={
+                  backgroundColor: Colors.white,
+                  height: Metrics.button,
+                  justifyContent: 'center',
+                  paddingHorizontal: Metrics.pad,
 
+                  shadowColor: Colors.black,
+                  shadowOpacity: Metrics.shadow / 2,
+                  shadowRadius: 5,
+                  shadowOffset: {width: 0, height: 0},
+                }]}>
+                  <Text style={{
+                    fontWeight: 'bold',
+                    color: Colors.gray1,
+                  }}>{title}</Text>
+                </View>
+              )}
+              sections={[
+                {title: 'TODAY', data: [profilesList[5]]},
+                {title: 'SATURDAY', data: [profilesList[6], profilesList[1], profilesList[2]]},
+                {title: 'SUNDAY', data: [profilesList[0], profilesList[3]]},
+                {title: 'MONDAY', data: [profilesList[4], profilesList[6]]},
+              ]}
+              keyExtractor={(item, index) => item + index}
+            />
+
+            {/* bottom nav */}
+            <View style={[styles.nav, styles.shadow]}>
             </View>
+
+          </View>
+
 
         </View>
       );
@@ -232,12 +435,14 @@ const styles = StyleSheet.create({
 
     borderBottomWidth: 1,
     borderColor: Colors.gray5,
+
   },
 
   title: {
     color: Colors.black,
     fontSize: Metrics.font3,
     paddingBottom: Metrics.pad / 2,
+    fontWeight: 'bold',
   },
 
   listContainer: {
@@ -249,16 +454,18 @@ const styles = StyleSheet.create({
 
     // TODO: change this to reveal some cool illustration
     backgroundColor: Colors.purple,
+
   },
 
   listItem: {
     paddingVertical: Metrics.pad * 1.25,
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'space-evenly',
     backgroundColor: Colors.white,
 
     borderColor: Colors.gray6,
     borderBottomWidth: 1,
+    paddingHorizontal: Metrics.pad * 1.25,
   },
 
   info: {
@@ -266,14 +473,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'flex-start',
-    paddingHorizontal: Metrics.pad * 1.5,
-
-    backgroundColor: Colors.white,
   },
 
   shadow: {
     shadowColor: Colors.black,
-    shadowOpacity: Metrics.glow / 4,
+    shadowOpacity: Metrics.glow / 2,
     shadowRadius: 20,
     shadowOffset: {width: 0, height: 4}
   },
@@ -291,7 +495,6 @@ const styles = StyleSheet.create({
     width: Metrics.button,
     justifyContent: 'center',
     alignItems: 'center',
-
   },
   glow: {
     shadowColor: Colors.yellow,
@@ -321,19 +524,23 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
 
-  button_filled: {
-    backgroundColor: Colors.yellow,
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 80,
-    width: 80,
-    borderRadius: 40
 
+  overlayContainer: {
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    backgroundColor: Colors.inactive,
+    alignItems: 'center',
+
+    zIndex: 1,
   },
-  star_filled: {
-    backgroundColor: Colors.yellow,
-    height: 50,
-    width: 50,
+
+  overlay: {
+    flex: 0.11,
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    backgroundColor: Colors.white,
+
+    padding: Metrics.pad * 1.25,
   },
 
   nav: {

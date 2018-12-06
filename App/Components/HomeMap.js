@@ -15,7 +15,7 @@ import Metrics from '../Themes/Metrics.js'
 import markerImg from '../Images/Icons/icons_pin_orange.png';
 import {profilesList} from '../Themes/Profiles.js'
 import { material } from 'react-native-typography'
-import { Feather, MaterialIcons, FontAwesome } from '@expo/vector-icons';
+import { Feather, MaterialIcons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Overlay, Button } from 'react-native-elements';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
@@ -35,8 +35,6 @@ const SPACE = 0.01;
 
 function createMarker(modifier = 1) {
   return {
-    // latitude: LATITUDE - (SPACE * modifier),
-    // longitude: LONGITUDE - (SPACE * modifier),
     latitude: profilesList[modifier - 1].latitude,
     longitude: profilesList[modifier - 1].longitude,
   };
@@ -58,15 +56,22 @@ class FitToCoordinates extends React.Component {
   constructor(props) {
     super(props);
 
+    let arr = []
+    for(let i = 0; i < 7; i++) {
+      arr.push(false);
+    }
+    let remind = []
+    for(let i = 0; i < 7; i++) {
+      remind.push(false);
+    }
+
     this.state = {
-      name: profilesList[0].name,
-      cuisine: profilesList[0].cuisine,
-      description: profilesList[0].description,
-      image: profilesList[0].image,
-      latitude: profilesList[0].latitude,
-      longitude: profilesList[0].longitude,
+      starArray: arr,
+      remindArray: remind,
+      profile: profilesList[0],
 
       text: '',
+      isTimeVisible: false,
       isVisible: false,
       isDateTimePickerVisible: false,
       date: 'Now',
@@ -118,26 +123,39 @@ class FitToCoordinates extends React.Component {
     });
 
     this.setState({
-      name: profilesList[index].name,
-      cuisine: profilesList[index].cuisine,
-      description: profilesList[index].description,
-      image: profilesList[index].image,
-      latitude: profilesList[index].latitude,
-      longitude: profilesList[index].longitude,
+      profile: profilesList[index]
     });
   }
 
-  toggleOverlay = () => {
+  toggleArray = (item) => {
+    console.log(profilesList.indexOf(item));
+
+    let temp = this.state.starArray;
+    temp[profilesList.indexOf(item)] = !temp[profilesList.indexOf(item)]
     this.setState({
-      isVisible: !this.state.isVisible,
-    });
+        starArray: temp,
+    })
+  }
+
+  toggleArrayRemind = (item) => {
+    console.log(profilesList.indexOf(item));
+
+    let temp = this.state.remindArray;
+    temp[profilesList.indexOf(item)] = !temp[profilesList.indexOf(item)]
+    this.setState({
+        remindArray: temp,
+        isVisible: !this.state.isVisible,
+    })
+
+    console.log('overlay visibility set to: ' + this.state.isVisible);
+
   }
 
 // TODO: fix functionality
   goToTruck = () => {
     // openMap({ latitude: this.state.latitude, longitude: this.state.longitude });
     const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
-    const latLng = `${this.state.latitude},${this.state.longitude}`;
+    const latLng = `${this.state.profile.latitude},${this.state.profile.longitude}`;
     const label = 'Food Truck';
     const url = Platform.select({
       ios: `${scheme}${label}@${latLng}`,
@@ -202,14 +220,14 @@ class FitToCoordinates extends React.Component {
                 }}
                 placeholder="I'm craving..."
                 placeholderTextColor='#828282'
-                onSubmitEditing={this.searchComplete}
+                onSubmitEditing={() => this.searchComplete}
                 />
 
                 {/* clock icon */}
                 <Button
-                  buttonStyle={[styles.button, style={backgroundColor: Colors.white}]}
+                  buttonStyle={[styles.button, style={backgroundColor: Colors.gray6}]}
                   containerStyle={{
-                    backgroundColor: Colors.white,
+                    backgroundColor: Colors.gray6,
                     borderTopRightRadius: Metrics.button,
                     borderBottomRightRadius: Metrics.button,
                     borderLeftWidth: 1,
@@ -224,10 +242,12 @@ class FitToCoordinates extends React.Component {
                     <Feather
                       name='clock'
                       size={20}
-                      color='#828282'
+                      color={Colors.gray3}
                     />
                   }
-                  onPress={this.toggleOverlay}
+                  onPress={() => this.setState({
+                    isTimeVisible: !this.state.isTimeVisible,
+                  })}
                 />
 
             </View>
@@ -248,68 +268,251 @@ class FitToCoordinates extends React.Component {
         {/* TODO: overlapping w buttons for long descriptions */}
         <View style={[styles.card, styles.shadow]}>
 
-          {/* info: holding photo, info, and star*/}
-          <View style={styles.info}>
+        {/* hold photo, info, and address (to the right is the button column)*/}
+          <View style={{
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+          }}>
 
+            {/* info: holding photo, info*/}
+            <View style={styles.info}>
 
-            {/* view to hold image for shadow*/}
-            <View style={[styles.shadowSmall, style={
-              flex: 1,
-            }]}>
-              <Image source={this.state.image} resizeMode='cover' style={{
-                borderRadius: Metrics.curve,
-                aspectRatio: 1,
-                width: 50,
-                height: 50,
-              }}/>
+              {/* view to hold image for shadow*/}
+              <View style={[styles.shadowSmall, style={
+                flex: 1,
+                backgroundColor: Colors.white,
+                borderWidth: 4,
+                borderColor: Colors.white,
+
+                shadowColor: Colors.black,
+                shadowOpacity: Metrics.shadow * 0.75,
+                shadowRadius: 5,
+                shadowOffset: {width: 0, height: 4},
+              }]}>
+                <Image source={this.state.profile.image} resizeMode='contain' style={{
+                  //borderRadius: Metrics.curve,
+                  aspectRatio: 1,
+                  width: undefined,
+                  height: undefined,
+                }}/>
+              </View>
+
+              {/* info */}
+              <View style={{
+                flex: 2,
+                paddingHorizontal: Metrics.padSmall,
+              }}>
+                <Text style={{
+                  fontSize: Metrics.font3,
+                  fontWeight: 'bold',
+                }}> {this.state.profile.name} </Text>
+                <Text style={{
+                  color: Colors.gray3,
+                  fontSize: Metrics.font5,
+                  paddingVertical: 5
+                }}> {this.state.profile.cuisine} </Text>
+                <Text style={{
+                  flexWrap: 'wrap',
+                  textAlign: 'left',
+                  fontSize: Metrics.font5,
+                }}> {this.state.profile.description} </Text>
+              </View>
+
             </View>
 
-            {/* info */}
+            {/* address, time*/}
             <View style={{
-              flex: 2,
-              paddingHorizontal: Metrics.padSmall,
+              paddingTop: Metrics.padSmall,
             }}>
               <Text style={{
-                fontSize: Metrics.font3,
-              }}> {this.state.name} </Text>
-              <Text style={{
-                color: Colors.gray3,
-                fontSize: Metrics.font5,
-                paddingVertical: 5
-              }}> {this.state.cuisine} </Text>
+                fontWeight: 'bold',
+                flexWrap: 'wrap',
+              }}>{this.state.profile.time}</Text>
               <Text style={{
                 flexWrap: 'wrap',
-                textAlign: 'left',
-                fontSize: Metrics.font5,
-              }}> {this.state.description} </Text>
+              }}>{this.state.profile.address}</Text>
             </View>
 
+          </View>
+
+
+          {/* fake button column)*/}
+          <View style={{
+            width: Metrics.padSmall / 2,
+          }}>
+          </View>
+
+          {/* button column)*/}
+          <View style={{
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+          }}>
+
+          <Button
+            buttonStyle={
+              this.state.starArray[profilesList.indexOf(this.state.profile)]
+                ? [styles.circleButton, styles.glow, style={backgroundColor: Colors.yellow}]
+                : [styles.circleButton, style={
+                  backgroundColor: Colors.gray5,
+                  borderWidth: 1,
+                  borderColor: Colors.gray6
+                }]
+            }
+            containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.yellow}]}
+            titleStyle={{
+              color: Colors.white,
+            }}
+            onPress={() => this.toggleArray(this.state.profile)}
+            title=''
+            icon={
+              <FontAwesome
+                name='star'
+                size={Metrics.button/2}
+                color= {Colors.white}
+              />
+            }
+          />
+
+            {/* for spacing between buttons in button column */}
+            <View style={{
+              height: Metrics.pad / 2,
+            }}>
+            </View>
 
             <Button
-              buttonStyle={[styles.circleButton, styles.glow, style={backgroundColor: Colors.yellow}]}
-              containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.yellow}]}
+              onPress={() => console.log('should run this.goToTruck')}
+              buttonStyle={[styles.circleButton, style={backgroundColor: Colors.orange}]}
+              containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.orange}]}
               titleStyle={{
                 color: Colors.white,
+                fontSize: Metrics.font4,
               }}
               title=''
               icon={
-                <FontAwesome
-                  name='star'
-                  size={Metrics.button/2}
+                <Feather
+                  name='map-pin'
+                  size={18}
+                  color='white'
+                />
+              }
+            />
+
+            {/* for spacing between buttons in button column */}
+            <View style={{
+              height: Metrics.pad / 2,
+            }}>
+            </View>
+
+            <Button
+              onPress={() => this.toggleArrayRemind(this.state.profile)}
+              buttonStyle={
+                this.state.remindArray[profilesList.indexOf(this.state.profile)]
+                  ? [styles.circleButton, style={backgroundColor: Colors.blue}]
+                  : [styles.circleButton, style={
+                    backgroundColor: Colors.gray5,
+                    borderWidth: 1,
+                    borderColor: Colors.gray6
+                  }]
+              }
+              containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.blue}]}
+              titleStyle={{
+                color: Colors.white,
+                fontSize: Metrics.font4,
+              }}
+              title=''
+              icon={
+                <MaterialCommunityIcons
+                  name='reminder'
+                  size={18}
                   color='white'
                 />
               }
             />
           </View>
 
+
         </View>
 
-        <View style={[styles.nav, styles.shadow]}>
+        <View style={[styles.nav, styles.shadowSmall]}>
+          <Button
+            buttonStyle={[styles.nav, style={height: Metrics.nav}]}
+            containerStyle={[styles.nav, style={flex: 1}]}
+            titleStyle={{
+              color: Colors.white
+            }}
+            title=''
+            icon={
+              <Feather
+                name='map-pin'
+                size={20}
+                color={Colors.orange}
+              />
+            }
+          />
+
+          <Button
+            buttonStyle={[styles.nav, style={height: Metrics.nav}]}
+            containerStyle={[styles.nav, style={flex: 1}]}
+            titleStyle={{
+              color: Colors.white
+            }}
+            title=''
+            icon={
+              <Feather
+                name='award'
+                size={20}
+                color={Colors.gray1}
+              />
+            }
+          />
+
+          <Button
+            buttonStyle={[styles.nav, style={height: Metrics.nav}]}
+            containerStyle={[styles.nav, style={flex: 1}]}
+            titleStyle={{
+              color: Colors.white
+            }}
+            title=''
+            icon={
+              <Feather
+                name='star'
+                size={20}
+                color={Colors.gray1}
+              />
+            }
+          />
+
+          <Button
+            buttonStyle={[styles.nav, style={height: Metrics.nav}]}
+            containerStyle={[styles.nav, style={flex: 1}]}
+            titleStyle={{
+              color: Colors.white
+            }}
+            title=''
+            icon={
+              <Feather
+                name='clock'
+                size={20}
+                color={Colors.gray1}
+              />
+            }
+          />
         </View>
 
+
+
+
+
+
+
+
+        {/* Choose Time Overlay */}
         <Overlay
-          isVisible={this.state.isVisible}
-          onBackdropPress={this.toggleOverlay}
+          isVisible={this.state.isTimeVisible}
+          onBackdropPress={() => this.setState({
+            isTimeVisible: !this.state.isTimeVisible,
+          })}
           windowBackgroundColor='rgba(0,0,0,0.25)'
           containerStyle={styles.overlayContainer}
           overlayStyle={[styles.overlay, styles.shadow]}
@@ -378,7 +581,7 @@ class FitToCoordinates extends React.Component {
                 <Feather
                   name='edit'
                   size={20}
-                  color='white'
+                  color={Colors.white}
                 />
               }
             />
@@ -387,7 +590,9 @@ class FitToCoordinates extends React.Component {
 
           {/*TODO: too visually heavy with 2 buttons? or stick w button conventions? */}
           <Button
-            onPress={this.toggleOverlay}
+            onPress={() => this.setState({
+              isTimeVisible: !this.state.isTimeVisible,
+            })}
             buttonStyle={[styles.circleButton, style={backgroundColor: Colors.blue}]}
             containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.blue}]}
             titleStyle={{
@@ -405,7 +610,93 @@ class FitToCoordinates extends React.Component {
               />
             }
           />
+        </Overlay>
 
+        {/* Remind Overlay */}
+        <Overlay
+          isVisible={this.state.isVisible}
+          onBackdropPress={() => this.setState({
+            isVisible: !this.state.isVisible,
+          })}
+          windowBackgroundColor='rgba(0,0,0,0.25)'
+          containerStyle={styles.remind_overlayContainer}
+          overlayStyle={[styles.remind_overlay, styles.shadow]}
+          fullScreen={true}
+          >
+
+
+          {
+            this.state.fontLoaded ? (
+              <Text style={{
+                fontFamily: 'lato-regular',
+                fontSize: Metrics.font3,
+                textAlign: 'center',
+                paddingBottom: Metrics.pad / 2,
+              }}>Set a reminder</Text>
+            ) : null
+          }
+
+          {/* Set time options*/}
+          <DateTimePicker
+            isVisible={this.state.isDateTimePickerVisible}
+            onConfirm={this._handleDatePicked}
+            onCancel={this._hideDateTimePicker}
+            mode='datetime'
+            titleIOS='Pick a time to find trucks'
+          />
+
+          <View style={{
+            flexDirection: 'row',
+            justifyContent: 'space-evenly'
+          }}>
+            {/*TODO: will people try to click on time directly, not button?*/}
+            <View style={{
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+              alignItems: 'center',
+              backgroundColor: Colors.white,
+              borderColor: Colors.orange,
+              borderWidth: 1,
+              borderRadius: Metrics.button
+            }}>
+
+              {
+                this.state.fontLoaded ? (
+                  <Text
+                    style={{
+                      paddingHorizontal: Metrics.pad,
+                      color: Colors.orange,
+                      fontFamily: 'lato-regular',
+                      fontSize: Metrics.font3,
+                    }}>
+                    {this.state.date}
+                  </Text>
+                ) : null
+              }
+
+              <Button
+                onPress={this._showDateTimePicker}
+                buttonStyle={[styles.circleButton, style={backgroundColor: Colors.orange, paddingHorizontal: Metrics.smallPad}]}
+                containerStyle={[styles.buttonContainer], style={
+                  backgroundColor: Colors.orange,
+                  borderTopRightRadius: Metrics.button,
+                  borderBottomRightRadius: Metrics.button,
+                  paddingHorizontal: Metrics.pad / 2,
+                }}
+                titleStyle={{
+                  color: Colors.white
+                }}
+                title=''
+                icon={
+                  <Feather
+                    name='clock'
+                    size={20}
+                    color={Colors.white}
+                  />
+                }
+              />
+            </View>
+          </View>
         </Overlay>
 
       </View>
@@ -441,10 +732,11 @@ const styles = StyleSheet.create({
   searchContainer: {
     paddingTop: Metrics.padSmall,
     height: Metrics.button * 2,
-    backgroundColor: Colors.frosty,
+    //backgroundColor: Colors.frosty,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+
   },
 
   searchBar: {
@@ -460,8 +752,11 @@ const styles = StyleSheet.create({
 
     shadowColor: Colors.black,
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: Metrics.shadow,
+    shadowOpacity: Metrics.glow / 4,
     shadowRadius: 20,
+
+    // borderColor: Colors.gray5,
+    // borderWidth: 1,
   },
 
   searchIcon: {
@@ -499,31 +794,48 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
 
-  card: {
-    flex: 3,
 
-    paddingVertical: Metrics.pad * 1.25,
+  remind_overlayContainer: {
     flexDirection: 'column',
+    justifyContent: 'flex-end',
+    backgroundColor: Colors.inactive,
+    alignItems: 'center',
+
+    zIndex: 1,
+  },
+
+  remind_overlay: {
+    flex: 0.11,
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    backgroundColor: Colors.white,
+
+    padding: Metrics.pad * 1.25,
+  },
+
+  card: {
+    padding: Metrics.pad * 1.25,
+    flexDirection: 'row',
     justifyContent: 'space-evenly',
     backgroundColor: Colors.white,
 
     borderColor: Colors.gray6,
     borderBottomWidth: 1,
+
   },
 
+  // Remove flex: 1 to make adaptable card
   info: {
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'flex-start',
-    paddingHorizontal: Metrics.pad * 1.5,
 
-    backgroundColor: Colors.white,
+    paddingBottom: Metrics.smallPad,
   },
 
   shadow: {
     shadowColor: Colors.black,
-    shadowOpacity: Metrics.glow / 4,
+    shadowOpacity: Metrics.glow / 2,
     shadowRadius: 20,
     shadowOffset: {width: 0, height: 4}
   },
@@ -571,24 +883,12 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
 
-  button_filled: {
-    backgroundColor: Colors.yellow,
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 80,
-    width: 80,
-    borderRadius: 40
-
-  },
-  star_filled: {
-    backgroundColor: Colors.yellow,
-    height: 50,
-    width: 50,
-  },
-
   nav: {
+    flexDirection: 'row',
     height: Metrics.nav,
-    backgroundColor: Colors.purple,
+    backgroundColor: Colors.white,
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
   },
 
 });

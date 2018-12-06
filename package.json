@@ -20,6 +20,7 @@
     "react-native-multiple-tags": "0.0.4",
     "react-native-snap-carousel": "^3.7.5",
     "react-native-typography": "^1.4.0",
+    "react-navigation": "^3.0.5",
     "yarn": "^1.12.3"
   },
   "devDependencies": {

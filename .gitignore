@@ -1,6 +1,7 @@
 node_modules/*
 android/*
 ios/*
-setup.sh
 .expo/packager-info.json
 .expo/settings.json
+*.json
+package-lock.json
