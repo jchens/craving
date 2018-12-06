@@ -1,6 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types' //consider using this!
-import { StyleSheet, SafeAreaView, View, FlatList, Text, Linking, ActivityIndicator, TouchableOpacity, Image } from 'react-native'
+import {
+  StyleSheet,
+  SafeAreaView,
+  View,
+  Dimensions,
+  FlatList, SectionList,
+  ScrollView,
+  Text, Linking, ActivityIndicator, TouchableOpacity, Image } from 'react-native'
 import { Metrics, Colors, Images } from '../Themes'
 import {profilesList} from '../Themes/Profiles.js'
 
@@ -8,201 +15,239 @@ import { material } from 'react-native-typography'
 import { Feather, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import { Overlay, Button } from 'react-native-elements';
 
+import Carousel from 'react-native-snap-carousel';
+import { ENTRIES1 } from '../Themes/Pictures.js';
+
+import MultipleTags from 'react-native-multiple-tags';
+
+
+
+const { width, height } = Dimensions.get('window');
+
+const tags = [
+  'cherry',
+  'mango',
+  'cashew',
+  'almond',
+  'guava',
+  'pineapple',
+  'orange',
+  'pear',
+  'date',
+  'strawberry',
+  'pawpaw',
+  'banana',
+  'apple',
+  'grape',
+  'lemon',
+];
+
+const objectTags = [
+  {
+    key: 'id_01',
+    value: 'cherry',
+  },
+  {
+    key: 'id_02',
+    value: 'mango',
+  },
+  {
+    key: 'id_03',
+    value: 'cashew',
+  },
+  {
+    key: 'id_04',
+    value: 'almond'
+  },
+  {
+    key: 'id_05',
+    value: 'guava'
+  },
+  {
+    key: 'id_06',
+    value: 'pineapple'
+  },
+  {
+    key: 'id_07',
+    value: 'orange'
+  },
+  {
+    key: 'id_08',
+    value: 'pear'
+  },
+  {
+    key: 'id_09',
+    value: 'date'
+  }
+]
+
+const reviews = [
+  {
+      name: "Justine Robinson",
+      icon: require('../Images/FTProfiles/trijeet.jpeg'),
+      friend: true,
+      date: "2 days ago",
+      positiveTags: ["Great carnitas", "Friendly Staff"],
+      negativeTags: ["Oily", "Long Line"]
+  },
+  {
+      name: "Justine Robinson",
+      icon: require('../Images/FTProfiles/trijeet.jpeg'),
+      friend: true,
+      date: "2 days ago",
+      positiveTags: ["Great carnitas", "Friendly Staff"],
+      negativeTags: ["Oily", "Long Line"]
+  },
+  {
+      name: "Justine Robinson",
+      icon: require('../Images/FTProfiles/trijeet.jpeg'),
+      friend: true,
+      date: "2 days ago",
+      positiveTags: ["Great carnitas", "Friendly Staff"],
+      negativeTags: ["Oily", "Long Line"]
+  },
+  {
+      name: "Justine Robinson",
+      icon: require('../Images/FTProfiles/trijeet.jpeg'),
+      friend: true,
+      date: "2 days ago",
+      positiveTags: ["Great carnitas", "Friendly Staff"],
+      negativeTags: ["Oily", "Long Line"]
+  },
+]
+
+
+
 export default class Tracking extends Component {
-  constructor() {
-    super();
-    let arr = []
-    for(let i = 0; i < 7; i++) {
-      arr.push(false);
-    }
+
+  constructor(props) {
+    super(props);
     this.state = {
-      fav: arr,
+      content: [],
+      contentx: [],
     };
   }
 
-  updatedState = (key) => {
-    console.log("im here");
-    console.log(key);
-    let temp = this.state.fav;
-    temp[key] = !temp[key];
-    console.log(temp);
-    this.setState({
-        fav: temp,
-    })
+
+
+  _renderItem ({item, index}) {
+      return (
+          <View style={styles.slide}>
+            <Image source={item.illustration}/>
+          </View>
+      );
   }
+
 
 
   render () {
 
     return (
-        <View style={styles.container}>
+      <View style={styles.container}>
+        <ScrollView>
 
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}> Visted</Text>
-            </View>
-
-            <View style={styles.listContainer}>
-
-              <FlatList
-                data={profilesList}
-                keyExtractor= {(item) => item.name}
-                renderItem={({item}) =>
-
-                <View style={[styles.listItem]}>
-
-                  {/* day you visited*/}
-                  <Text style={{
-                    color: Colors.blue,
-                    paddingHorizontal: Metrics.pad,
-                  }}> {item.visit} </Text>
-
-                  {/* info: holding photo, info, and star*/}
-                  <View style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'space-evenly',
-                    alignItems: 'flex-start',
-                    paddingHorizontal: Metrics.pad * 1.5,
-                    paddingVertical: Metrics.padSmall,
-                  }}>
-
-
-                    {/* view to hold image for shadow*/}
-                    <View style={{
-                      shadowColor: Colors.black,
-                      shadowOffset: { width: 0, height: 4 },
-                      shadowOpacity: Metrics.shadow,
-                      shadowRadius: 10,
-                    }}>
-                      <Image source={item.image} resizeMode='contain' style={{
-                        borderRadius: Metrics.curve,
-
-                        width: 40,
-                        height: 40,
-                      }}/>
-                    </View>
-
-                    <View style={{
-                      flex: 2,
-                      paddingHorizontal: Metrics.padSmall,
-                      // width: 200,
-                      // marginLeft: 30,
-                      // marginRight: 30,
-                    }}>
-                      <Text style={material.title}> {item.name} </Text>
-                      <Text style={material.caption}> {item.cuisine} </Text>
-                      <Text style={{
-                        color: Colors.gray3,
-                        flexWrap: 'wrap',
-                        textAlign: 'left',
-                        fontSize: Metrics.fontSmall,
-                        paddingTop: Metrics.pad / 2 ,
-                      }}> {item.description} </Text>
-                    </View>
-
-
-                    <Button
-                      buttonStyle={[styles.circleButton, styles.glow, style={backgroundColor: Colors.yellow}]}
-                      containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.yellow}]}
-                      titleStyle={{
-                        color: Colors.white
-                      }}
-                      title=''
-                      icon={
-                        <FontAwesome
-                          name='star'
-                          size={Metrics.button/2}
-                          color='white'
-                        />
-                      }
-                    />
-                  </View>
-
-                  {/* buttonRow */}
-                  <View style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'space-evenly',
-                    alignItems: 'center',
-                    paddingTop: 5,
-                  }}>
-
-                    <View style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-evenly',
-                      alignItems: 'center',
-                      backgroundColor: Colors.white,
-                      borderColor: Colors.orange,
-                      borderWidth: 1,
-                      borderRadius: Metrics.button
-                    }}>
-                      <Text
-                        style={{
-                          paddingHorizontal: Metrics.pad,
-                          color: Colors.orange,
-                          fontSize: Metrics.fontMed,
-                        }}>
-                        1.1 mi
-                      </Text>
-                      <Button
-                        onPress={console.log('should run this.goToTruck')}
-                        buttonStyle={[styles.button, style={backgroundColor: Colors.orange, paddingLeft: Metrics.pad}]}
-                        containerStyle={{
-                          backgroundColor: Colors.orange,
-                          borderTopRightRadius: Metrics.button,
-                          borderBottomRightRadius: Metrics.button,
-                        }}
-                        titleStyle={{
-                          color: Colors.white
-                        }}
-                        title=''
-                        icon={
-                          <MaterialIcons
-                            name='directions-run'
-                            size={20}
-                            color='white'
-                          />
-                        }
-                        iconRight
-                      />
-                    </View>
-
-                    {/* view to hold right button */}
-                    <View style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-evenly',
-                      alignItems: 'center',
-                    }}>
-                      <Button
-                        buttonStyle={[styles.button, style={backgroundColor: Colors.blue}]}
-                        containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.blue}]}
-                        titleStyle={{
-                          color: Colors.white
-                        }}
-                        title='Profile'
-                        icon={
-                          <Feather
-                            name='truck'
-                            size={20}
-                            color='white'
-                          />
-                        }
-                      />
-                    </View>
-
-                  </View>
-
-                </View>
+          <Carousel
+            data={ENTRIES1}
+            renderItem={this._renderItem}
+            sliderWidth={width}
+            itemWidth={250}
+            layout={'default'}
+          />
 
 
 
-                }
+          <Text> MOST POPULAR TAGS </Text>
+
+
+          <View style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+
+          }}>
+            <Button
+             title="LOADING BUTTON"
+             buttonStyle={{
+               backgroundColor: "rgba(92, 99,216, 1)",
+               width: 150,
+               height: 45,
+               borderColor: "transparent",
+               borderWidth: 0,
+               borderRadius: 5
+             }}
+             containerStyle={{ marginTop: 20 }}
+            />
+            <Button
+             title="LOADING BUTTON"
+             buttonStyle={{
+               backgroundColor: "rgba(92, 99,216, 1)",
+               width: 150,
+               height: 45,
+               borderColor: "transparent",
+               borderWidth: 0,
+               borderRadius: 5
+             }}
+             containerStyle={{ marginTop: 20 }}
+            />
+            <Button
+             title="LOADING BUTTON"
+             buttonStyle={{
+               backgroundColor: "rgba(92, 99,216, 1)",
+               width: 150,
+               height: 45,
+               borderColor: "transparent",
+               borderWidth: 0,
+               borderRadius: 5
+             }}
+             containerStyle={{ marginTop: 20 }}
+            />
+            <Button
+             title="LOADING BUTTON"
+             buttonStyle={{
+               backgroundColor: "rgba(92, 99,216, 1)",
+               width: 150,
+               height: 45,
+               borderColor: "transparent",
+               borderWidth: 0,
+               borderRadius: 5
+             }}
+             containerStyle={{ marginTop: 20 }}
+            />
+          </View>
+
+          <Text> ADD MY REVIEW </Text>
+
+
+          <View>
+            <MultipleTags
+                tags={objectTags}
+                search
+                onChangeItem={(content) => { this.setState({ content }); }}
+                title="Fruits"
               />
-            </View>
+              {
+              (() => this.state.content.map(item => <Text key={item.key}> {item.key}: {item.value} </Text>))()
+              }
+          </View>
 
-        </View>
-      );
 
+          <Text> OTHER REVIEWS </Text>
+
+
+          <View>
+            <FlatList
+              data={reviews}
+              renderItem={({item}) =>  (
+                  <Text>{item.name}</Text>
+                )
+              }
+            />
+
+          </View>
+
+        </ScrollView>
+      </View>
+
+    )
   }
 }
 
@@ -215,125 +260,13 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     backgroundColor: Colors.white,
   },
-  title: {
-    color: Colors.gray1,
-    fontSize: 36,
-  },
-  titleContainer: {
-    flex: 1,
-    color: Colors.blue,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-  },
-
-  listContainer: {
-    flex: 7,
-    backgroundColor: 'white',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'stretch',
-
-    // TODO: change this to reveal some cool illustration
-    backgroundColor: Colors.purple,
-  },
-
-  listItem: {
-    paddingTop: Metrics.pad * 1.5,
-    paddingBottom: Metrics.padBig,
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    backgroundColor: Colors.white,
-
-    borderColor: Colors.gray5,
-    borderBottomWidth: 1,
-  },
-  shadow: {
-    shadowColor: Colors.black,
-    shadowOpacity: Metrics.glow / 4,
-    shadowRadius: 20,
-  },
-
-  circleButton: {
-    borderRadius: Metrics.button,
-    height: Metrics.button,
-    width: Metrics.button,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  glow: {
-    shadowColor: Colors.yellow,
-    shadowOpacity: Metrics.glow,
-    shadowRadius: 10,
-  },
-
-  button: {
-    borderRadius: Metrics.button,
-    height: Metrics.button,
-    paddingLeft: Metrics.button / 2,
-    paddingRight: Metrics.pad,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  buttonContainer: {
-    borderRadius: Metrics.button,
-  },
-
-  star: {
-    backgroundColor: Colors.gray6,
-    height: 50,
-    width: 50,
-  },
-  button_filled: {
-    backgroundColor: Colors.yellow,
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 80,
-    width: 80,
-    borderRadius: 40
-
-  },
-  star_filled: {
-    backgroundColor: Colors.yellow,
-    height: 50,
-    width: 50,
-  },
-  bottom: {
-    flexDirection: 'row',
-  },
-  bottom_button_left: {
-    backgroundColor: '#FF4D00',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 50,
-    width: 120,
-    borderRadius: 40,
-    borderWidth: 2,
-    borderColor: '#FF4D00',
-    marginRight: 10,
-    marginTop: 20,
-  },
-  bottom_button_right: {
-    backgroundColor: '#0496FF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 50,
-    width: 120,
-    borderRadius: 40,
-    borderWidth: 2,
-    borderColor: '#0496FF',
-    marginTop: 20,
-  },
-  bottom_text_left: {
-    color: Colors.orange,
-
-  },
-  bottom_text_right: {
-    color: Colors.blue,
+  tags: {
+    backgroundColor: "rgba(92, 99,216, 1)",
+    width: 150,
+    height: 45,
+    borderColor: "transparent",
+    borderWidth: 0,
+    borderRadius: 5
 
   }
-
-
-
 });
