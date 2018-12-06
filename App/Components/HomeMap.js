@@ -303,12 +303,11 @@ class FitToCoordinates extends React.Component {
               }}> {this.state.description} </Text>
             </View>
 
-
             <Button
               key={index}
               buttonStyle={
                 this.state.starArray[profilesList.indexOf(item)]
-                  ? [styles.circleButton, style={backgroundColor: Colors.yellow}]
+                  ? [styles.circleButton, styles.glow, style={backgroundColor: Colors.yellow}]
                   : [styles.circleButton, style={
                     backgroundColor: Colors.gray5,
                     borderWidth: 1,
@@ -325,7 +324,7 @@ class FitToCoordinates extends React.Component {
                 <FontAwesome
                   name='star'
                   size={Metrics.button/2}
-                  color='white'
+                  color= {Colors.white}
                 />
               }
             />
@@ -532,12 +531,14 @@ const styles = StyleSheet.create({
     flex: 3,
 
     paddingVertical: Metrics.pad * 1.25,
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'space-evenly',
     backgroundColor: Colors.white,
 
     borderColor: Colors.gray6,
     borderBottomWidth: 1,
+    paddingHorizontal: Metrics.pad * 1.25,
+
   },
 
   info: {
@@ -545,8 +546,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'flex-start',
-    paddingHorizontal: Metrics.pad * 1.5,
-
     backgroundColor: Colors.white,
   },
 

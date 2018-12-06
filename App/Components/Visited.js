@@ -28,17 +28,6 @@ export default class Visited extends Component {
     };
   }
 
-  updatedState = (key) => {
-    console.log("im here");
-    console.log(key);
-    let temp = this.state.starArray;
-    temp[key] = !temp[key];
-    console.log(temp);
-    this.setState({
-        starArray: temp,
-    })
-  }
-
   toggleArray = (item) => {
     console.log(profilesList.indexOf(item));
 
@@ -99,6 +88,7 @@ export default class Visited extends Component {
                     }}>
                       <Text style={{
                         fontSize: Metrics.font3,
+                        fontWeight: 'bold',
                       }}> {item.name} </Text>
                       <Text style={{
                         color: Colors.gray3,
@@ -120,12 +110,11 @@ export default class Visited extends Component {
                       justifyContent: 'flex-start',
                     }}>
 
-                    {/* edited */}
                       <Button
                         key={index}
                         buttonStyle={
                           this.state.starArray[profilesList.indexOf(item)]
-                            ? [styles.circleButton, style={backgroundColor: Colors.yellow}]
+                            ? [styles.circleButton, styles.glow, style={backgroundColor: Colors.yellow}]
                             : [styles.circleButton, style={
                               backgroundColor: Colors.gray5,
                               borderWidth: 1,
@@ -142,7 +131,7 @@ export default class Visited extends Component {
                           <FontAwesome
                             name='star'
                             size={Metrics.button/2}
-                            color='white'
+                            color= {Colors.white}
                           />
                         }
                       />
@@ -234,6 +223,8 @@ const styles = StyleSheet.create({
     color: Colors.black,
     fontSize: Metrics.font3,
     paddingBottom: Metrics.pad / 2,
+    fontWeight: 'bold',
+
   },
 
 
@@ -250,12 +241,15 @@ const styles = StyleSheet.create({
 
     listItem: {
       paddingVertical: Metrics.pad * 1.25,
-      flexDirection: 'column',
+      flexDirection: 'row',
       justifyContent: 'space-evenly',
       backgroundColor: Colors.white,
 
       borderColor: Colors.gray6,
       borderBottomWidth: 1,
+
+      paddingHorizontal: Metrics.pad * 1.25,
+
     },
 
     info: {
@@ -263,7 +257,6 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-evenly',
       alignItems: 'flex-start',
-      paddingHorizontal: Metrics.pad * 1.25,
     },
 
     shadow: {
