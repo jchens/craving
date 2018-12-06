@@ -62,7 +62,7 @@ const profilesList = [
     address: "Nordstrom, 550 Stanford Shopping Center, Palo Alto, CA 94304",
     fave: true,
     reminder: true,
-    visit: "2 WEEKS AGO",
+    visit: "1 WEEK AGO",
     latitude: 37.42,
     longitude: -122.1710,
   },

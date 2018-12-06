@@ -19,6 +19,8 @@ import { Feather, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import { Overlay, Button } from 'react-native-elements';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
+import { Font } from 'expo';
+
 const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
@@ -63,11 +65,24 @@ class FitToCoordinates extends React.Component {
       image: profilesList[0].image,
       latitude: profilesList[0].latitude,
       longitude: profilesList[0].longitude,
+
       text: '',
       isVisible: false,
       isDateTimePickerVisible: false,
       date: 'Now',
+      fontLoaded: false,
     };
+  }
+
+  async componentDidMount() {
+    await Font.loadAsync({
+      'lato-regular': require('../../assets/fonts/Lato-Regular.ttf'),
+      'lato-bold': require('../../assets/fonts/Lato-Bold.ttf'),
+      'lato-light': require('../../assets/fonts/Lato-Light.ttf'),
+
+    });
+
+    this.setState({ fontLoaded: true });
   }
 
   // TODO: constantly submitting with onSubmitEditing??
@@ -202,7 +217,7 @@ class FitToCoordinates extends React.Component {
                   }}
                   titleStyle={{
                     color: Colors.gray3,
-                    fontSize: Metrics.fontSmall,
+                    fontSize: Metrics.font4,
                   }}
                   title={this.state.date}
                   icon={
@@ -234,48 +249,38 @@ class FitToCoordinates extends React.Component {
         <View style={[styles.card, styles.shadow]}>
 
           {/* info: holding photo, info, and star*/}
-          <View style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            alignItems: 'flex-start',
-            paddingHorizontal: Metrics.pad * 1.5,
-          }}>
+          <View style={styles.info}>
+
 
             {/* view to hold image for shadow*/}
-            <View style={{
-              shadowColor: Colors.black,
-              shadowOffset: { width: 0, height: 4 },
-              shadowOpacity: Metrics.shadow,
-              shadowRadius: 10,
-            }}>
-              <Image source={this.state.image} resizeMode='contain' style={{
-                flex: 1.25,
-                aspectRatio: 1,
+            <View style={[styles.shadowSmall, style={
+              flex: 1,
+            }]}>
+              <Image source={this.state.image} resizeMode='cover' style={{
                 borderRadius: Metrics.curve,
-
-                width: 40,
-                height: 40,
-                //borderWidth: 4,
-                borderColor: Colors.white,
+                aspectRatio: 1,
+                width: 50,
+                height: 50,
               }}/>
             </View>
 
+            {/* info */}
             <View style={{
               flex: 2,
               paddingHorizontal: Metrics.padSmall,
-              // width: 200,
-              // marginLeft: 30,
-              // marginRight: 30,
             }}>
-              <Text style={material.title}> {this.state.name} </Text>
-              <Text style={material.caption}> {this.state.cuisine} </Text>
+              <Text style={{
+                fontSize: Metrics.font3,
+              }}> {this.state.name} </Text>
               <Text style={{
                 color: Colors.gray3,
+                fontSize: Metrics.font5,
+                paddingVertical: 5
+              }}> {this.state.cuisine} </Text>
+              <Text style={{
                 flexWrap: 'wrap',
                 textAlign: 'left',
-                fontSize: Metrics.fontSmall,
-                paddingTop: Metrics.pad / 2 ,
+                fontSize: Metrics.font5,
               }}> {this.state.description} </Text>
             </View>
 
@@ -284,7 +289,7 @@ class FitToCoordinates extends React.Component {
               buttonStyle={[styles.circleButton, styles.glow, style={backgroundColor: Colors.yellow}]}
               containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.yellow}]}
               titleStyle={{
-                color: Colors.white
+                color: Colors.white,
               }}
               title=''
               icon={
@@ -295,80 +300,6 @@ class FitToCoordinates extends React.Component {
                 />
               }
             />
-          </View>
-
-          <View style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            alignItems: 'center',
-
-            //backgroundColor: Colors.orange,
-          }}>
-
-            <View style={{
-              flexDirection: 'row',
-              justifyContent: 'space-evenly',
-              alignItems: 'center',
-              backgroundColor: Colors.white,
-              borderColor: Colors.orange,
-              borderWidth: 1,
-              borderRadius: Metrics.button
-            }}>
-              <Text
-                style={{
-                  paddingHorizontal: Metrics.pad,
-                  color: Colors.orange,
-                  fontSize: Metrics.fontMed,
-                }}>
-                1.1 mi
-              </Text>
-              <Button
-                onPress={this.goToTruck}
-                buttonStyle={[styles.button, style={backgroundColor: Colors.orange, paddingLeft: Metrics.pad}]}
-                containerStyle={{
-                  backgroundColor: Colors.orange,
-                  borderTopRightRadius: Metrics.button,
-                  borderBottomRightRadius: Metrics.button,
-                }}
-                titleStyle={{
-                  color: Colors.white
-                }}
-                title=''
-                icon={
-                  <MaterialIcons
-                    name='directions-run'
-                    size={20}
-                    color='white'
-                  />
-                }
-                iconRight
-              />
-            </View>
-
-            {/* view to hold right button */}
-            <View style={{
-              flexDirection: 'row',
-              justifyContent: 'space-evenly',
-              alignItems: 'center',
-            }}>
-              <Button
-                buttonStyle={[styles.button, style={backgroundColor: Colors.blue}]}
-                containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.blue}]}
-                titleStyle={{
-                  color: Colors.white
-                }}
-                title='Profile'
-                icon={
-                  <Feather
-                    name='truck'
-                    size={20}
-                    color='white'
-                  />
-                }
-              />
-            </View>
-
           </View>
 
         </View>
@@ -384,10 +315,16 @@ class FitToCoordinates extends React.Component {
           overlayStyle={[styles.overlay, styles.shadow]}
           fullScreen={true}
           >
-          <Text style={{
-            fontSize: Metrics.fontMed,
-            textAlign: 'center',
-          }}>Set time to find trucks</Text>
+
+          {
+            this.state.fontLoaded ? (
+              <Text style={{
+                fontFamily: 'lato-regular',
+                fontSize: Metrics.font3,
+                textAlign: 'center',
+              }}>Set time to find trucks</Text>
+            ) : null
+          }
 
           {/* Set time options*/}
           <DateTimePicker
@@ -411,14 +348,20 @@ class FitToCoordinates extends React.Component {
             borderRadius: Metrics.button
           }}>
 
-            <Text
-              style={{
-                paddingHorizontal: Metrics.pad,
-                color: Colors.orange,
-                fontSize: Metrics.fontMed,
-              }}>
-              {this.state.date}
-            </Text>
+            {
+              this.state.fontLoaded ? (
+                <Text
+                  style={{
+                    paddingHorizontal: Metrics.pad,
+                    color: Colors.orange,
+                    fontFamily: 'lato-regular',
+                    fontSize: Metrics.font3,
+                  }}>
+                  {this.state.date}
+                </Text>
+              ) : null
+            }
+
             <Button
               onPress={this._showDateTimePicker}
               buttonStyle={[styles.button, style={backgroundColor: Colors.orange, paddingLeft: Metrics.pad}]}
@@ -438,7 +381,6 @@ class FitToCoordinates extends React.Component {
                   color='white'
                 />
               }
-              iconRight
             />
           </View>
 
@@ -453,7 +395,7 @@ class FitToCoordinates extends React.Component {
             }}
             title=''
             titleStyle={{
-              fontSize: Metrics.fontMed,
+              fontSize: Metrics.font3,
             }}
             icon={
               <Feather
@@ -494,16 +436,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'flex-end',
-
-    // // to move right,
-    // left: width / 1.17,
-    // // to move up, increase
-    // top: height / 2.3,
   },
 
   searchContainer: {
-    paddingTop: Metrics.pad,
-    flex: 0.25,
+    paddingTop: Metrics.padSmall,
+    height: Metrics.button * 2,
     backgroundColor: Colors.frosty,
     flexDirection: 'row',
     alignItems: 'center',
@@ -525,7 +462,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: Metrics.shadow,
     shadowRadius: 20,
-
   },
 
   searchIcon: {
@@ -544,12 +480,9 @@ const styles = StyleSheet.create({
 
   changeTime: {
     flex: 1,
-    //flexDirection: 'row',
     borderColor: Colors.gray5,
     borderLeftWidth: 1,
     backgroundColor: 'gray'
-    //alignItems: 'center',
-    //justifyContent: 'center',
   },
 
   overlayContainer: {
@@ -566,28 +499,40 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
 
+  card: {
+    flex: 3,
+
+    paddingVertical: Metrics.pad * 1.25,
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+    backgroundColor: Colors.white,
+
+    borderColor: Colors.gray6,
+    borderBottomWidth: 1,
+  },
+
+  info: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'flex-start',
+    paddingHorizontal: Metrics.pad * 1.5,
+
+    backgroundColor: Colors.white,
+  },
+
   shadow: {
     shadowColor: Colors.black,
     shadowOpacity: Metrics.glow / 4,
     shadowRadius: 20,
+    shadowOffset: {width: 0, height: 4}
   },
 
-  card: {
-    flex: 5,
-    paddingTop: Metrics.pad * 1.5,
-    paddingBottom: Metrics.pad * 0.5,
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    backgroundColor: Colors.white,
-  },
-
-  button: {
-    borderRadius: Metrics.button,
-    height: Metrics.button,
-    paddingLeft: Metrics.button / 2,
-    paddingRight: Metrics.pad,
-    justifyContent: 'center',
-    alignItems: 'center',
+  shadowSmall: {
+    shadowColor: Colors.black,
+    shadowOpacity: Metrics.shadow / 2,
+    shadowRadius: 5,
+    shadowOffset: {width: 0, height: 2},
   },
 
   circleButton: {
@@ -596,28 +541,53 @@ const styles = StyleSheet.create({
     width: Metrics.button,
     justifyContent: 'center',
     alignItems: 'center',
-  },
 
+  },
   glow: {
     shadowColor: Colors.yellow,
     shadowOpacity: Metrics.glow,
     shadowRadius: 10,
   },
 
-  buttonContainer: {
+  button: {
     borderRadius: Metrics.button,
+    height: Metrics.button,
+    paddingLeft: Metrics.button / 2,
+    paddingRight: Metrics.button / 4,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
+  buttonContainer: {
+    borderRadius: Metrics.button,
+
+  },
 
   buttonRow: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
+    paddingTop: 5,
+  },
+
+  button_filled: {
+    backgroundColor: Colors.yellow,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 80,
+    width: 80,
+    borderRadius: 40
+
+  },
+  star_filled: {
+    backgroundColor: Colors.yellow,
+    height: 50,
+    width: 50,
   },
 
   nav: {
-    height: Metrics.button * 1,
+    height: Metrics.nav,
     backgroundColor: Colors.purple,
   },
 

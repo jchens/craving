@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View } from 'react-native';
-//import Tracking from './App/Components/Tracking';
-//import HomeMap from './App/Components/HomeMap';
+import HomeMap from './App/Components/HomeMap';
 //import TruckMap from './App/Components/TruckMap';
 //import Rewards from './App/Components/Rewards';
+import Visited from './App/Components/Visited';
+import Followed from './App/Components/Followed';
+
 import { Font } from 'expo';
 import { Metrics, Colors, Images } from './App/Themes'
-
-
 
 import Icon from '@expo/vector-icons/MaterialCommunityIcons'
 
@@ -35,12 +35,10 @@ export default class App extends React.Component {
       <View style={styles.container}>
         {
           this.state.fontLoaded ? (
-            <Text style={{ fontFamily: 'lato-bold', fontSize: 20 }}>
-              Hello, world!
-            </Text>
+            // <Text style={{fontFamily: 'lato-bold'}}>Hi!</Text>
+            <Followed />
           ) : null
         }
-        <Text style={{ fontSize: 20 }}> Hello, world! is there a difference lmao</Text>
       </View>
     );
   }

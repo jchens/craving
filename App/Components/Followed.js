@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types' //consider using this!
-import { StyleSheet, SafeAreaView, View, FlatList, Text, Linking, ActivityIndicator, TouchableOpacity, Image } from 'react-native'
+import {
+  StyleSheet,
+  SafeAreaView,
+  View,
+  FlatList, SectionList,
+  Text, Linking, ActivityIndicator, TouchableOpacity, Image } from 'react-native'
 import { Metrics, Colors, Images } from '../Themes'
 import {profilesList} from '../Themes/Profiles.js'
 
@@ -38,23 +43,16 @@ export default class Tracking extends Component {
         <View style={styles.container}>
 
             <View style={styles.titleContainer}>
-              <Text style={styles.title}> Visted</Text>
+              <Text style={styles.title}>{'Followed'}</Text>
             </View>
 
             <View style={styles.listContainer}>
 
-              <FlatList
-                data={profilesList}
-                keyExtractor= {(item) => item.name}
-                renderItem={({item}) =>
+              {/* flatlist / sectionlist */}
+              <SectionList
+                renderItem={({item, index, section}) =>
 
                 <View style={[styles.listItem]}>
-
-                  {/* day you visited*/}
-                  <Text style={{
-                    color: Colors.blue,
-                    paddingHorizontal: Metrics.pad,
-                  }}> {item.visit} </Text>
 
                   {/* info: holding photo, info, and star*/}
                   <View style={{
@@ -63,40 +61,39 @@ export default class Tracking extends Component {
                     justifyContent: 'space-evenly',
                     alignItems: 'flex-start',
                     paddingHorizontal: Metrics.pad * 1.5,
-                    paddingVertical: Metrics.padSmall,
+                    paddingBottom: Metrics.padSmall,
                   }}>
 
 
                     {/* view to hold image for shadow*/}
-                    <View style={{
-                      shadowColor: Colors.black,
-                      shadowOffset: { width: 0, height: 4 },
-                      shadowOpacity: Metrics.shadow,
-                      shadowRadius: 10,
-                    }}>
-                      <Image source={item.image} resizeMode='contain' style={{
+                    <View style={[styles.shadowSmall, style={
+                      flex: 1,
+                    }]}>
+                      <Image source={item.image} resizeMode='cover' style={{
                         borderRadius: Metrics.curve,
-
-                        width: 40,
-                        height: 40,
+                        aspectRatio: 1,
+                        width: undefined,
+                        height: undefined,
                       }}/>
                     </View>
 
+                    {/* info */}
                     <View style={{
                       flex: 2,
                       paddingHorizontal: Metrics.padSmall,
-                      // width: 200,
-                      // marginLeft: 30,
-                      // marginRight: 30,
                     }}>
-                      <Text style={material.title}> {item.name} </Text>
-                      <Text style={material.caption}> {item.cuisine} </Text>
+                      <Text style={{
+                        fontSize: Metrics.font3,
+                      }}> {item.name} </Text>
                       <Text style={{
                         color: Colors.gray3,
+                        fontSize: Metrics.font5,
+                        paddingVertical: 5
+                      }}> {item.cuisine} </Text>
+                      <Text style={{
                         flexWrap: 'wrap',
                         textAlign: 'left',
-                        fontSize: Metrics.fontSmall,
-                        paddingTop: Metrics.pad / 2 ,
+                        fontSize: Metrics.font5,
                       }}> {item.description} </Text>
                     </View>
 
@@ -118,14 +115,8 @@ export default class Tracking extends Component {
                     />
                   </View>
 
-                  {/* buttonRow */}
-                  <View style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'space-evenly',
-                    alignItems: 'center',
-                    paddingTop: 5,
-                  }}>
+                  {/* button Row */}
+                  <View style={styles.buttonRow}>
 
                     <View style={{
                       flexDirection: 'row',
@@ -134,36 +125,24 @@ export default class Tracking extends Component {
                       backgroundColor: Colors.white,
                       borderColor: Colors.orange,
                       borderWidth: 1,
-                      borderRadius: Metrics.button
+                      borderRadius: Metrics.button,
                     }}>
-                      <Text
-                        style={{
-                          paddingHorizontal: Metrics.pad,
-                          color: Colors.orange,
-                          fontSize: Metrics.fontMed,
-                        }}>
-                        1.1 mi
-                      </Text>
                       <Button
                         onPress={console.log('should run this.goToTruck')}
-                        buttonStyle={[styles.button, style={backgroundColor: Colors.orange, paddingLeft: Metrics.pad}]}
-                        containerStyle={{
-                          backgroundColor: Colors.orange,
-                          borderTopRightRadius: Metrics.button,
-                          borderBottomRightRadius: Metrics.button,
-                        }}
+                        buttonStyle={[styles.button, style={backgroundColor: Colors.orange}]}
+                        containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.orange}]}
                         titleStyle={{
-                          color: Colors.white
+                          color: Colors.white,
+                          fontSize: Metrics.font4,
                         }}
-                        title=''
+                        title='Find on map'
                         icon={
-                          <MaterialIcons
-                            name='directions-run'
-                            size={20}
+                          <Feather
+                            name='map-pin'
+                            size={18}
                             color='white'
                           />
                         }
-                        iconRight
                       />
                     </View>
 
@@ -177,13 +156,14 @@ export default class Tracking extends Component {
                         buttonStyle={[styles.button, style={backgroundColor: Colors.blue}]}
                         containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.blue}]}
                         titleStyle={{
-                          color: Colors.white
+                          color: Colors.white,
+                          fontSize: Metrics.font4,
                         }}
                         title='Profile'
                         icon={
                           <Feather
                             name='truck'
-                            size={20}
+                            size={17}
                             color='white'
                           />
                         }
@@ -193,11 +173,38 @@ export default class Tracking extends Component {
                   </View>
 
                 </View>
+              }
+                renderSectionHeader={({section: {title}}) => (
+                  <View style={[styles.shadowSmall, style={
+                    backgroundColor: Colors.white,
+                    height: Metrics.button,
+                    justifyContent: 'center',
+                    paddingHorizontal: Metrics.pad,
 
-
-
-                }
+                    shadowColor: Colors.black,
+                    shadowOpacity: Metrics.shadow / 2,
+                    shadowRadius: 5,
+                    shadowOffset: {width: 0, height: 0},
+                  }]}>
+                    <Text style={{
+                      fontWeight: 'bold',
+                      color: Colors.gray1,
+                    }}>{title}</Text>
+                  </View>
+                )}
+                sections={[
+                  {title: 'TODAY', data: [profilesList[5]]},
+                  {title: 'SATURDAY', data: [profilesList[6], profilesList[1], profilesList[2]]},
+                  {title: 'SUNDAY', data: [profilesList[0], profilesList[3]]},
+                  {title: 'MONDAY', data: [profilesList[4], profilesList[6]]},
+                ]}
+                keyExtractor={(item, index) => item + index}
               />
+
+              {/* bottom nav */}
+              <View style={[styles.nav, styles.shadow]}>
+              </View>
+
             </View>
 
         </View>
@@ -215,20 +222,26 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     backgroundColor: Colors.white,
   },
-  title: {
-    color: Colors.gray1,
-    fontSize: 36,
-  },
+
   titleContainer: {
-    flex: 1,
-    color: Colors.blue,
+    height: Metrics.nav * 1.25,
+    backgroundColor: Colors.gray7,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'flex-end',
+
+    borderBottomWidth: 1,
+    borderColor: Colors.gray5,
+  },
+
+  title: {
+    color: Colors.black,
+    fontSize: Metrics.font3,
+    paddingBottom: Metrics.pad / 2,
   },
 
   listContainer: {
-    flex: 7,
+    flex: 1,
     backgroundColor: 'white',
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -239,19 +252,37 @@ const styles = StyleSheet.create({
   },
 
   listItem: {
-    paddingTop: Metrics.pad * 1.5,
-    paddingBottom: Metrics.padBig,
+    paddingVertical: Metrics.pad * 1.25,
     flexDirection: 'column',
     justifyContent: 'space-evenly',
     backgroundColor: Colors.white,
 
-    borderColor: Colors.gray5,
+    borderColor: Colors.gray6,
     borderBottomWidth: 1,
   },
+
+  info: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'flex-start',
+    paddingHorizontal: Metrics.pad * 1.5,
+
+    backgroundColor: Colors.white,
+  },
+
   shadow: {
     shadowColor: Colors.black,
     shadowOpacity: Metrics.glow / 4,
     shadowRadius: 20,
+    shadowOffset: {width: 0, height: 4}
+  },
+
+  shadowSmall: {
+    shadowColor: Colors.black,
+    shadowOpacity: Metrics.shadow / 2,
+    shadowRadius: 5,
+    shadowOffset: {width: 0, height: 2},
   },
 
   circleButton: {
@@ -260,10 +291,11 @@ const styles = StyleSheet.create({
     width: Metrics.button,
     justifyContent: 'center',
     alignItems: 'center',
+
   },
   glow: {
     shadowColor: Colors.yellow,
-    shadowOpacity: Metrics.glow,
+    shadowOpacity: Metrics.glow / 2,
     shadowRadius: 10,
   },
 
@@ -271,20 +303,24 @@ const styles = StyleSheet.create({
     borderRadius: Metrics.button,
     height: Metrics.button,
     paddingLeft: Metrics.button / 2,
-    paddingRight: Metrics.pad,
+    paddingRight: Metrics.button / 4,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   buttonContainer: {
     borderRadius: Metrics.button,
+
   },
 
-  star: {
-    backgroundColor: Colors.gray6,
-    height: 50,
-    width: 50,
+  buttonRow: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    paddingTop: 5,
   },
+
   button_filled: {
     backgroundColor: Colors.yellow,
     alignItems: 'center',
@@ -299,41 +335,11 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
   },
-  bottom: {
-    flexDirection: 'row',
-  },
-  bottom_button_left: {
-    backgroundColor: '#FF4D00',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 50,
-    width: 120,
-    borderRadius: 40,
-    borderWidth: 2,
-    borderColor: '#FF4D00',
-    marginRight: 10,
-    marginTop: 20,
-  },
-  bottom_button_right: {
-    backgroundColor: '#0496FF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 50,
-    width: 120,
-    borderRadius: 40,
-    borderWidth: 2,
-    borderColor: '#0496FF',
-    marginTop: 20,
-  },
-  bottom_text_left: {
-    color: Colors.orange,
 
+  nav: {
+    height: Metrics.nav,
+    backgroundColor: Colors.purple,
   },
-  bottom_text_right: {
-    color: Colors.blue,
-
-  }
-
 
 
 });
