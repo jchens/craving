@@ -31,7 +31,7 @@ export default class Tracking extends Component {
       remindArray: remind,
 
       date: 'None',
-      isVisible: true,
+      isVisible: false,
       isDateTimePickerVisible: false,
 
     };

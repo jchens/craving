@@ -434,7 +434,7 @@ class FitToCoordinates extends React.Component {
 
         </View>
 
-        <View style={[styles.nav, styles.shadow]}>
+        <View style={[styles.nav, styles.shadowSmall]}>
           <Button
             buttonStyle={[styles.nav, style={height: Metrics.nav}]}
             containerStyle={[styles.nav, style={flex: 1}]}
@@ -462,7 +462,7 @@ class FitToCoordinates extends React.Component {
               <Feather
                 name='award'
                 size={20}
-                color={Colors.orange}
+                color={Colors.gray1}
               />
             }
           />
@@ -478,7 +478,7 @@ class FitToCoordinates extends React.Component {
               <Feather
                 name='star'
                 size={20}
-                color={Colors.orange}
+                color={Colors.gray1}
               />
             }
           />
@@ -494,7 +494,7 @@ class FitToCoordinates extends React.Component {
               <Feather
                 name='clock'
                 size={20}
-                color={Colors.orange}
+                color={Colors.gray1}
               />
             }
           />
@@ -886,7 +886,7 @@ const styles = StyleSheet.create({
   nav: {
     flexDirection: 'row',
     height: Metrics.nav,
-    backgroundColor: Colors.purple,
+    backgroundColor: Colors.white,
     justifyContent: 'space-evenly',
     alignItems: 'center',
   },
