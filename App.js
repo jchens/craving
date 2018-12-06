@@ -36,7 +36,7 @@ export default class App extends React.Component {
         {
           this.state.fontLoaded ? (
             // <Text style={{fontFamily: 'lato-bold'}}>Hi!</Text>
-            <Followed />
+            <Visited />
           ) : null
         }
       </View>

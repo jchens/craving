@@ -4,3 +4,4 @@ ios/*
 setup.sh
 .expo/packager-info.json
 .expo/settings.json
+*.json

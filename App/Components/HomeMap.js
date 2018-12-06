@@ -133,6 +133,16 @@ class FitToCoordinates extends React.Component {
     });
   }
 
+  toggleArray = (item) => {
+    console.log(profilesList.indexOf(item));
+
+    let temp = this.state.starArray;
+    temp[profilesList.indexOf(item)] = !temp[profilesList.indexOf(item)]
+    this.setState({
+        starArray: temp,
+    })
+  }
+
 // TODO: fix functionality
   goToTruck = () => {
     // openMap({ latitude: this.state.latitude, longitude: this.state.longitude });
@@ -252,17 +262,26 @@ class FitToCoordinates extends React.Component {
           <View style={styles.info}>
 
 
-            {/* view to hold image for shadow*/}
-            <View style={[styles.shadowSmall, style={
-              flex: 1,
-            }]}>
-              <Image source={this.state.image} resizeMode='cover' style={{
-                borderRadius: Metrics.curve,
-                aspectRatio: 1,
-                width: 50,
-                height: 50,
-              }}/>
-            </View>
+          {/* view to hold image for shadow*/}
+          <View style={[styles.shadowSmall, style={
+            flex: 1,
+            backgroundColor: Colors.white,
+            //borderRadius: Metrics.curve,
+            borderWidth: 4,
+            borderColor: Colors.white,
+
+            shadowColor: Colors.black,
+            shadowOpacity: Metrics.shadow * 0.75,
+            shadowRadius: 5,
+            shadowOffset: {width: 0, height: 4},
+          }]}>
+            <Image source={item.image} resizeMode='contain' style={{
+              //borderRadius: Metrics.curve,
+              aspectRatio: 1,
+              width: undefined,
+              height: undefined,
+            }}/>
+          </View>
 
             {/* info */}
             <View style={{
@@ -286,11 +305,21 @@ class FitToCoordinates extends React.Component {
 
 
             <Button
-              buttonStyle={[styles.circleButton, styles.glow, style={backgroundColor: Colors.yellow}]}
+              key={index}
+              buttonStyle={
+                this.state.starArray[profilesList.indexOf(item)]
+                  ? [styles.circleButton, style={backgroundColor: Colors.yellow}]
+                  : [styles.circleButton, style={
+                    backgroundColor: Colors.gray5,
+                    borderWidth: 1,
+                    borderColor: Colors.gray6
+                  }]
+              }
               containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.yellow}]}
               titleStyle={{
                 color: Colors.white,
               }}
+              onPress={() => this.toggleArray(item)}
               title=''
               icon={
                 <FontAwesome

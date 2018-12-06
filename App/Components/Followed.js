@@ -36,13 +36,22 @@ export default class Tracking extends Component {
     })
   }
 
+  toggleArray = (item) => {
+    console.log(profilesList.indexOf(item));
 
+    let temp = this.state.starArray;
+    temp[profilesList.indexOf(item)] = !temp[profilesList.indexOf(item)]
+    this.setState({
+        starArray: temp,
+    })
+  }
+  
   render () {
 
     return (
         <View style={styles.container}>
 
-            <View style={styles.titleContainer}>
+            <View style={[styles.titleContainer]}>
               <Text style={styles.title}>{'Followed'}</Text>
             </View>
 
@@ -55,32 +64,34 @@ export default class Tracking extends Component {
                 <View style={[styles.listItem]}>
 
                   {/* info: holding photo, info, and star*/}
-                  <View style={{
+                  <View style={styles.info}>
+
+                  {/* view to hold image for shadow*/}
+                  <View style={[styles.shadowSmall, style={
                     flex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'space-evenly',
-                    alignItems: 'flex-start',
-                    paddingHorizontal: Metrics.pad * 1.5,
-                    paddingBottom: Metrics.padSmall,
-                  }}>
+                    backgroundColor: Colors.white,
+                    //borderRadius: Metrics.curve,
+                    borderWidth: 4,
+                    borderColor: Colors.white,
 
-
-                    {/* view to hold image for shadow*/}
-                    <View style={[styles.shadowSmall, style={
-                      flex: 1,
-                    }]}>
-                      <Image source={item.image} resizeMode='cover' style={{
-                        borderRadius: Metrics.curve,
-                        aspectRatio: 1,
-                        width: undefined,
-                        height: undefined,
-                      }}/>
-                    </View>
+                    shadowColor: Colors.black,
+                    shadowOpacity: Metrics.shadow * 0.75,
+                    shadowRadius: 5,
+                    shadowOffset: {width: 0, height: 4},
+                  }]}>
+                    <Image source={item.image} resizeMode='contain' style={{
+                      //borderRadius: Metrics.curve,
+                      aspectRatio: 1,
+                      width: undefined,
+                      height: undefined,
+                    }}/>
+                  </View>
 
                     {/* info */}
                     <View style={{
                       flex: 2,
                       paddingHorizontal: Metrics.padSmall,
+                      // backgroundColor: Colors.purple,
                     }}>
                       <Text style={{
                         fontSize: Metrics.font3,
@@ -97,13 +108,29 @@ export default class Tracking extends Component {
                       }}> {item.description} </Text>
                     </View>
 
+                    {/* buttom column */}
+                    <View style={{
+                      flexDirection: 'column',
+                      justifyContent: 'flex-start',
+                      // backgroundColor: Colors.purple,
+                    }}>
 
                     <Button
-                      buttonStyle={[styles.circleButton, styles.glow, style={backgroundColor: Colors.yellow}]}
+                      key={index}
+                      buttonStyle={
+                        this.state.starArray[profilesList.indexOf(item)]
+                          ? [styles.circleButton, style={backgroundColor: Colors.yellow}]
+                          : [styles.circleButton, style={
+                            backgroundColor: Colors.gray5,
+                            borderWidth: 1,
+                            borderColor: Colors.gray6
+                          }]
+                      }
                       containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.yellow}]}
                       titleStyle={{
-                        color: Colors.white
+                        color: Colors.white,
                       }}
+                      onPress={() => this.toggleArray(item)}
                       title=''
                       icon={
                         <FontAwesome
@@ -113,29 +140,23 @@ export default class Tracking extends Component {
                         />
                       }
                     />
-                  </View>
 
-                  {/* button Row */}
-                  <View style={styles.buttonRow}>
+                      {/* for spacing between buttons in button column */}
+                      <View style={{
+                        height: Metrics.pad / 2,
+                        // backgroundColor: Colors.blue,
+                      }}>
+                      </View>
 
-                    <View style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-evenly',
-                      alignItems: 'center',
-                      backgroundColor: Colors.white,
-                      borderColor: Colors.orange,
-                      borderWidth: 1,
-                      borderRadius: Metrics.button,
-                    }}>
                       <Button
                         onPress={console.log('should run this.goToTruck')}
-                        buttonStyle={[styles.button, style={backgroundColor: Colors.orange}]}
+                        buttonStyle={[styles.circleButton, style={backgroundColor: Colors.orange}]}
                         containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.orange}]}
                         titleStyle={{
                           color: Colors.white,
                           fontSize: Metrics.font4,
                         }}
-                        title='Find on map'
+                        title=''
                         icon={
                           <Feather
                             name='map-pin'
@@ -145,33 +166,7 @@ export default class Tracking extends Component {
                         }
                       />
                     </View>
-
-                    {/* view to hold right button */}
-                    <View style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-evenly',
-                      alignItems: 'center',
-                    }}>
-                      <Button
-                        buttonStyle={[styles.button, style={backgroundColor: Colors.blue}]}
-                        containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.blue}]}
-                        titleStyle={{
-                          color: Colors.white,
-                          fontSize: Metrics.font4,
-                        }}
-                        title='Profile'
-                        icon={
-                          <Feather
-                            name='truck'
-                            size={17}
-                            color='white'
-                          />
-                        }
-                      />
-                    </View>
-
                   </View>
-
                 </View>
               }
                 renderSectionHeader={({section: {title}}) => (
@@ -232,6 +227,9 @@ const styles = StyleSheet.create({
 
     borderBottomWidth: 1,
     borderColor: Colors.gray5,
+
+    zIndex: 3,
+
   },
 
   title: {
@@ -249,6 +247,8 @@ const styles = StyleSheet.create({
 
     // TODO: change this to reveal some cool illustration
     backgroundColor: Colors.purple,
+    zIndex: 1,
+
   },
 
   listItem: {
@@ -266,9 +266,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'flex-start',
-    paddingHorizontal: Metrics.pad * 1.5,
-
-    backgroundColor: Colors.white,
+    paddingHorizontal: Metrics.pad * 1.25,
   },
 
   shadow: {
