@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View } from 'react-native';
+import { createBottomTabNavigator, TabBarBottom, createAppContainer} from 'react-navigation';
 import HomeMap from './App/Components/HomeMap';
 //import TruckMap from './App/Components/TruckMap';
 //import Rewards from './App/Components/Rewards';
@@ -11,6 +12,30 @@ import { Metrics, Colors, Images } from './App/Themes'
 
 import Icon from '@expo/vector-icons/MaterialCommunityIcons'
 
+
+const TabNavigator = createBottomTabNavigator(
+  {
+    Map: HomeMap,
+    //Rewards: Rewards,
+    Followed: Followed,
+    Visited: Visited
+  },
+  {
+    initialRouteName: 'Map',
+    order: ['Map', /*'Rewards',*/'Followed', 'Visited'],
+    tabBarComponent: TabBarBottom,
+    tabBarPosition: 'bottom',
+    tabBarOptions: {
+      activeTintColor: Colors.blue,
+      inactiveTintColor: Colors.gray3,
+      tabStyle: {
+        paddingBotom: 15, // note: idk if this is needed, but the Android bar is in the way
+      },
+    },
+    animationEnabled: false, // idk what this does lol
+    swipeEnabled: true, // I don't think it actually supports swipes lol
+  }
+);
 
 export default class App extends React.Component {
 
