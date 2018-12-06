@@ -22,7 +22,11 @@ const metrics = {
   screenWidth: width < height ? width : height,
   screenHeight: width < height ? height : width,
   navBarHeight: (Platform.OS === 'ios') ? 64 : 54,
-  button: 50,
+  button: 40,
+  nav: 50,
+
+  image: 60,
+
   curve: 5,
   icons: {
     tiny: 15,
@@ -38,8 +42,11 @@ const metrics = {
     logo: 200,
   },
 
-  fontMed: 18,
-  fontSmall: 14,
+  font1: 36,
+  font2: 24,
+  font3: 18,
+  font4: 14,
+  font5: 12,
 }
 
 export default metrics
