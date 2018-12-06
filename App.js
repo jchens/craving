@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 //import HomeMap from './App/Components/HomeMap';
 //import TruckMap from './App/Components/TruckMap';
 //import Rewards from './App/Components/Rewards';
+import Profile from './App/Components/Profile';
 import { Font } from 'expo';
 import { Metrics, Colors, Images } from './App/Themes'
 
@@ -32,16 +33,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        {
-          this.state.fontLoaded ? (
-            <Text style={{ fontFamily: 'lato-bold', fontSize: 20 }}>
-              Hello, world!
-            </Text>
-          ) : null
-        }
-        <Text style={{ fontSize: 20 }}> Hello, world! is there a difference lmao</Text>
-      </View>
+      <Profile />
     );
   }
 }
