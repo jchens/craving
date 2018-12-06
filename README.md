@@ -10,6 +10,10 @@ Used `npm install --save react-native-modal-datetime-picker` to [pick a date & t
 
 Used `npm install --save react-native-modal-datetime-picker` to [implement the bottom navbar](https://github.com/react-navigation/react-navigation).
 
+Used `npm install --save react-native-snap-carousel` to [implement the photo carousel](https://www.npmjs.com/package/react-native-snap-carousel.
+
+Used `npm i -S react-native-multiple-tags` to [implement the review tags](https://github.com/caleb-tolu/react-native-multiple-tags).
+
 Allow usage of location from instructions [here](https://stackoverflow.com/questions/48157185/info-plist-file-for-react-native-ios-app-using-expo-sdk?noredirect=1&lq=1).
 
 ## Instructions
@@ -25,6 +29,10 @@ npm install yarn add react-native-typography
 npm install --save react-native-modal-datetime-picker
 
 npm install --save react-navigation
+
+npm install --save react-native-snap-carousel
+
+npm i -S react-native-multiple-tags
 
 expo start
 ```
