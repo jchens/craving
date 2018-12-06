@@ -18,6 +18,7 @@
     "react-native-material-bottom-navigation": "^1.0.2",
     "react-native-modal-datetime-picker": "^6.0.0",
     "react-native-typography": "^1.4.0",
+    "react-navigation": "^3.0.5",
     "yarn": "^1.12.3"
   },
   "devDependencies": {
