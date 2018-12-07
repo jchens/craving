@@ -635,55 +635,47 @@ export default class Profile extends Component {
           }}>
             <Button
              title= {'Affordable'}
-             buttonStyle={{
-               backgroundColor: "#241E4E",
-               width: 150,
-               height: 45,
-               borderColor: "transparent",
-               borderWidth: 0,
-               borderRadius: 5,
-               marginLeft: 10
+             titleStyle={{
+                 color: Colors.white,
+                 fontWeight: 'bold',
              }}
-             containerStyle={{ marginTop: 20 }}
+             buttonStyle={[styles.tag, style={
+               backgroundColor: Colors.orange,
+             }]}
+             containerStyle={styles.tagContainer}
             />
             <Button
              title= {'Good food'}
-             buttonStyle={{
-               backgroundColor: "#241E4E",
-               width: 150,
-               height: 45,
-               borderColor: "transparent",
-               borderWidth: 0,
-               borderRadius: 5,
-               marginLeft: 10
+             titleStyle={{
+                 color: Colors.white,
+                 fontWeight: 'bold',
              }}
-             containerStyle={{ marginTop: 20 }}
+             buttonStyle={[styles.tag, style={
+               backgroundColor: Colors.orange,
+             }]}
+             containerStyle={styles.tagContainer}
             />
             <Button
              title= {'Long line'}
-             buttonStyle={{
-               backgroundColor: "#6A6876",
-               width: 150,
-               height: 45,
-               borderColor: "transparent",
-               borderWidth: 0,
-               borderRadius: 5,
-               marginLeft: 10
+             titleStyle={{
+                 color: Colors.gray1,
+                 fontWeight: 'bold',
              }}
-             containerStyle={{ marginTop: 20 }}
+             buttonStyle={[styles.tag, style={
+               backgroundColor: Colors.gray5,
+             }]}
+             containerStyle={styles.tagContainer}
             />
             <Button
              title= {'Small Portions'}
-             buttonStyle={{
-               backgroundColor: "#6A6876",
-               width: 150,
-               height: 45,
-               borderColor: "transparent",
-               borderWidth: 0,
-               borderRadius: 5,
-               marginLeft: 10
+             titleStyle={{
+                 color: Colors.gray1,
+                 fontWeight: 'bold',
              }}
-             containerStyle={{ marginTop: 20 }}
+             buttonStyle={[styles.tag, style={
+               backgroundColor: Colors.gray5,
+             }]}
+             containerStyle={styles.tagContainer}
             />
           </View>
 
