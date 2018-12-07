@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
 
     description: {
       fontSize: 18,
-      color: Colors.purple,
+      color: Colors.gray1,
       textAlign: 'center',
     },
 
