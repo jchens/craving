@@ -34,7 +34,6 @@ const SPACE = 0.01;
 
 
 function createMarker(modifier = 1) {
-  console.log('create marker');
   return {
     latitude: profilesList[modifier - 1].latitude,
     longitude: profilesList[modifier - 1].longitude,
@@ -659,14 +658,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'stretch',
     flexDirection: 'column',
-    backgroundColor: 'blue',
+    backgroundColor: Colors.orange,
   },
   map: {
     //...StyleSheet.absoluteFillObject,
     flex: 10,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    backgroundColor: 'yellow'
   },
 
   zoomButton: {

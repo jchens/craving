@@ -48,16 +48,6 @@ export default class Followed extends Component {
     this.setState({ fontLoaded: true });
   }
 
-  updatedState = (key) => {
-    console.log("im here");
-    console.log(key);
-    let temp = this.state.fav;
-    temp[key] = !temp[key];
-    console.log(temp);
-    this.setState({
-        fav: temp,
-    })
-  }
 
   toggleArray = (item) => {
     console.log(profilesList.indexOf(item));
@@ -402,7 +392,6 @@ export default class Followed extends Component {
             }
               renderSectionHeader={({section: {title}}) => (
                 <View style={[styles.shadowSmall, styles.sectionHead]}>
-
                   {
                     this.state.fontLoaded ? (
                       <Text style={{
@@ -470,7 +459,7 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
 
     // TODO: change this to reveal some cool illustration
-    backgroundColor: Colors.purple,
+    backgroundColor: Colors.orange,
 
   },
 
@@ -508,7 +497,7 @@ const styles = StyleSheet.create({
 
   shadowSmall: {
     shadowColor: Colors.black,
-    shadowOpacity: Metrics.glow / 10,
+    shadowOpacity: Metrics.glow / 9,
     shadowRadius: 5,
     shadowOffset: {width: 0, height: 4},
   },
@@ -566,11 +555,6 @@ const styles = StyleSheet.create({
     padding: Metrics.pad * 1.25,
     paddingBottom: Metrics.nav * 1.5,
 
-  },
-
-  nav: {
-    height: Metrics.nav,
-    backgroundColor: Colors.purple,
   },
 
 

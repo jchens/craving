@@ -7,7 +7,7 @@ const images = {
   'pin-orange': require('../Images/Icons/icons_pin_orange.png'),
   'search': require('../Images/Icons/icons_search.png'),
   'star': require('../Images/Icons/icons_star.png'),
-  'sanjeet-food-truck': require('../Images/FTProfiles/trijeet.jpeg'),
+  'sanjeet_food_truck': require('../Images/FTProfiles/trijeet.jpeg'),
   'akita-gourmet': require('../Images/FTProfiles/akita_gourmet.png'),
   'i-love-cheesesteak': require('../Images/FTProfiles/i_love_cheesesteak.jpg'),
   'los-tolucas': require('../Images/FTProfiles/los_tolucas.jpg'),

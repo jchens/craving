@@ -232,7 +232,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.orange,
+
   },
 
   titleContainer: {
@@ -256,7 +257,6 @@ const styles = StyleSheet.create({
 
   },
 
-
   listContainer: {
     flex: 1,
     backgroundColor: 'white',
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
 
     // TODO: change this to reveal some cool illustration
-    backgroundColor: Colors.purple,
+    backgroundColor: Colors.orange,
   },
 
   sectionHead: {
@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
 
   shadowSmall: {
     shadowColor: Colors.black,
-    shadowOpacity: Metrics.glow / 10,
+    shadowOpacity: Metrics.glow / 9,
     shadowRadius: 5,
     shadowOffset: {width: 0, height: 4},
   },
