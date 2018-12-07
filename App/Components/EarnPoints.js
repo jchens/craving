@@ -41,8 +41,10 @@ export default class EarnPoints extends Component {
           color={Colors.orange}
         />
 
-        <Text style={styles.description}>Thanks for {this.props.source}!</Text>
-        <Text style={styles.description}>You earned 10 points.</Text>
+        <View>
+          <Text style={styles.description}>Thanks for {this.props.source}! </Text>
+          <Text style={styles.description}>You earned <Text style={styles.emphasis}>10 points.</Text></Text>
+        </View>
 
         <Button
           buttonStyle={styles.button}
@@ -95,12 +97,18 @@ const styles = StyleSheet.create({
     header: {
       fontSize: 28,
       fontWeight: 'bold',
-      color: Colors.black
+      color: Colors.black,
     },
 
     description: {
       fontSize: 18,
-      color: Colors.purple
+      color: Colors.purple,
+      textAlign: 'center',
+    },
+
+    emphasis: {
+      fontWeight: 'bold',
+      color: Colors.orange,
     },
 
     shadow: {

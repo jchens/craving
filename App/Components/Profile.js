@@ -416,7 +416,6 @@ export default class Profile extends Component {
                     this.state.fontLoaded ? (
                       <Text style={{
                         fontFamily: 'lato-bold',
-                        flexWrap: 'wrap',
                       }}>{truck.time}</Text>
                     ) : null
                   }
