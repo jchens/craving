@@ -6,14 +6,18 @@ import {profilesList} from '../Themes/Profiles.js'
 
 import ProgressBarAnimated from 'react-native-progress-bar-animated';
 
+import { Font } from 'expo';
+
+
 
 
 export default class Rewards extends Component {
 
   state = {
     progress: 20,
-    progressWithOnComplete: 0,
+    progressWithOnComplete: 50,
     progressCustomized: 0,
+    fontLoaded: false,
   }
 
   increase = (key, value) => {
@@ -22,6 +26,15 @@ export default class Rewards extends Component {
     });
   }
 
+
+  async componentDidMount() {
+    await Font.loadAsync({
+      'lato-regular': require('../../assets/fonts/Lato-Regular.ttf'),
+      'lato-bold': require('../../assets/fonts/Lato-Bold.ttf'),
+      'lato-black': require('../../assets/fonts/Lato-Black.ttf'),
+    });
+    this.setState({ fontLoaded: true });
+  }
 
 
   render () {
@@ -40,40 +53,128 @@ export default class Rewards extends Component {
           <Text style={styles.titleRewards}> Rewards</Text>
 
           <View style={styles.progress}>
+            <View style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              flex: 1,
+            }}>
 
-            <View style={styles.checkpoints}>
-              <View style={styles.outer1}>
-                <View style={styles.inner}>
+
+              <View style={{
+                width: 25,
+                height: 25,
+                borderRadius: 12.5,
+                backgroundColor: '#FF4D00',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 16,
+                marginRight: 26,
+              }}>
+                <View style={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: 5,
+                  backgroundColor: '#FF4D00',
+                }}>
                 </View>
               </View>
-              <View style={styles.outer2}>
-                <View style={styles.inner}>
+
+              <View style={{
+                width: 25,
+                height: 25,
+                borderRadius: 12.5,
+                backgroundColor: '#FF4D00',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 16,
+                marginLeft: 25,
+                marginRight: 25,
+              }}>
+                <View style={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: 5,
+                  backgroundColor: '#FF4D00',
+                }}>
                 </View>
               </View>
-            <View>
 
+              <View style={{
+                width: 25,
+                height: 25,
+                borderRadius: 12.5,
+                backgroundColor: '#FF4D00',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 16,
+                marginLeft: 25,
+                marginRight: 25,
+              }}>
+                <View style={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: 5,
+                  backgroundColor: '#FF4D00',
+                }}>
+                </View>
+              </View>
+
+              <View style={{
+                width: 25,
+                height: 25,
+                borderRadius: 12.5,
+                backgroundColor: '#FF4D00',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 16,
+                marginLeft: 25,
+                marginRight: 25,
+              }}>
+                <View style={{
+                  width: 7,
+                  height: 7,
+                  borderRadius: 3.5,
+                  backgroundColor: 'white',
+                  zIndex: 1,
+                }}>
+                </View>
+              </View>
+
+              <View style={{
+                width: 25,
+                height: 25,
+                borderRadius: 12.5,
+                backgroundColor: '#FF4D00',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 16,
+                marginLeft: 26,
+              }}>
+                <View style={{
+                  width: 7,
+                  height: 7,
+                  borderRadius: 3.5,
+                  backgroundColor: 'white',
+                }}>
+                </View>
+              </View>
+
+
+
+
+            </View>
             <View style={styles.bar}>
-
 
               <ProgressBarAnimated
                 {...progressCustomStyles}
                 width={barWidth}
+                height={8}
                 value={this.state.progressWithOnComplete}
                 onComplete={() => {
                   Alert.alert('Hey!', 'onComplete event fired!');
                 }}
               />
             </View>
-
-            <View style={styles.buttonContainer}>
-              <View style={styles.buttonInner}>
-                <Button
-                  title="Increase 25%"
-                  onPress={this.increase.bind(this, 'progressWithOnComplete', 25)}
-                />
-              </View>
-            </View>
-
           </View>
 
         </View>
@@ -153,53 +254,12 @@ const styles = StyleSheet.create({
   },
   progress: {
     alignItems: 'center',
-  },
-  outer1: {
-    backgroundColor: '#FF4D00',
-    height: 30,
-    width: 30,
-    borderRadius: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inner: {
-    backgroundColor: 'white',
-    height: 16,
-    width: 16,
-    borderRadius: 8,
-  },
-  outer2: {
-    backgroundColor: '#FF4D00',
-    height: 30,
-    width: 30,
-    borderRadius: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
-
-  },
-  outer3: {
-    backgroundColor: '#FF4D00',
-    height: 30,
-    width: 30,
-    borderRadius: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginLeft: 300,
-    marginTop: 2.5,
-  },
-  outer4: {
-    backgroundColor: '#FF4D00',
-    height: 30,
-    width: 30,
-    borderRadius: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginLeft: 300,
-    marginTop: 2.5,
+    flex: 1,
   },
   bar: {
     position: 'absolute',
-    paddingTop: 10,
+    paddingTop:25,
+    zIndex: 0,
 
   },
   craving: {
