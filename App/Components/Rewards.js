@@ -5,7 +5,7 @@ import { Metrics, Colors, Images } from '../Themes'
 import {profilesList} from '../Themes/Profiles.js'
 
 import ProgressBarAnimated from 'react-native-progress-bar-animated';
-import { Feather, MaterialIcons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Feather, MaterialIcons, FontAwesome, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 
 
 import { Font } from 'expo';
@@ -187,52 +187,83 @@ export default class Rewards extends Component {
 
 
         <View style={styles.craving}>
-          <Text style={styles.titleCraving}> {"TODAY'S CRAVING"} </Text>
+          <View style={[styles.shadowSmall, styles.sectionHead]}>
+            {
+              this.state.fontLoaded ? (
+                <Text style={{
+                  fontFamily: 'lato-bold',
+                  color: Colors.gray1,
+                  letterSpacing: 1,
+                  fontSize: Metrics.font5
+                }}>{"TODAY'S CRAVINGS"}</Text>
+              ) : null
+            }
+          </View>
           <View style={styles.goals}>
 
-            <View style={styles.card1}>
+            <View style={styles.listItem}>
 
-              <View style={styles.symbol}>
-                <View style={styles.circle}>
-                  <FontAwesome
-                    name='star'
+              <View style={[styles.symbol]}>
+                <View style={styles.symbolContainer}>
+                  <AntDesign
+                    name='find'
                     size={Metrics.button/1.5}
-                    color= {'#0496FF'}
+                    color= {Colors.white}
                   />
                 </View>
                 <Text style={styles.points}> + 10 PTS </Text>
               </View>
 
-              <Text style={styles.text}> FIND A FOOD TRUCK NEARBY </Text>
+              <View style={styles.textContainer}>
+                {
+                  this.state.fontLoaded ? (
+                    <Text style={styles.text}>Find a food truck nearby</Text>
+                  ) : null
+                }
+              </View>
             </View>
 
-            <View style={styles.card2}>
-              <View style={styles.symbol}>
-                <View style={styles.circle}>
-                  <FontAwesome
-                    name='star'
+            <View style={styles.listItem}>
+
+              <View style={[styles.symbol]}>
+                <View style={styles.symbolContainer}>
+                  <Feather
+                    name='check-circle'
                     size={Metrics.button/1.5}
-                    color= {'#FF4D00'}
+                    color= {Colors.white}
                   />
                 </View>
                 <Text style={styles.points}> + 10 PTS </Text>
               </View>
-              <Text style={styles.text}> VISIT A FOOD TRUCK </Text>
+
+              <View style={styles.textContainer}>
+                {
+                  this.state.fontLoaded ? (
+                    <Text style={styles.text}>Visit a food truck</Text>
+                  ) : null
+                }
+              </View>
             </View>
 
-            <View style={styles.card3}>
-
-              <View style={styles.symbol}>
-                <View style={styles.circle}>
-                  <FontAwesome
-                    name='star'
+            <View style={styles.listItem}>
+              <View style={[styles.symbol]}>
+                <View style={styles.symbolContainer}>
+                  <MaterialCommunityIcons
+                    name='comment-text-outline'
                     size={Metrics.button/1.5}
-                    color= {'#FFD046'}
+                    color= {Colors.white}
                   />
                 </View>
                 <Text style={styles.points}> + 10 PTS </Text>
               </View>
-              <Text style={styles.text}> LEAVE A REVIEW </Text>
+
+              <View style={styles.textContainer}>
+                {
+                  this.state.fontLoaded ? (
+                    <Text style={styles.text}>Leave a review</Text>
+                  ) : null
+                }
+              </View>
             </View>
 
           </View>
@@ -268,12 +299,30 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: Colors.gray5,
   },
-  titleCraving: {
-    fontFamily: 'lato-bold',
-    fontSize: 18,
-    marginLeft: 35,
 
+  sectionHead: {
+    backgroundColor: Colors.white,
+    height: Metrics.button,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: Metrics.pad,
+    flexDirection: 'row',
   },
+
+  shadow: {
+    shadowColor: Colors.black,
+    shadowOpacity: Metrics.glow / 2,
+    shadowRadius: 20,
+    shadowOffset: {width: 0, height: 4}
+  },
+
+  shadowSmall: {
+    shadowColor: Colors.black,
+    shadowOpacity: Metrics.glow / 9,
+    shadowRadius: 5,
+    shadowOffset: {width: 0, height: 4},
+  },
+
   reward: {
     flex: 2,
   },
@@ -296,66 +345,67 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   card1: {
-    backgroundColor: '#0496FF',
+    paddingVertical: Metrics.pad * 1.25,
     flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 15,
-    width: 330,
-    height: 117,
-    margin: 15,
+    justifyContent: 'space-evenly',
+    backgroundColor: Colors.white,
+
+    borderColor: Colors.gray6,
+    borderBottomWidth: 1,
+    paddingHorizontal: Metrics.pad * 1.25,
   },
-  card2: {
-    backgroundColor: '#FF4D00',
+
+  listItem: {
+    paddingVertical: Metrics.pad * 1.25,
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 15,
-    width: 330,
-    height: 117,
-    margin: 15,
+    // backgroundColor: Colors.purple,
+
+    borderColor: Colors.gray6,
+    borderBottomWidth: 1,
+    paddingHorizontal: Metrics.pad * 1.25,
   },
-  card3: {
-    backgroundColor: '#FFD046',
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 15,
-    width: 330,
-    height: 117,
-    margin: 15,
-  },
+
   symbol: {
     flexDirection: 'column',
     alignItems: 'center',
-    marginLeft: 30,
+    flex: 1,
   },
-  circle: {
-    backgroundColor: 'white',
+
+  symbolContainer: {
+    backgroundColor: Colors.orange,
     alignItems: 'center',
     justifyContent: 'center',
     height: 50,
     width: 50,
     borderRadius: 25,
   },
-  star: {
-    backgroundColor: 'blue',
-    height: 30,
-    width: 30,
-  },
+
   points: {
     fontFamily: 'lato-bold',
     marginTop: 5,
-    color: 'white',
+    color: Colors.gray1,
 
+  },
+
+  textContainer: {
+    flex: 2,
+    // backgroundColor: Colors.blue,
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   text: {
     fontFamily: 'lato-bold',
-    fontSize: 15,
+    fontSize: Metrics.font4,
     textAlign: 'center',
-    lineHeight: 20,
+    // lineHeight: 20,
     width: 125,
-    marginBottom: 10,
-    marginLeft: 60,
-    color: 'white',
+    // marginBottom: 10,
+    // marginLeft: 60,
+    color: Colors.gray1,
   },
+
   label: {
     color: '#999',
     fontSize: 14,
