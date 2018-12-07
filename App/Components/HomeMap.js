@@ -97,9 +97,9 @@ class FitToCoordinates extends React.Component {
   // also not able to move map now
   searchComplete = () => {
     // case-insensitive
-    if (this.state.text === 'taco') {
-      console.log(input)
-      this.onMarkerClick(0)
+    if (this.state.text.localeCompare('taco') === 0) {
+      console.log(input);
+      this.onMarkerClick(0);
     }
   }
 
@@ -244,7 +244,7 @@ class FitToCoordinates extends React.Component {
 
               }}
               placeholder="I'm craving..."
-              placeholderTextColor='#828282'
+              placeholderTextColor={Colors.gray3}
               onSubmitEditing={() => this.searchComplete}
               />
 
