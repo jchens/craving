@@ -659,14 +659,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'stretch',
     flexDirection: 'column',
-    backgroundColor: 'blue',
+    backgroundColor: Colors.orange,
   },
   map: {
     //...StyleSheet.absoluteFillObject,
     flex: 10,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    backgroundColor: 'yellow'
   },
 
   zoomButton: {

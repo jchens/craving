@@ -6,6 +6,7 @@ import HomeMap from './App/Components/HomeMap';
 import Visited from './App/Components/Visited';
 import Followed from './App/Components/Followed';
 import Profile from './App/Components/Profile';
+import ProfileA from './App/Components/ProfileA';
 import { Feather, MaterialIcons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { Font } from 'expo';
@@ -32,7 +33,7 @@ const TabNavigator = createBottomTabNavigator(
     //Rewards: Rewards,
 
     Rewards: {
-      screen: Followed,
+      screen: ProfileA,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <Feather
@@ -74,7 +75,7 @@ const TabNavigator = createBottomTabNavigator(
 
   },
   {
-    initialRouteName: 'HomeMap',
+    initialRouteName: 'Rewards',
     order: ['HomeMap', 'Rewards', 'Followed', 'Visited'],
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
@@ -113,6 +114,6 @@ export default createAppContainer(TabNavigator);
 const styles = StyleSheet.create({
   container: {
       flex: 1,
-      backgroundColor: Colors.yellow,
+      backgroundColor: Colors.orange,
     },
 });
