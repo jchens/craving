@@ -225,7 +225,7 @@ export default class Followed extends Component {
                       borderColor: Colors.white,
 
                       shadowColor: Colors.black,
-                      shadowOpacity: Metrics.shadow * 0.75,
+                      shadowOpacity: Metrics.shadow * 0.85,
                       shadowRadius: 5,
                       shadowOffset: {width: 0, height: 4},
                     }]}>
@@ -426,7 +426,7 @@ export default class Followed extends Component {
                 </View>
               )}
               sections={[
-                {title: 'TODAY', data: [profilesList[5]]},
+                {title: 'FRIDAY', data: [profilesList[5]]},
                 {title: 'SATURDAY', data: [profilesList[6], profilesList[1], profilesList[2]]},
                 {title: 'SUNDAY', data: [profilesList[0], profilesList[3]]},
                 {title: 'MONDAY', data: [profilesList[4], profilesList[6]]},

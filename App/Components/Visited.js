@@ -84,7 +84,7 @@ export default class Visited extends Component {
                       borderColor: Colors.white,
 
                       shadowColor: Colors.black,
-                      shadowOpacity: Metrics.shadow * 0.75,
+                      shadowOpacity: Metrics.shadow * 0.85,
                       shadowRadius: 5,
                       shadowOffset: {width: 0, height: 4},
                     }]}>
