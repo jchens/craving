@@ -1,18 +1,30 @@
 import React, { Component } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
+import { NavigationActions, StackActions } from 'react-navigation';
 
 import { Colors } from '../Themes';
 
+/* Disables being able to go back to the onboarding screens from the main app. */
+const resetAction = StackActions.reset({
+  index: 0,
+  actions: [
+    NavigationActions.navigate({
+      routeName: 'Main',
+    })
+  ]
+});
+
 export default class Onboard extends Component {
+
   doneCallback = () => {
     /* Hitting the done button navigates to the rest of the app. */
-    this.props.navigation.navigate('Main');
+    this.props.navigation.dispatch(resetAction);
   }
 
   skipCallback = () => {
     /* Hitting the skip button navigates to the rest of the app. */
-    this.props.navigation.navigate('Main');
+    this.props.navigation.dispatch(resetAction);
   }
 
   render() {
