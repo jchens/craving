@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native';
-import { createBottomTabNavigator, TabBarBottom, createAppContainer} from 'react-navigation';
+import { createBottomTabNavigator, TabBarBottom, createAppContainer, createStackNavigator } from 'react-navigation';
 import HomeMap from './HomeMap';
 import Rewards from './Rewards';
 import Visited from './Visited';
@@ -14,11 +14,30 @@ import { Metrics, Colors, Images } from '../Themes';
 
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
+/* Handles navigating from map to truck profile. */
+const HomeStack = createStackNavigator(
+  {
+    HomeMap: {
+      screen: HomeMap
+    },
+    Profile: {
+      screen: Profile
+    }
+  },
+  {
+    /* These options hide the stack navigator at the top. */
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false
+    }
+  }
+)
 
+/* Bottom tab navigator. */
 const TabNavigator = createBottomTabNavigator(
   {
     HomeMap: {
-      screen: HomeMap,
+      screen: HomeStack,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <Feather
