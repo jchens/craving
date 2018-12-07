@@ -67,7 +67,7 @@ const reviews = [
   {
       name: "Thomas Hsieh",
       icon: Images.stock3,
-      friend: true,
+      friend: false,
       date: "2 days ago",
       positiveTags: ["Short wait", "Friendly staff"],
       negativeTags: ["Greasy", "Tastes bland"]
@@ -75,7 +75,7 @@ const reviews = [
   {
       name: "Jessica Chen",
       icon: Images.stock4,
-      friend: true,
+      friend: false,
       date: "2 days ago",
       positiveTags: ["Great carnitas", "Great tacos"],
       negativeTags: ["Long", "Small portions"]
@@ -733,14 +733,6 @@ export default class Profile extends Component {
                   <View style={[styles.listItem]}>
 
 
-
-
-
-
-
-
-
-
                   {/* hold photo, info, and address (to the right is the button column)*/}
                     <View style={{
                       flex: 1,
@@ -767,8 +759,8 @@ export default class Profile extends Component {
                           <Image source={item.icon} resizeMode='contain' style={{
                             //borderRadius: Metrics.curve,
                             aspectRatio: 1,
-                            width: 75,
-                            height: 75,
+                            width: undefined,
+                            height: undefined,
                           }}/>
                         </View>
 
@@ -808,7 +800,7 @@ export default class Profile extends Component {
                         flexDirection: 'row',
                         alignItems: 'center',
                         flexWrap: 'wrap',
-                        justifyContent: 'space-between',
+                        justifyContent: 'flex-start',
                       }}>
                         {
                           item.positiveTags.map(tag =>
@@ -829,7 +821,8 @@ export default class Profile extends Component {
 
                       <View style={{
                         flexDirection: 'row',
-                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        justifyContent: 'flex-start',
                         flexWrap: 'wrap',
                       }}>
                         {
