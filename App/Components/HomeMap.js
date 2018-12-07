@@ -34,6 +34,7 @@ const SPACE = 0.01;
 
 
 function createMarker(modifier = 1) {
+  console.log('create marker');
   return {
     latitude: profilesList[modifier - 1].latitude,
     longitude: profilesList[modifier - 1].longitude,
@@ -203,84 +204,79 @@ class FitToCoordinates extends React.Component {
           loadingEnabled={true}
           showsUserLocation={true}
         >
-
-          {/* TODO: add highlight when marker is clicked */}
-          {MARKERS.map((marker, i) => (
-            <Marker
-              key={i}
-              identifier={i.toString()}
-              coordinate={marker}
-              onPress={e => this.onMarkerClick(parseInt(e.nativeEvent.id))}
-              anchor={{ x: 0.5, y: 1 }}
-            >
-            <Image source={markerImg} style={{
-              width: 40,
-              height: 40
-            }} />
-            </Marker>
-          ))}
-
-          <View style={styles.searchContainer}>
-            <View style={styles.searchBar}>
-
-              {/* search bar - text input */}
-              <TextInput
-                onChangeText={(text) => this.setState({text})}
-                value={this.state.text}
-                clearButtonMode='while-editing'
-                style={{
-                  paddingHorizontal: Metrics.pad,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  flex: 1,
-
-                }}
-                placeholder="I'm craving..."
-                placeholderTextColor='#828282'
-                onSubmitEditing={() => this.searchComplete}
-                />
-
-                {/* clock icon */}
-                <Button
-                  buttonStyle={[styles.button, style={backgroundColor: Colors.gray6}]}
-                  containerStyle={{
-                    backgroundColor: Colors.gray6,
-                    borderTopRightRadius: Metrics.button,
-                    borderBottomRightRadius: Metrics.button,
-                    borderLeftWidth: 1,
-                    borderColor: Colors.gray5
-                  }}
-                  titleStyle={{
-                    color: Colors.gray3,
-                    fontSize: Metrics.font4,
-                  }}
-                  title={this.state.timeToSearch}
-                  icon={
-                    <Feather
-                      name='clock'
-                      size={20}
-                      color={Colors.gray3}
-                    />
-                  }
-                  onPress={() => this.setState({
-                    isTimeOverlayVisible: !this.state.isTimeOverlayVisible,
-                  })}
-                />
-
-            </View>
-          </View>
-
-          <TouchableOpacity
-            onPress={this.fitAllMarkers}
-            style={styles.zoomButton}
+        {MARKERS.map((marker, i) => (
+          <Marker
+            key={i}
+            identifier={i.toString()}
+            coordinate={marker}
+            onPress={e => this.onMarkerClick(parseInt(e.nativeEvent.id))}
+            anchor={{ x: 0.5, y: 1 }}
           >
-            <Feather
-              name='zoom-out'
-              size={Metrics.button / 2}
-            />
-          </TouchableOpacity>
-
+          <Image source={markerImg} style={{width: 40, height: 40 }} />
+          </Marker>
+        ))}
         </MapView>
+
+        {/* Had to move these components out of the map */}
+        <View style={styles.searchContainer}>
+          <View style={styles.searchBar}>
+
+            {/* search bar - text input */}
+            <TextInput
+              onChangeText={(text) => this.setState({text})}
+              value={this.state.text}
+              clearButtonMode='while-editing'
+              style={{
+                paddingHorizontal: Metrics.pad,
+                justifyContent: 'center',
+                alignItems: 'center',
+                flex: 1,
+
+              }}
+              placeholder="I'm craving..."
+              placeholderTextColor='#828282'
+              onSubmitEditing={() => this.searchComplete}
+              />
+
+              {/* clock icon */}
+              <Button
+                buttonStyle={[styles.button, style={backgroundColor: Colors.gray6}]}
+                containerStyle={{
+                  backgroundColor: Colors.gray6,
+                  borderTopRightRadius: Metrics.button,
+                  borderBottomRightRadius: Metrics.button,
+                  borderLeftWidth: 1,
+                  borderColor: Colors.gray5
+                }}
+                titleStyle={{
+                  color: Colors.gray3,
+                  fontSize: Metrics.font4,
+                }}
+                title={this.state.timeToSearch}
+                icon={
+                  <Feather
+                    name='clock'
+                    size={20}
+                    color={Colors.gray3}
+                  />
+                }
+                onPress={() => this.setState({
+                  isTimeOverlayVisible: !this.state.isTimeOverlayVisible,
+                })}
+              />
+
+          </View>
+        </View>
+
+        <TouchableOpacity
+          onPress={this.fitAllMarkers}
+          style={styles.zoomButton}
+        >
+          <Feather
+            name='zoom-out'
+            size={Metrics.button / 2}
+          />
+        </TouchableOpacity>
 
         {/* TODO: overlapping w buttons for long descriptions */}
         <View style={[styles.card, styles.shadow]}>
@@ -674,6 +670,8 @@ const styles = StyleSheet.create({
   },
 
   zoomButton: {
+    position: 'absolute',
+    top: '12%',
     borderRadius: Metrics.button,
     height: Metrics.button,
     width: Metrics.button + Metrics.pad/2,
@@ -683,12 +681,14 @@ const styles = StyleSheet.create({
   },
 
   searchContainer: {
-    paddingTop: Metrics.padSmall,
-    height: Metrics.button * 2,
+    position: 'absolute',
+    top: 0,
+    paddingTop: Metrics.pad * 2,
+    width: '100%',
+    //height: Metrics.button * 2,
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'center',
-
     // backgroundColor: Colors.yellow
 
   },
