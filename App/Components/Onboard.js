@@ -34,8 +34,8 @@ export default class Onboard extends Component {
         onSkip={() => this.skipCallback()}
         pages={[
           {
-            backgroundColor: Colors.yellow,
-            image: <Image style={{width: 0, height: 0, resizeMode: 'contain'}} source={require('../Images/Onboarding/onboarding1.png')} />,
+            backgroundColor: '#ec5b29',
+            image: <Image style={{width: 250, height: 250, resizeMode: 'contain'}} source={require('../Images/logo-gray.png')} />,
             title: 'Welcome to Craving!',
             subtitle: 'Discover, review, and track food trucks',
           },
