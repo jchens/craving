@@ -1,76 +1,130 @@
-import React from 'react';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types' //consider using this!
 import {
-  StyleSheet,
-  View,
-  Dimensions,
-  TouchableOpacity,
-  Text,
-  Image,
-  TextInput,
-} from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
-import { Images, Profiles } from '../Themes';
-import Colors from '../Themes/Colors.js'
-import Metrics from '../Themes/Metrics.js'
-import markerImg from '../Images/Icons/icons_pin_orange.png';
-import {profilesList} from '../Themes/Profiles.js'
-import { material } from 'react-native-typography'
-import { Feather, MaterialIcons, FontAwesome } from '@expo/vector-icons';
-import { Overlay, Button } from 'react-native-elements';
-import DateTimePicker from 'react-native-modal-datetime-picker';
+  StyleSheet, SafeAreaView,
+  View, Dimensions,
+  FlatList, SectionList,
+  ScrollView, Text,
+  Linking, ActivityIndicator,
+  TouchableOpacity, Image,
+  Platform,
+  Keyboard, } from 'react-native';
+import { Metrics, Colors, Images } from '../Themes';
+import {profilesList} from '../Themes/Profiles.js';
+import EarnPoints from './EarnPoints.js';
 
+import { material } from 'react-native-typography'
+import { Feather, MaterialIcons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Overlay, Button } from 'react-native-elements';
 import { Font } from 'expo';
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import { NavigationActions } from 'react-navigation';
+
+import Carousel from 'react-native-snap-carousel';
+import { ENTRIES1 } from '../Themes/Pictures.js';
+
+import MultipleTags from 'react-native-multiple-tags';
+import AutoTags from 'react-native-tag-autocomplete';
+
+
+
 
 const { width, height } = Dimensions.get('window');
 
-const ASPECT_RATIO = width / height;
-const LATITUDE = 37.4275;
-const LONGITUDE = -122.1697;
-const LATITUDE_DELTA = 0.0922;
-const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-const SPACE = 0.01;
-
-
-
-
-function createMarker(modifier = 1) {
-  return {
-    // latitude: LATITUDE - (SPACE * modifier),
-    // longitude: LONGITUDE - (SPACE * modifier),
-    latitude: profilesList[modifier - 1].latitude,
-    longitude: profilesList[modifier - 1].longitude,
-  };
-}
-
-const MARKERS = [
-  createMarker(),
-  createMarker(2),
-  createMarker(3),
-  createMarker(4),
-  createMarker(5),
-  createMarker(6),
-  createMarker(7),
+const tags = [
+  'Affordable',
+  'Good Food',
+  'Small Portions',
+  'Long Line',
+  'guava',
+  'pineapple',
+  'orange',
+  'pear',
+  'date',
+  'strawberry',
+  'pawpaw',
+  'banana',
+  'apple',
+  'grape',
+  'lemon',
 ];
 
-const DEFAULT_PADDING = { top: 400, right: 400, bottom: 400, left: 400 };
 
-class FitToCoordinates extends React.Component {
+const reviews = [
+  {
+      name: "Justine Robinson",
+      icon: Images.stock1,
+      friend: true,
+      date: "2 days ago",
+      positiveTags: ["Great carnitas", "Friendly Staff", "Tasty"],
+      negativeTags: ["Oily", "Long Line", "Salty", "Pricey"]
+  },
+  {
+      name: "Jerry Berry",
+      icon: Images.stock2,
+      friend: true,
+      date: "2 days ago",
+      positiveTags: ["Great carnitas", "Friendly Staff"],
+      negativeTags: ["Oily", "Long Line"]
+  },
+  {
+      name: "Thomas Hsieh",
+      icon: Images.stock3,
+      friend: true,
+      date: "2 days ago",
+      positiveTags: ["Great carnitas", "Friendly Staff"],
+      negativeTags: ["Oily", "Long Line"]
+  },
+  {
+      name: "Jessica Chen",
+      icon: Images.stock4,
+      friend: true,
+      date: "2 days ago",
+      positiveTags: ["Great carnitas", "Friendly Staff"],
+      negativeTags: ["Oily", "Long Line"]
+  },
+]
+
+const item =   {
+      name: "Justine Robinson",
+      icon: Images.sanjeet_food_truck,
+      friend: true,
+      date: "2 days ago",
+      positiveTags: ["Great carnitas", "Friendly Staff"],
+      negativeTags: ["Oily", "Long Line"]
+  }
+
+const truck = profilesList[0];
+
+
+export default class Profile extends Component {
+
   constructor(props) {
     super(props);
 
+    let arr = []
+    for(let i = 0; i < 7; i++) {
+      arr.push(true);
+    }
+    let remind = []
+    for(let i = 0; i < 7; i++) {
+      remind.push('None');
+    }
     this.state = {
-      name: profilesList[0].name,
-      cuisine: profilesList[0].cuisine,
-      description: profilesList[0].description,
-      image: profilesList[0].image,
-      latitude: profilesList[0].latitude,
-      longitude: profilesList[0].longitude,
+      content: [],
 
-      text: '',
+      starArray: arr,
+      remindArray: remind,
+      activeReminderIndex: 0,
+      checkIns: [],
+
       isVisible: false,
       isDateTimePickerVisible: false,
-      date: 'Now',
       fontLoaded: false,
+      sliderActiveSlide: 1,
+
+      suggestions : [ {name:'Long line'}, {name:'Affordable'}, {name:'Friendly'}, {name:'Oily'}, {name:'Good food'}, {name:'Small portions'}, {name:'Expensive'},],
+      tagsSelected : []
     };
   }
 
@@ -78,59 +132,10 @@ class FitToCoordinates extends React.Component {
     await Font.loadAsync({
       'lato-regular': require('../../assets/fonts/Lato-Regular.ttf'),
       'lato-bold': require('../../assets/fonts/Lato-Bold.ttf'),
-      'lato-light': require('../../assets/fonts/Lato-Light.ttf'),
-
+      'lato-black': require('../../assets/fonts/Lato-Black.ttf'),
     });
-
     this.setState({ fontLoaded: true });
-  }
-
-  // TODO: constantly submitting with onSubmitEditing??
-  // also not able to move map now
-  searchComplete = () => {
-    // case-insensitive
-    if (this.state.text === 'taco') {
-      console.log(input)
-      this.onMarkerClick(0)
-    }
-  }
-
-  fitAllMarkers = () => {
-    // this.map.fitToCoordinates(MARKERS, {
-    //   animated: true,
-    // });
-    this.map.fitToSuppliedMarkers(['1', '2', '3', '4', '5', '6', '7'], {
-      animated: true,
-    });
-  }
-
-  onMarkerClick(index) {
-    // input = index at profiles list
-    console.log(index);
-    console.log(profilesList[index].name);
-    this.map.fitToCoordinates([
-      {
-        latitude: profilesList[index].latitude,
-        longitude: profilesList[index].longitude,
-      }
-    ], {
-      animated: true,
-    });
-
-    this.setState({
-      name: profilesList[index].name,
-      cuisine: profilesList[index].cuisine,
-      description: profilesList[index].description,
-      image: profilesList[index].image,
-      latitude: profilesList[index].latitude,
-      longitude: profilesList[index].longitude,
-    });
-  }
-
-  toggleOverlay = () => {
-    this.setState({
-      isVisible: !this.state.isVisible,
-    });
+    Keyboard.dismiss();
   }
 
   toggleArray = (item) => {
@@ -143,17 +148,30 @@ class FitToCoordinates extends React.Component {
     })
   }
 
-// TODO: fix functionality
-  goToTruck = () => {
-    // openMap({ latitude: this.state.latitude, longitude: this.state.longitude });
-    const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
-    const latLng = `${this.state.latitude},${this.state.longitude}`;
-    const label = 'Food Truck';
-    const url = Platform.select({
-      ios: `${scheme}${label}@${latLng}`,
-      android: `${scheme}${latLng}(${label})`
-    });
-    Linking.openURL(url);
+  toggleRemindArray = (item) => {
+    console.log(profilesList.indexOf(item));
+
+    this.setState({
+        activeReminderIndex: profilesList.indexOf(item),
+        isVisible: !this.state.isVisible,
+    })
+  }
+
+  checkIn = (item) => {
+    console.log(profilesList.indexOf(item));
+
+    let temp = this.state.checkIns;
+
+    var toggle = typeof temp[profilesList.indexOf(item)] == 'undefined';
+
+    /* Only toggles the button color the first time the button is clicked. */
+    if (toggle) {
+      temp[profilesList.indexOf(item)] = true;
+      this.setState({
+        checkIns: temp,
+      });
+      this.child.toggleVisibility('checking in');
+    }
   }
 
   _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
@@ -161,104 +179,85 @@ class FitToCoordinates extends React.Component {
   _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
 
   _handleDatePicked = (date) => {
-    console.log('A time has been picked: ', date.toLocaleTimeString());
-    this._hideDateTimePicker();
+    let temp = this.state.remindArray;
+    temp[this.state.activeReminderIndex] = date.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
     this.setState({
-      date: date.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'})
-    });
+        remindArray: temp,
+        isVisible: !this.state.isVisible,
+    })
+    console.log('A time has been picked: ', this.state.remindArray[this.state.activeReminderIndex]);
+
+    this._hideDateTimePicker();
   };
 
-  render() {
+  /* TODO: implement */
+  _handleAddPhoto = () => {
+    console.log('uploading photo');
+    // If we can't get functionality, we can at least show the Earn Points overlay
+    // this.setState({
+    //   isEarnPointsVisible: !this.state.isEarnPointsVisible,
+    //   uploadedPhoto: true,
+    // });
+    this.child.toggleVisibility('uploading a photo');
+  };
+
+  _renderItem ({item, index}) {
+      return (
+          <View style={styles.slide}>
+            <Image style={{flex: 1, width: 250, height: 250, resizeMode: 'contain'}} source={item.illustration}/>
+          </View>
+      );
+  }
+
+  goToTruck = () => {
+    const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+    const latLng = `${this.state.profile.latitude},${this.state.profile.longitude}`;
+    const label = 'Food Truck';
+    const url = Platform.select({
+      ios: `${scheme}${label}@${latLng}`,
+      android: `${scheme}${latLng}(${label})`
+    });
+    console.log(url),
+    Linking.openURL(url);
+  }
+
+
+  handleDelete = index => {
+     let tagsSelected = this.state.tagsSelected;
+     tagsSelected.splice(index, 1);
+     this.setState({ tagsSelected });
+  }
+
+  handleAddition = suggestion => {
+     this.setState({ tagsSelected: this.state.tagsSelected.concat([suggestion]) });
+  }
+
+
+
+
+
+  render () {
     return (
       <View style={styles.container}>
-        <MapView
-          ref={ref => { this.map = ref; }}
-          style={styles.map}
-          initialRegion={{
-            latitude: LATITUDE,
-            longitude: LONGITUDE,
-            latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA,
-          }}
-          loadingEnabled={true}
-          showsUserLocation={true}
-        >
-          {MARKERS.map((marker, i) => (
-            <Marker
-              key={i}
-              identifier={i.toString()}
-              coordinate={marker}
-              onPress={e => this.onMarkerClick(parseInt(e.nativeEvent.id))}
-              anchor={{ x: 0.5, y: 1 }}
-            >
-            <Image source={markerImg} style={{width: 40, height: 40 }} />
-            </Marker>
-          ))}
-
-          <View style={styles.searchContainer}>
-            <View style={styles.searchBar}>
-
-              {/* search bar - text input */}
-              <TextInput
-                onChangeText={(text) => this.setState({text})}
-                value={this.state.text}
-                clearButtonMode='while-editing'
-                style={{
-                  paddingHorizontal: Metrics.pad,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  flex: 1,
-
-                }}
-                placeholder="I'm craving..."
-                placeholderTextColor='#828282'
-                onSubmitEditing={this.searchComplete}
-                />
-
-                {/* clock icon */}
-                <Button
-                  buttonStyle={[styles.button, style={backgroundColor: Colors.white}]}
-                  containerStyle={{
-                    backgroundColor: Colors.white,
-                    borderTopRightRadius: Metrics.button,
-                    borderBottomRightRadius: Metrics.button,
-                    borderLeftWidth: 1,
-                    borderColor: Colors.gray5
-                  }}
-                  titleStyle={{
-                    color: Colors.gray3,
-                    fontSize: Metrics.font4,
-                  }}
-                  title={this.state.date}
-                  icon={
-                    <Feather
-                      name='clock'
-                      size={20}
-                      color='#828282'
-                    />
-                  }
-                  onPress={this.toggleOverlay}
-                />
-
-            </View>
-          </View>
-
-          <TouchableOpacity
-            onPress={this.fitAllMarkers}
-            style={styles.zoomButton}
-          >
-            <Feather
-              name='zoom-out'
-              size={Metrics.button / 2}
-            />
-          </TouchableOpacity>
-
-        </MapView>
 
 
+      <View style={styles.titleContainer}>
+        {
+          this.state.fontLoaded ? (
+            <Text style={styles.title}>{'Profile'}</Text>
+          ) : null
+        }
+      </View>
+
+      {/* Earn Points overlay */}
+      <EarnPoints ref={(child) => {this.child = child}} />
+
+        {/* Remind Overlay */}
         <Overlay
           isVisible={this.state.isVisible}
-          onBackdropPress={this.toggleOverlay}
+          onBackdropPress={() => this.setState({
+            isVisible: !this.state.isVisible
+          })}
           windowBackgroundColor='rgba(0,0,0,0.25)'
           containerStyle={styles.overlayContainer}
           overlayStyle={[styles.overlay, styles.shadow]}
@@ -268,10 +267,12 @@ class FitToCoordinates extends React.Component {
           {
             this.state.fontLoaded ? (
               <Text style={{
-                fontFamily: 'lato-regular',
+                fontFamily: 'lato-bold',
+                color: Colors.gray1,
                 fontSize: Metrics.font3,
                 textAlign: 'center',
-              }}>Set time to find trucks</Text>
+                paddingBottom: Metrics.pad,
+              }}>Set a reminder</Text>
             ) : null
           }
 
@@ -281,176 +282,629 @@ class FitToCoordinates extends React.Component {
             onConfirm={this._handleDatePicked}
             onCancel={this._hideDateTimePicker}
             mode='datetime'
-            titleIOS='Pick a time to find trucks'
+            titleIOS='Set a reminder for this truck'
           />
 
 
 
-          {/*TODO: will people try to click on time directly, not button?*/}
           <View style={{
             flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            alignItems: 'center',
-            backgroundColor: Colors.white,
-            borderColor: Colors.orange,
-            borderWidth: 1,
-            borderRadius: Metrics.button
+            justifyContent: 'space-evenly'
           }}>
+            <View style={{
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+              alignItems: 'center',
+              backgroundColor: Colors.white,
+              borderColor: Colors.orange,
+              borderWidth: 1,
+              borderRadius: Metrics.button
+            }}>
 
+              {
+                this.state.fontLoaded ? (
+                  <Text
+                    style={{
+                      paddingHorizontal: Metrics.pad,
+                      color: Colors.orange,
+                      fontFamily: 'lato-regular',
+                      fontSize: Metrics.font3,
+                    }}>
+                    {this.state.remindArray[this.state.activeReminderIndex]}
+                  </Text>
+                ) : null
+              }
+
+              <Button
+                onPress={this._showDateTimePicker}
+                buttonStyle={[styles.circleButton, style={backgroundColor: Colors.orange, paddingHorizontal: Metrics.smallPad}]}
+                containerStyle={[styles.buttonContainer], style={
+                  backgroundColor: Colors.orange,
+                  borderTopRightRadius: Metrics.button,
+                  borderBottomRightRadius: Metrics.button,
+                  paddingHorizontal: Metrics.pad / 2,
+                }}
+                titleStyle={{
+                  color: Colors.white
+                }}
+                title=''
+                icon={
+                  <Feather
+                    name='edit'
+                    size={20}
+                    color='white'
+                  />
+                }
+              />
+            </View>
+          </View>
+        </Overlay>
+
+
+        {/* Not sure whether the contentContainerStyle is necessary. */}
+        <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}>
+
+            {/* truck info header */}
+            <View style={[styles.listItem]}>
+
+              {/* hold photo, info, and address (to the right is the button column)*/}
+              <View style={{
+                flex: 1,
+                flexDirection: 'column',
+                justifyContent: 'flex-start',
+              }}>
+
+                {/* info: holding photo, info*/}
+                <View style={styles.info}>
+
+                  {/* view to hold image for shadow*/}
+                  <View style={[styles.shadowSmall, style={
+                    flex: 1,
+                    backgroundColor: Colors.white,
+                    //borderRadius: Metrics.curve,
+                    borderWidth: 4,
+                    borderColor: Colors.white,
+
+                    shadowColor: Colors.black,
+                    shadowOpacity: Metrics.shadow * 0.85,
+                    shadowRadius: 5,
+                    shadowOffset: {width: 0, height: 4},
+                  }]}>
+                    <Image source={truck.image} resizeMode='contain' style={{
+                      aspectRatio: 1,
+                      width: undefined,
+                      height: undefined,
+                    }}/>
+                  </View>
+
+                  {/* info */}
+                  <View style={{
+                    flex: 2,
+                    paddingHorizontal: Metrics.pad,
+                  }}>
+
+                    {
+                      this.state.fontLoaded ? (
+                        <Text style={{
+                          fontSize: Metrics.font3,
+                          fontFamily: 'lato-black',
+                        }}> {truck.name} </Text>
+                      ) : null
+                    }
+                    {
+                      this.state.fontLoaded ? (
+                        <Text style={{
+                          fontFamily: 'lato-regular',
+                          color: Colors.gray3,
+                          fontSize: Metrics.font5,
+                          paddingTop: 3,
+                          paddingBottom: 4,
+                        }}> {truck.cuisine} </Text>
+                      ) : null
+                    }
+                    {
+                      this.state.fontLoaded ? (
+                        <Text style={{
+                          fontFamily: 'lato-regular',
+                          flexWrap: 'wrap',
+                          textAlign: 'left',
+                          fontSize: Metrics.font5,
+                        }}> {truck.description} </Text>
+                      ) : null
+                    }
+                  </View>
+
+                </View>
+
+                {/* address, time*/}
+                <View style={{
+                  paddingTop: Metrics.pad,
+                }}>
+
+                  {
+                    this.state.fontLoaded ? (
+                      <Text style={{
+                        fontFamily: 'lato-bold',
+                      }}>{truck.time}</Text>
+                    ) : null
+                  }
+
+
+                  {
+                    this.state.fontLoaded ? (
+                      <Text style={{
+                        fontFamily: 'lato-regular',
+                        flexWrap: 'wrap',
+                      }}>{truck.address}</Text>
+                    ) : null
+                  }
+                </View>
+
+                <Button
+                  onPress={() => this.checkIn(truck)}
+                  buttonStyle={
+                    ((this.state.checkIns[profilesList.indexOf(truck)]) && (this.state.checkIns[profilesList.indexOf(truck)] !== 0))
+                      ? [styles.button, style={
+                        backgroundColor: Colors.gray5,
+                        borderWidth: 1,
+                        borderColor: Colors.gray6}]
+                      : [styles.button, style={backgroundColor: Colors.orange}]
+                  }
+                  containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.gray5, marginTop: Metrics.marginVertical * 1.5}]}
+                  titleStyle={{
+                    color: Colors.white,
+                    fontSize: Metrics.font4,
+                  }}
+                  title='Mark as visited'
+                  icon={
+                    <MaterialCommunityIcons
+                      name='check-circle'
+                      size={18}
+                      color='white'
+                    />
+                  }
+                  disabled={((this.state.checkIns[profilesList.indexOf(truck)]) && (this.state.checkIns[profilesList.indexOf(truck)] !== 0))
+                    ? true : false
+                  }
+                />
+
+              </View>
+
+              {/* fake button column)*/}
+                <View style={{
+                  width: Metrics.padSmall / 2,
+                }}>
+                </View>
+
+              {/* button column)*/}
+              <View style={{
+                flexDirection: 'column',
+                justifyContent: 'flex-start',
+              }}>
+
+              <Button
+                buttonStyle={
+                  this.state.starArray[profilesList.indexOf(truck)]
+                    ? [styles.circleButton, styles.glow, style={backgroundColor: Colors.yellow}]
+                    : [styles.circleButton, style={
+                      backgroundColor: Colors.gray5,
+                      borderWidth: 1,
+                      borderColor: Colors.gray6
+                    }]
+                }
+                containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.yellow}]}
+                titleStyle={{
+                  color: Colors.white,
+                }}
+                onPress={() => this.toggleArray(truck)}
+                title=''
+                icon={
+                  <FontAwesome
+                    name='star'
+                    size={Metrics.button/2}
+                    color= {Colors.white}
+                  />
+                }
+              />
+
+                {/* for spacing between buttons in button column */}
+                <View style={{
+                  height: Metrics.pad / 2,
+                }}>
+                </View>
+
+                <Button
+                  // onPress={() => this.props.navigation.dispatch(
+                  //   NavigationActions.navigate({routeName: 'HomeMap', params: {truck: profilesList.indexOf(truck)}})
+                  // )}
+                  onPress={() => this.goToTruck() }
+                  buttonStyle={[styles.circleButton, style={backgroundColor: Colors.orange}]}
+                  containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.orange}]}
+                  titleStyle={{
+                    color: Colors.white,
+                    fontSize: Metrics.font4,
+                  }}
+                  title=''
+                  icon={
+                    <Feather
+                      name='map-pin'
+                      size={18}
+                      color='white'
+                    />
+                  }
+                />
+
+                {/* for spacing between buttons in button column */}
+                <View style={{
+                  height: Metrics.pad / 2,
+                }}>
+                </View>
+
+                <Button
+                  onPress={() => this.toggleRemindArray(truck)}
+                  buttonStyle={
+                    ((this.state.remindArray[profilesList.indexOf(truck)]) && (this.state.remindArray[profilesList.indexOf(truck)].localeCompare('None') !== 0))
+                      ? [styles.circleButton, style={backgroundColor: Colors.blue}]
+                      : [styles.circleButton, style={
+                        backgroundColor: Colors.gray5,
+                        borderWidth: 1,
+                        borderColor: Colors.gray6,
+                      }]
+                  }
+                  containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.blue}]}
+                  titleStyle={{
+                    color: Colors.white,
+                    fontSize: Metrics.font4,
+                  }}
+                  title=''
+                  icon={
+                    <MaterialCommunityIcons
+                      name='bell'
+                      size={18}
+                      color='white'
+                    />
+                  }
+                />
+
+                {/* for spacing between buttons in button column */}
+                <View style={{
+                  height: Metrics.pad / 2,
+                }}>
+                </View>
+
+              </View>
+
+            </View>
+
+
+          <View style={[styles.shadowSmall, styles.sectionHead]}>
             {
               this.state.fontLoaded ? (
-                <Text
-                  style={{
-                    paddingHorizontal: Metrics.pad,
-                    color: Colors.orange,
-                    fontFamily: 'lato-regular',
-                    fontSize: Metrics.font3,
-                  }}>
-                  {this.state.date}
-                </Text>
+                <Text style={{
+                  fontFamily: 'lato-bold',
+                  color: Colors.gray1,
+                  letterSpacing: 1,
+                  fontSize: Metrics.font5
+                }}>PHOTOS</Text>
               ) : null
             }
-
             <Button
-              onPress={this._showDateTimePicker}
-              buttonStyle={[styles.button, style={backgroundColor: Colors.orange, paddingLeft: Metrics.pad}]}
-              containerStyle={{
-                backgroundColor: Colors.orange,
-                borderTopRightRadius: Metrics.button,
-                borderBottomRightRadius: Metrics.button,
-              }}
-              titleStyle={{
-                color: Colors.white
-              }}
+              onPress={ this._handleAddPhoto }
+              buttonStyle={ [styles.circleButton, style={backgroundColor: 'rgba(0, 0, 0, 0)'}] }
+              containerStyle={styles.buttonContainer}
               title=''
               icon={
                 <Feather
-                  name='edit'
+                  name='plus'
                   size={20}
-                  color='white'
+                  color={Colors.gray3}
                 />
               }
             />
           </View>
 
-
-          {/*TODO: too visually heavy with 2 buttons? or stick w button conventions? */}
-          <Button
-            onPress={this.toggleOverlay}
-            buttonStyle={[styles.circleButton, style={backgroundColor: Colors.blue}]}
-            containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.blue}]}
-            titleStyle={{
-              color: Colors.white
-            }}
-            title=''
-            titleStyle={{
-              fontSize: Metrics.font3,
-            }}
-            icon={
-              <Feather
-                name='search'
-                size={20}
-                color={Colors.white}
-              />
-            }
+          <Carousel
+            data={ENTRIES1}
+            renderItem={this._renderItem}
+            sliderWidth={width}
+            itemWidth={200}
+            layout={'default'}
+            enableMomentum={true}
+                  activeSlideAlignment={'start'}
           />
 
-        </Overlay>
 
+
+          <View style={[styles.shadowSmall, styles.sectionHead]}>
+            {
+              this.state.fontLoaded ? (
+                <Text style={{
+                  fontFamily: 'lato-bold',
+                  color: Colors.gray1,
+                  letterSpacing: 1,
+                  fontSize: Metrics.font5
+                }}>MOST POPULAR TAGS</Text>
+              ) : null
+            }
+          </View>
+
+
+
+          <View style={{
+            flexDirection: 'row',
+            flex: 1,
+            flexWrap: 'wrap',
+            alignItems: 'center',
+
+          }}>
+            <Button
+             title= {'Affordable'}
+             buttonStyle={{
+               backgroundColor: "#241E4E",
+               width: 150,
+               height: 45,
+               borderColor: "transparent",
+               borderWidth: 0,
+               borderRadius: 5,
+               marginLeft: 10
+             }}
+             containerStyle={{ marginTop: 20 }}
+            />
+            <Button
+             title= {'Good food'}
+             buttonStyle={{
+               backgroundColor: "#241E4E",
+               width: 150,
+               height: 45,
+               borderColor: "transparent",
+               borderWidth: 0,
+               borderRadius: 5,
+               marginLeft: 10
+             }}
+             containerStyle={{ marginTop: 20 }}
+            />
+            <Button
+             title= {'Long line'}
+             buttonStyle={{
+               backgroundColor: "#6A6876",
+               width: 150,
+               height: 45,
+               borderColor: "transparent",
+               borderWidth: 0,
+               borderRadius: 5,
+               marginLeft: 10
+             }}
+             containerStyle={{ marginTop: 20 }}
+            />
+            <Button
+             title= {'Small Portions'}
+             buttonStyle={{
+               backgroundColor: "#6A6876",
+               width: 150,
+               height: 45,
+               borderColor: "transparent",
+               borderWidth: 0,
+               borderRadius: 5,
+               marginLeft: 10
+             }}
+             containerStyle={{ marginTop: 20 }}
+            />
+          </View>
+
+          <View style={[styles.shadowSmall, styles.sectionHead]}>
+            {
+              this.state.fontLoaded ? (
+                <Text style={{
+                  fontFamily: 'lato-bold',
+                  color: Colors.gray1,
+                  letterSpacing: 1,
+                  fontSize: Metrics.font5
+                }}>ADD MY REVIEW</Text>
+              ) : null
+            }
+          </View>
+
+
+
+          <View>
+            <AutoTags
+              suggestions={this.state.suggestions}
+              tagsSelected={this.state.tagsSelected}
+              handleAddition={this.handleAddition}
+              handleDelete={this.handleDelete}
+              placeholder="Add a contact.."
+              renderTags={this.renderTags}
+            />
+
+          </View>
+
+          <View style={[styles.shadowSmall, styles.sectionHead]}>
+            {
+              this.state.fontLoaded ? (
+                <Text style={{
+                  fontFamily: 'lato-bold',
+                  color: Colors.gray1,
+                  letterSpacing: 1,
+                  fontSize: Metrics.font5
+                }}>ALL REVIEWS</Text>
+              ) : null
+            }
+          </View>
+          <View>
+
+
+            {/* Reviews!! */}
+            <FlatList
+              data={reviews}
+              renderItem={({item}) =>  (
+                  <View style={[styles.listItem]}>
+                  {/* hold photo, info, and address (to the right is the button column)*/}
+                    <View style={{
+                      flex: 1,
+                      flexDirection: 'column',
+                      justifyContent: 'flex-start',
+                    }}>
+
+                      {/* info: holding photo, info*/}
+                      <View style={styles.info}>
+
+                        {/* view to hold image for shadow*/}
+                        <View style={[styles.shadowSmall, style={
+                          flex: 1,
+                          backgroundColor: Colors.white,
+                          //borderRadius: Metrics.curve,
+                          borderWidth: 4,
+                          borderColor: Colors.white,
+
+                          shadowColor: Colors.black,
+                          shadowOpacity: Metrics.shadow * 0.75,
+                          shadowRadius: 5,
+                          shadowOffset: {width: 0, height: 4},
+                        }]}>
+                          <Image source={item.icon} resizeMode='contain' style={{
+                            aspectRatio: 1,
+                            width: undefined,
+                            height: undefined,
+                          }}/>
+                        </View>
+
+                        {/* info */}
+                        <View style={{
+                          flex: 2,
+                          paddingHorizontal: Metrics.padSmall,
+                        }}>
+                          <Text style={{
+                            fontSize: Metrics.font3,
+                            fontWeight: 'bold',
+                          }}> {item.name} </Text>
+                          <Text style={{
+                            color: Colors.gray3,
+                            fontSize: Metrics.font5,
+                            paddingVertical: 5
+                          }}> {item.date} </Text>
+                        </View>
+
+                      </View>
+
+
+                      {/* tags!! */}
+                      <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        flexWrap: 'wrap',
+                        justifyContent: 'space-between',
+                      }}>
+                        {
+                          item.positiveTags.map(tag =>
+                            <Button
+                             title= {tag}
+                             titleStyle={{
+                                 color: Colors.white,
+                                 fontWeight: 'bold',
+                             }}
+                             buttonStyle={[styles.tag, style={
+                               backgroundColor: Colors.orange,
+                             }]}
+                             containerStyle={styles.tagContainer}
+                            />
+                          )
+                        }
+                      </View>
+
+                      <View style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        flexWrap: 'wrap',
+                      }}>
+                        {
+                          item.negativeTags.map(tag =>
+                            <Button
+                             title= {tag}
+                             titleStyle={{
+                                 color: Colors.gray1,
+                                 fontWeight: 'bold',
+                             }}
+                             buttonStyle={[styles.tag, style={
+                               backgroundColor: Colors.gray5,
+                             }]}
+                             containerStyle={styles.tagContainer}
+                            />
+                          )
+                        }
+                      </View>
+
+
+
+
+
+                    </View>
+
+                  </View>
+
+
+                )
+              }
+            />
+          </View>
+
+        </ScrollView>
       </View>
-    );
+
+    )
   }
 }
 
+
 const styles = StyleSheet.create({
   container: {
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: 'center',
-    alignItems: 'stretch',
-    flexDirection: 'column',
-    backgroundColor: 'blue',
-  },
-  map: {
-    //...StyleSheet.absoluteFillObject,
-    flex: 10,
+    flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    backgroundColor: 'yellow'
-  },
-
-  zoomButton: {
-    borderRadius: Metrics.button,
-    height: Metrics.button + Metrics.pad/2,
-    width: Metrics.button + Metrics.pad/2,
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'flex-end',
-  },
-
-  searchContainer: {
-    paddingTop: Metrics.padSmall,
-    height: Metrics.button * 2,
-    backgroundColor: Colors.frosty,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  searchBar: {
-    flex: 0.8,
-    height: Metrics.button,
-    borderRadius: 100,
-    paddingLeft: Metrics.pad / 2,
-
-    backgroundColor: Colors.white,
-    flexDirection: 'row',
     alignItems: 'stretch',
-    justifyContent: 'center',
-
-    shadowColor: Colors.black,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: Metrics.shadow,
-    shadowRadius: 20,
+    backgroundColor: Colors.gray6,
   },
 
-  searchIcon: {
-    flex: 2,
-    backgroundColor: 'green',
-    alignItems: 'center',
+  titleContainer: {
+    height: Metrics.nav * 1.25,
+    backgroundColor: Colors.gray7,
+    flexDirection: 'row',
     justifyContent: 'center',
-  },
+    alignItems: 'flex-end',
 
-  searchInput: {
-    flex: 3,
-    paddingHorizontal: Metrics.pad,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  changeTime: {
-    flex: 1,
+    borderBottomWidth: 1,
     borderColor: Colors.gray5,
-    borderLeftWidth: 1,
-    backgroundColor: 'gray'
+
+    zIndex: 1,
   },
 
-  overlayContainer: {
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-    backgroundColor: Colors.inactive,
-    alignItems: 'center',
+  title: {
+    color: Colors.gray1,
+    fontSize: Metrics.font3,
+    paddingBottom: Metrics.pad / 2,
+    fontFamily: 'lato-bold',
+    // marginTop: Platform.OS === 'ios' ? 28 : 38,
+
   },
 
-  overlay: {
-    flex: 0.3,
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
+  tags: {
+    backgroundColor: "rgba(92, 99,216, 1)",
+    width: 150,
+    height: 45,
+    borderColor: "transparent",
+    borderWidth: 0,
+    borderRadius: 5
+  },
+
+  sectionHead: {
     backgroundColor: Colors.white,
+    height: Metrics.button,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: Metrics.pad,
+    flexDirection: 'row',
   },
 
-  card: {
-    flex: 3,
-
+  listItem: {
     paddingVertical: Metrics.pad * 1.25,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
@@ -459,7 +913,6 @@ const styles = StyleSheet.create({
     borderColor: Colors.gray6,
     borderBottomWidth: 1,
     paddingHorizontal: Metrics.pad * 1.25,
-
   },
 
   info: {
@@ -467,21 +920,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'flex-start',
-    backgroundColor: Colors.white,
   },
 
   shadow: {
     shadowColor: Colors.black,
-    shadowOpacity: Metrics.glow / 4,
+    shadowOpacity: Metrics.glow / 2,
     shadowRadius: 20,
     shadowOffset: {width: 0, height: 4}
   },
 
   shadowSmall: {
     shadowColor: Colors.black,
-    shadowOpacity: Metrics.shadow / 2,
+    shadowOpacity: Metrics.glow / 9,
     shadowRadius: 5,
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: {width: 0, height: 4},
   },
 
   circleButton: {
@@ -490,11 +942,10 @@ const styles = StyleSheet.create({
     width: Metrics.button,
     justifyContent: 'center',
     alignItems: 'center',
-
   },
   glow: {
     shadowColor: Colors.yellow,
-    shadowOpacity: Metrics.glow,
+    shadowOpacity: Metrics.glow / 2,
     shadowRadius: 10,
   },
 
@@ -520,26 +971,45 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
 
-  button_filled: {
-    backgroundColor: Colors.yellow,
+
+  overlayContainer: {
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    backgroundColor: Colors.inactive,
     alignItems: 'center',
+
+    zIndex: 1,
+  },
+
+  overlay: {
+    flex: 0.11,
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    backgroundColor: Colors.white,
+    padding: Metrics.pad * 1.25,
+    paddingBottom: Metrics.nav * 1.5,
+
+  },
+  circleButton: {
+    borderRadius: Metrics.button,
+    height: Metrics.button,
+    width: Metrics.button,
     justifyContent: 'center',
-    height: 80,
-    width: 80,
-    borderRadius: 40
-
+    alignItems: 'center',
   },
-  star_filled: {
+
+  tag: {
+    borderRadius: Metrics.button / 4,
+    height: Metrics.button,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: Metrics.button/4,
+  },
+
+  tagContainer: {
     backgroundColor: Colors.yellow,
-    height: 50,
-    width: 50,
+    paddingRight: Metrics.pad/2,
   },
 
-  nav: {
-    height: Metrics.nav,
-    backgroundColor: Colors.purple,
-  },
 
 });
-
-export default FitToCoordinates;
