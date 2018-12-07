@@ -798,7 +798,7 @@ export default class Profile extends Component {
                                  fontWeight: 'bold',
                              }}
                              buttonStyle={[styles.tag, style={
-                               backgroundColor: Colors.orange,
+                               backgroundColor: Colors.orange_frosty,
                              }]}
                              containerStyle={styles.tagContainer}
                             />

@@ -2,6 +2,8 @@ const colors = {
   background: '#1F0808',
   clear: 'rgba(0,0,0,0)',
   frosty: 'rgba(255,255,255,0.65)',
+  orange_frosty: 'rgba(255,77,0,0.10)',
+
   inactive: 'rgba(0,0,0,0.25)',
   black: '#000000',
   white: '#FFFFFF',
