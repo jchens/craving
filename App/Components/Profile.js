@@ -23,6 +23,8 @@ import Carousel from 'react-native-snap-carousel';
 import { ENTRIES1 } from '../Themes/Pictures.js';
 
 import MultipleTags from 'react-native-multiple-tags';
+import AutoTags from 'react-native-tag-autocomplete';
+
 
 
 
@@ -46,44 +48,6 @@ const tags = [
   'lemon',
 ];
 
-const objectTags = [
-  {
-    key: 'id_01',
-    value: 'Affordable',
-  },
-  {
-    key: 'id_02',
-    value: 'Good Food',
-  },
-  {
-    key: 'id_03',
-    value: 'Small Portions',
-  },
-  {
-    key: 'id_04',
-    value: 'Long Line'
-  },
-  {
-    key: 'id_05',
-    value: 'guava'
-  },
-  {
-    key: 'id_06',
-    value: 'pineapple'
-  },
-  {
-    key: 'id_07',
-    value: 'orange'
-  },
-  {
-    key: 'id_08',
-    value: 'pear'
-  },
-  {
-    key: 'id_09',
-    value: 'date'
-  }
-]
 
 const reviews = [
   {
@@ -157,6 +121,9 @@ export default class Profile extends Component {
       isDateTimePickerVisible: false,
       fontLoaded: false,
       sliderActiveSlide: 1,
+
+      suggestions : [ {name:'Long line'}, {name:'Affordable'}, {name:'Friendly'}, {name:'Oily'}, {name:'Good food'}, {name:'Small portions'}, {name:'Expensive'},],
+      tagsSelected : []
     };
   }
 
@@ -239,6 +206,19 @@ export default class Profile extends Component {
           </View>
       );
   }
+
+
+  handleDelete = index => {
+     let tagsSelected = this.state.tagsSelected;
+     tagsSelected.splice(index, 1);
+     this.setState({ tagsSelected });
+  }
+
+  handleAddition = suggestion => {
+     this.setState({ tagsSelected: this.state.tagsSelected.concat([suggestion]) });
+  }
+
+
 
 
 
@@ -634,56 +614,64 @@ export default class Profile extends Component {
             }
           </View>
 
+
+
           <View style={{
             flexDirection: 'row',
+            flex: 1,
             flexWrap: 'wrap',
+            alignItems: 'center',
 
           }}>
             <Button
-             title="LOADING BUTTON"
+             title= {'Affordable'}
              buttonStyle={{
-               backgroundColor: "rgba(92, 99,216, 1)",
+               backgroundColor: "#241E4E",
                width: 150,
                height: 45,
                borderColor: "transparent",
                borderWidth: 0,
-               borderRadius: 5
+               borderRadius: 5,
+               marginLeft: 10
              }}
              containerStyle={{ marginTop: 20 }}
             />
             <Button
-             title="LOADING BUTTON"
+             title= {'Good food'}
              buttonStyle={{
-               backgroundColor: "rgba(92, 99,216, 1)",
+               backgroundColor: "#241E4E",
                width: 150,
                height: 45,
                borderColor: "transparent",
                borderWidth: 0,
-               borderRadius: 5
+               borderRadius: 5,
+               marginLeft: 10
              }}
              containerStyle={{ marginTop: 20 }}
             />
             <Button
-             title="LOADING BUTTON"
+             title= {'Long line'}
              buttonStyle={{
-               backgroundColor: "rgba(92, 99,216, 1)",
+               backgroundColor: "#6A6876",
                width: 150,
                height: 45,
                borderColor: "transparent",
                borderWidth: 0,
-               borderRadius: 5
+               borderRadius: 5,
+               marginLeft: 10
              }}
              containerStyle={{ marginTop: 20 }}
             />
             <Button
-             title="LOADING BUTTON"
+             title= {'Small Portions'}
              buttonStyle={{
-               backgroundColor: "rgba(92, 99,216, 1)",
+               backgroundColor: "#6A6876",
                width: 150,
                height: 45,
                borderColor: "transparent",
                borderWidth: 0,
-               borderRadius: 5
+               borderRadius: 5,
+               marginLeft: 10
              }}
              containerStyle={{ marginTop: 20 }}
             />
@@ -702,13 +690,18 @@ export default class Profile extends Component {
             }
           </View>
 
+
+
           <View>
-            <MultipleTags
-                tags={objectTags}
-                search
-                onChangeItem={(content) => { this.setState({ content }); }}
-                title="Fruits"
-              />
+            <AutoTags
+              suggestions={this.state.suggestions}
+              tagsSelected={this.state.tagsSelected}
+              handleAddition={this.handleAddition}
+              handleDelete={this.handleDelete}
+              placeholder="Add a contact.."
+              renderTags={this.renderTags}
+            />
+
           </View>
 
           <View style={[styles.shadowSmall, styles.sectionHead]}>
@@ -800,42 +793,67 @@ export default class Profile extends Component {
                         }}>{item.address}</Text>
                       </View>
 
-                      <View>
-                        {
-                          item.positiveTags.map(tag =>
-                            <Button
-                             title= {tag}
-                             buttonStyle={{
-                               backgroundColor: "rgba(92, 99,150, 1)",
-                               width: 150,
-                               height: 45,
-                               borderColor: "transparent",
-                               borderWidth: 0,
-                               borderRadius: 5
-                             }}
-                             containerStyle={{ marginTop: 20 }}
-                            />
-                          )
-                        }
+
+                      <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        flexWrap: 'wrap',
+                        justifyContent: 'space-between',
+
+                      }}>
+                        <View style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                        }}>
+                          {
+                            item.positiveTags.map(tag =>
+                              <Button
+                               title= {tag}
+                               buttonStyle={{
+                                 backgroundColor: "#241E4E",
+                                 width: 150,
+                                 height: 45,
+                                 borderColor: "transparent",
+                                 borderWidth: 0,
+                                 borderRadius: 5,
+                                 marginLeft: 10
+                               }}
+                               containerStyle={{ marginTop: 20 }}
+                              />
+                            )
+                          }
+                        </View>
+
+
+                        <View style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                        }}>
+                          {
+                            item.negativeTags.map(tag =>
+                              <Button
+                               title= {tag}
+                               buttonStyle={{
+                                 backgroundColor: "#6A6876",
+                                 width: 150,
+                                 height: 45,
+                                 borderColor: "transparent",
+                                 borderWidth: 0,
+                                 borderRadius: 5,
+                                 marginLeft: 10
+                               }}
+                               containerStyle={{ marginTop: 20 }}
+                              />
+                            )
+                          }
+                        </View>
+
                       </View>
-                      <View>
-                        {
-                          item.negativeTags.map(tag =>
-                            <Button
-                             title= {tag}
-                             buttonStyle={{
-                               backgroundColor: "rgba(92, 99,216, 1)",
-                               width: 150,
-                               height: 45,
-                               borderColor: "transparent",
-                               borderWidth: 0,
-                               borderRadius: 5
-                             }}
-                             containerStyle={{ marginTop: 20 }}
-                            />
-                          )
-                        }
-                      </View>
+
+
+
+
+
                     </View>
 
                   </View>
@@ -988,6 +1006,13 @@ const styles = StyleSheet.create({
     padding: Metrics.pad * 1.25,
     paddingBottom: Metrics.nav * 1.5,
 
+  },
+  circleButton: {
+    borderRadius: Metrics.button,
+    height: Metrics.button,
+    width: Metrics.button,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
 });
