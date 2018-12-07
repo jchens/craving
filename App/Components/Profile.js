@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types' //consider using this!
 import {
-  StyleSheet,
-  SafeAreaView,
-  View,
-  Dimensions,
+  StyleSheet, SafeAreaView,
+  View, Dimensions,
   FlatList, SectionList,
-  ScrollView,
-  Text, Linking, ActivityIndicator, TouchableOpacity, Image, Platform} from 'react-native';
+  ScrollView, Text,
+  Linking, ActivityIndicator,
+  TouchableOpacity, Image,
+  Platform } from 'react-native';
 import { Metrics, Colors, Images } from '../Themes';
 import {profilesList} from '../Themes/Profiles.js';
 import EarnPoints from './EarnPoints.js';
@@ -223,6 +223,10 @@ export default class Profile extends Component {
     this._hideDateTimePicker();
   };
 
+  /* TODO: implement */
+  _handleAddPhoto = () => {
+    console.log('uploading photo');
+  };
 
   _renderItem ({item, index}) {
       return (
@@ -586,6 +590,19 @@ export default class Profile extends Component {
                 }}>PHOTOS</Text>
               ) : null
             }
+            <Button
+              onPress={ this._handleAddPhoto }
+              buttonStyle={[styles.circleButton, style={backgroundColor: 'rgba(0, 0, 0, 0)'}]}
+              containerStyle={styles.buttonContainer}
+              title=''
+              icon={
+                <Feather
+                  name='plus'
+                  size={20}
+                  color={Colors.gray3}
+                />
+              }
+            />
           </View>
 
           <Carousel
@@ -823,14 +840,6 @@ export default class Profile extends Component {
                   </View>
 
 
-
-
-
-
-
-
-
-
                 )
               }
             />
@@ -887,8 +896,10 @@ const styles = StyleSheet.create({
   sectionHead: {
     backgroundColor: Colors.white,
     height: Metrics.button,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingHorizontal: Metrics.pad,
+    flexDirection: 'row',
   },
 
   listItem: {
