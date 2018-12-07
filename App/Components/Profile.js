@@ -771,8 +771,12 @@ export default class Profile extends Component {
                             paddingVertical: 5
                           }}> {item.date} </Text>
                         </View>
-
                       </View>
+
+                      {/* fake view for padding between info & tags lol */}
+                      <View style={{
+                        height: Metrics.pad,
+                      }} />
 
                       {/* tags!! */}
                       <View style={{
@@ -799,9 +803,9 @@ export default class Profile extends Component {
                         }
                       </View>
 
-                      {/* view for padding lol */}
+                      {/* fake view for padding between tag lines lol */}
                       <View style={{
-                        height: Metrics.pad,
+                        height: Metrics.pad / 2,
                       }} />
 
                       <View style={{
@@ -820,7 +824,7 @@ export default class Profile extends Component {
                                  fontWeight: 'bold',
                              }}
                              buttonStyle={[styles.tag, style={
-                               backgroundColor: Colors.gray5,
+                               backgroundColor: Colors.gray6,
                              }]}
                              containerStyle={styles.tagContainer}
                             />
@@ -1002,7 +1006,7 @@ const styles = StyleSheet.create({
   },
 
   tagContainer: {
-    backgroundColor: Colors.yellow,
+    //backgroundColor: Colors.yellow,
     paddingRight: Metrics.pad/2,
   },
 });
