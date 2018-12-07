@@ -784,6 +784,7 @@ export default class Profile extends Component {
                         {
                           item.positiveTags.map(tag =>
                             <Button
+                             key={tag}
                              title= {tag}
                              titleStyle={{
                                  color: Colors.orange,
@@ -812,6 +813,7 @@ export default class Profile extends Component {
                         {
                           item.negativeTags.map(tag =>
                             <Button
+                             key={tag}
                              title= {tag}
                              titleStyle={{
                                  color: Colors.gray1,
