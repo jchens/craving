@@ -52,31 +52,31 @@ const tags = [
 const reviews = [
   {
       name: "Justine Robinson",
-      icon: Images.sanjeet_food_truck,
+      icon: Images.stock1,
       friend: true,
       date: "2 days ago",
       positiveTags: ["Great carnitas", "Friendly Staff"],
       negativeTags: ["Oily", "Long Line"]
   },
   {
-      name: "Justine Robinson",
-      icon: Images.sanjeet_food_truck,
+      name: "Jerry Berry",
+      icon: Images.stock2,
       friend: true,
       date: "2 days ago",
       positiveTags: ["Great carnitas", "Friendly Staff"],
       negativeTags: ["Oily", "Long Line"]
   },
   {
-      name: "Justine Robinson",
-      icon: Images.sanjeet_food_truck,
+      name: "Thomas Hsieh",
+      icon: Images.stock3,
       friend: true,
       date: "2 days ago",
       positiveTags: ["Great carnitas", "Friendly Staff"],
       negativeTags: ["Oily", "Long Line"]
   },
   {
-      name: "Justine Robinson",
-      icon: Images.sanjeet_food_truck,
+      name: "Jessica Chen",
+      icon: Images.stock4,
       friend: true,
       date: "2 days ago",
       positiveTags: ["Great carnitas", "Friendly Staff"],

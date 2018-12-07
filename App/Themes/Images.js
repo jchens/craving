@@ -14,6 +14,12 @@ const images = {
   'the-waffle-roost': require('../Images/FTProfiles/the_waffle_roost.png'),
   'twister': require('../Images/FTProfiles/twister.png'),
 
+  'stock1': require('../Images/FTProfiles/stock1.jpg'),
+  'stock2': require('../Images/FTProfiles/stock2.jpg'),
+  'stock3': require('../Images/FTProfiles/stock3.jpg'),
+  'stock4': require('../Images/FTProfiles/stock4.jpg'),
+
+
   'pin': require('../Images/Icons/map-pin.svg'),
   'award': require('../Images/Icons/award.svg'),
   'star': require('../Images/Icons/star.svg'),
