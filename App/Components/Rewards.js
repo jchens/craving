@@ -9,6 +9,14 @@ import { Feather, MaterialIcons, FontAwesome, MaterialCommunityIcons, AntDesign 
 
 
 import { Font } from 'expo';
+import { MenuProvider } from 'react-native-popup-menu';
+
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from 'react-native-popup-menu';
 
 
 
@@ -58,12 +66,25 @@ export default class Rewards extends Component {
 
           <View style={styles.progress}>
             <View style={{
+              position: 'absolute',
+              marginTop: 45,
+
+            }}>
+              <Text  style={styles.points}> 50 PTS </Text>
+            </View>
+            <View style={{
+              position: 'absolute',
+              marginTop: 45,
+              paddingLeft: 300,
+
+            }}>
+              <Text  style={styles.points}> 100 PTS </Text>
+            </View>
+            <View style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
               flex: 1,
             }}>
-
-
               <View style={{
                 width: 25,
                 height: 25,
@@ -71,7 +92,7 @@ export default class Rewards extends Component {
                 backgroundColor: '#FF4D00',
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginTop: 16.5,
+                marginTop: 14.5,
                 marginRight: 26,
               }}>
                 <View style={{
