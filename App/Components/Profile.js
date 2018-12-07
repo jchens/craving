@@ -145,7 +145,6 @@ export default class Profile extends Component {
     }
     this.state = {
       content: [],
-      contentx: [],
 
       starArray: arr,
       remindArray: remind,
@@ -630,9 +629,6 @@ export default class Profile extends Component {
                 onChangeItem={(content) => { this.setState({ content }); }}
                 title="Fruits"
               />
-              {
-              (() => this.state.content.map(item => <Text key={item.key}> {item.key}: {item.value} </Text>))()
-              }
           </View>
 
           <View style={[styles.shadowSmall, styles.sectionHead]}>
