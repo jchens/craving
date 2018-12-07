@@ -631,7 +631,7 @@ export default class Profile extends Component {
             flex: 1,
             flexWrap: 'wrap',
             alignItems: 'center',
-
+            padding: Metrics.pad * 1.25,
           }}>
             <Button
              title= {'Affordable'}
