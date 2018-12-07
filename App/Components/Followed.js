@@ -401,17 +401,7 @@ export default class Followed extends Component {
               </View>
             }
               renderSectionHeader={({section: {title}}) => (
-                <View style={[styles.shadowSmall, style={
-                  backgroundColor: Colors.white,
-                  height: Metrics.button,
-                  justifyContent: 'center',
-                  paddingHorizontal: Metrics.pad,
-
-                  shadowColor: Colors.black,
-                  shadowOpacity: Metrics.shadow / 2,
-                  shadowRadius: 5,
-                  shadowOffset: {width: 0, height: 0},
-                }]}>
+                <View style={[styles.shadowSmall, styles.sectionHead]}>
 
                   {
                     this.state.fontLoaded ? (
@@ -484,6 +474,13 @@ const styles = StyleSheet.create({
 
   },
 
+  sectionHead: {
+    backgroundColor: Colors.white,
+    height: Metrics.button,
+    justifyContent: 'center',
+    paddingHorizontal: Metrics.pad,
+  },
+
   listItem: {
     paddingVertical: Metrics.pad * 1.25,
     flexDirection: 'row',
@@ -511,9 +508,9 @@ const styles = StyleSheet.create({
 
   shadowSmall: {
     shadowColor: Colors.black,
-    shadowOpacity: Metrics.shadow / 2,
+    shadowOpacity: Metrics.glow / 10,
     shadowRadius: 5,
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: {width: 0, height: 4},
   },
 
   circleButton: {

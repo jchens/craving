@@ -198,14 +198,7 @@ export default class Visited extends Component {
 
                 }
                 renderSectionHeader={({section: {title}}) => (
-                  <View style={[styles.shadowSmall, style={
-                    backgroundColor: Colors.white,
-                    height: Metrics.button,
-                    justifyContent: 'center',
-                    paddingHorizontal: Metrics.pad,
-
-
-                  }]}>
+                  <View style={[styles.shadowSmall, styles.sectionHead]}>
                     {
                       this.state.fontLoaded ? (
                         <Text style={{
@@ -264,63 +257,70 @@ const styles = StyleSheet.create({
   },
 
 
-    listContainer: {
-      flex: 1,
-      backgroundColor: 'white',
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      alignItems: 'stretch',
+  listContainer: {
+    flex: 1,
+    backgroundColor: 'white',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
 
-      // TODO: change this to reveal some cool illustration
-      backgroundColor: Colors.purple,
-    },
+    // TODO: change this to reveal some cool illustration
+    backgroundColor: Colors.purple,
+  },
 
-    listItem: {
-      flexDirection: 'row',
-      justifyContent: 'space-evenly',
-      backgroundColor: Colors.white,
+  sectionHead: {
+    backgroundColor: Colors.white,
+    height: Metrics.button,
+    justifyContent: 'center',
+    paddingHorizontal: Metrics.pad,
+  },
 
-      borderColor: Colors.gray6,
-      borderBottomWidth: 1,
+  listItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    backgroundColor: Colors.white,
 
-      padding: Metrics.pad * 1.25,
+    borderColor: Colors.gray6,
+    borderBottomWidth: 1,
 
-    },
+    padding: Metrics.pad * 1.25,
 
-    info: {
-      flex: 1,
-      flexDirection: 'row',
-      justifyContent: 'space-evenly',
-      alignItems: 'flex-start',
-    },
+  },
 
-    shadow: {
-      shadowColor: Colors.black,
-      shadowOpacity: Metrics.glow / 4,
-      shadowRadius: 20,
-      shadowOffset: {width: 0, height: 4}
-    },
+  info: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'flex-start',
+  },
 
-    shadowSmall: {
-      shadowColor: Colors.black,
-      shadowOpacity: Metrics.shadow / 2,
-      shadowRadius: 5,
-      shadowOffset: {width: 0, height: 0},
-    },
+  shadow: {
+    shadowColor: Colors.black,
+    shadowOpacity: Metrics.glow / 4,
+    shadowRadius: 20,
+    shadowOffset: {width: 0, height: 4}
+  },
 
-    circleButton: {
-      borderRadius: Metrics.button,
-      height: Metrics.button,
-      width: Metrics.button,
-      justifyContent: 'center',
-      alignItems: 'center',
+  shadowSmall: {
+    shadowColor: Colors.black,
+    shadowOpacity: Metrics.glow / 10,
+    shadowRadius: 5,
+    shadowOffset: {width: 0, height: 4},
+  },
 
-    },
-    glow: {
-      shadowColor: Colors.yellow,
-      shadowOpacity: Metrics.glow / 2,
-      shadowRadius: 10,
-    },
+  circleButton: {
+    borderRadius: Metrics.button,
+    height: Metrics.button,
+    width: Metrics.button,
+    justifyContent: 'center',
+    alignItems: 'center',
+
+  },
+  glow: {
+    shadowColor: Colors.yellow,
+    shadowOpacity: Metrics.glow / 2,
+    shadowRadius: 10,
+  },
 
   button: {
     borderRadius: Metrics.button,
@@ -333,15 +333,6 @@ const styles = StyleSheet.create({
 
   buttonContainer: {
     borderRadius: Metrics.button,
-  },
-
-  button_filled: {
-    backgroundColor: Colors.yellow,
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 80,
-    width: 80,
-    borderRadius: 40
   },
 
   nav: {
