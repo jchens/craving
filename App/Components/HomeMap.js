@@ -7,6 +7,8 @@ import {
   Text,
   Image,
   TextInput,
+  Platform,
+  Linking
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { Images, Profiles } from '../Themes';
@@ -149,7 +151,6 @@ class FitToCoordinates extends React.Component {
 
   }
 
-// TODO: fix functionality
   goToTruck = () => {
     // openMap({ latitude: this.state.latitude, longitude: this.state.longitude });
     const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
@@ -189,6 +190,16 @@ class FitToCoordinates extends React.Component {
   };
 
   render() {
+    if (typeof this.props.navigation.state.params != 'undefined') {
+      console.log(this.props.navigation.state.params);
+      this.setState({
+        profile: profilesList[this.props.navigation.state.params.truck]
+      });
+      this.goToTruck();
+      // Hacky way of restoring the original app state 
+      delete this.props.navigation.state.params;
+    }
+
     return (
       <View style={styles.container}>
         <MapView
@@ -427,7 +438,7 @@ class FitToCoordinates extends React.Component {
               </View>
 
               <Button
-                onPress={() => console.log('should run this.goToTruck')}
+                onPress={() => this.goToTruck() }
                 buttonStyle={[styles.circleButton, style={backgroundColor: Colors.orange}]}
                 containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.orange}]}
                 titleStyle={{

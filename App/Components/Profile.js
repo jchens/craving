@@ -1,21 +1,23 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types' //consider using this!
 import {
-  StyleSheet,
-  SafeAreaView,
-  View,
-  Dimensions,
+  StyleSheet, SafeAreaView,
+  View, Dimensions,
   FlatList, SectionList,
-  ScrollView,
-  Text, Linking, ActivityIndicator, TouchableOpacity, Image, Platform} from 'react-native'
-import { Metrics, Colors, Images } from '../Themes'
-import {profilesList} from '../Themes/Profiles.js'
+  ScrollView, Text,
+  Linking, ActivityIndicator,
+  TouchableOpacity, Image,
+  Platform } from 'react-native';
+import { Metrics, Colors, Images } from '../Themes';
+import {profilesList} from '../Themes/Profiles.js';
+import EarnPoints from './EarnPoints.js';
 
 import { material } from 'react-native-typography'
 import { Feather, MaterialIcons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Overlay, Button } from 'react-native-elements';
 import { Font } from 'expo';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import { NavigationActions } from 'react-navigation';
 
 import Carousel from 'react-native-snap-carousel';
 import { ENTRIES1 } from '../Themes/Pictures.js';
@@ -149,6 +151,7 @@ export default class Profile extends Component {
       starArray: arr,
       remindArray: remind,
       activeReminderIndex: 0,
+      checkIns: [],
 
       isVisible: false,
       isDateTimePickerVisible: false,
@@ -185,6 +188,23 @@ export default class Profile extends Component {
     })
   }
 
+  checkIn = (item) => {
+    console.log(profilesList.indexOf(item));
+
+    let temp = this.state.checkIns;
+
+    var toggle = typeof temp[profilesList.indexOf(item)] == 'undefined';
+
+    /* Only toggles the button color the first time the button is clicked. */
+    if (toggle) {
+      temp[profilesList.indexOf(item)] = true;
+      this.setState({
+        checkIns: temp,
+      });
+      this.child.toggleVisibility('checking in');
+    }
+  }
+
   _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
 
   _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
@@ -201,6 +221,16 @@ export default class Profile extends Component {
     this._hideDateTimePicker();
   };
 
+  /* TODO: implement */
+  _handleAddPhoto = () => {
+    console.log('uploading photo');
+    // If we can't get functionality, we can at least show the Earn Points overlay
+    // this.setState({
+    //   isEarnPointsVisible: !this.state.isEarnPointsVisible,
+    //   uploadedPhoto: true,
+    // });
+    this.child.toggleVisibility('uploading a photo');
+  };
 
   _renderItem ({item, index}) {
       return (
@@ -213,7 +243,6 @@ export default class Profile extends Component {
 
 
   render () {
-
     return (
       <View style={styles.container}>
 
@@ -221,10 +250,13 @@ export default class Profile extends Component {
       <View style={styles.titleContainer}>
         {
           this.state.fontLoaded ? (
-            <Text style={styles.title}>{'Visited'}</Text>
+            <Text style={styles.title}>{'Profile'}</Text>
           ) : null
         }
       </View>
+
+      {/* Earn Points overlay */}
+      <EarnPoints ref={(child) => {this.child = child}} />
 
         {/* Remind Overlay */}
         <Overlay
@@ -400,7 +432,6 @@ export default class Profile extends Component {
                     this.state.fontLoaded ? (
                       <Text style={{
                         fontFamily: 'lato-bold',
-                        flexWrap: 'wrap',
                       }}>{truck.time}</Text>
                     ) : null
                   }
@@ -416,8 +447,35 @@ export default class Profile extends Component {
                   }
                 </View>
 
-              </View>
+                <Button
+                  onPress={() => this.checkIn(truck)}
+                  buttonStyle={
+                    ((this.state.checkIns[profilesList.indexOf(truck)]) && (this.state.checkIns[profilesList.indexOf(truck)] !== 0))
+                      ? [styles.button, style={
+                        backgroundColor: Colors.gray5,
+                        borderWidth: 1,
+                        borderColor: Colors.gray6}]
+                      : [styles.button, style={backgroundColor: Colors.orange}]
+                  }
+                  containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.gray5, marginTop: Metrics.marginVertical * 1.5}]}
+                  titleStyle={{
+                    color: Colors.white,
+                    fontSize: Metrics.font4,
+                  }}
+                  title='Mark as visited'
+                  icon={
+                    <MaterialCommunityIcons
+                      name='check-circle'
+                      size={18}
+                      color='white'
+                    />
+                  }
+                  disabled={((this.state.checkIns[profilesList.indexOf(truck)]) && (this.state.checkIns[profilesList.indexOf(truck)] !== 0))
+                    ? true : false
+                  }
+                />
 
+              </View>
 
               {/* fake button column)*/}
                 <View style={{
@@ -463,7 +521,9 @@ export default class Profile extends Component {
                 </View>
 
                 <Button
-                  onPress={() => console.log('should run this.goToTruck')}
+                  onPress={() => this.props.navigation.dispatch(
+                    NavigationActions.navigate({routeName: 'HomeMap', params: {truck: profilesList.indexOf(truck)}})
+                  )}
                   buttonStyle={[styles.circleButton, style={backgroundColor: Colors.orange}]}
                   containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.orange}]}
                   titleStyle={{
@@ -511,6 +571,13 @@ export default class Profile extends Component {
                     />
                   }
                 />
+
+                {/* for spacing between buttons in button column */}
+                <View style={{
+                  height: Metrics.pad / 2,
+                }}>
+                </View>
+
               </View>
 
             </View>
@@ -527,6 +594,19 @@ export default class Profile extends Component {
                 }}>PHOTOS</Text>
               ) : null
             }
+            <Button
+              onPress={ this._handleAddPhoto }
+              buttonStyle={ [styles.circleButton, style={backgroundColor: 'rgba(0, 0, 0, 0)'}] }
+              containerStyle={styles.buttonContainer}
+              title=''
+              icon={
+                <Feather
+                  name='plus'
+                  size={20}
+                  color={Colors.gray3}
+                />
+              }
+            />
           </View>
 
           <Carousel
@@ -761,14 +841,6 @@ export default class Profile extends Component {
                   </View>
 
 
-
-
-
-
-
-
-
-
                 )
               }
             />
@@ -825,8 +897,10 @@ const styles = StyleSheet.create({
   sectionHead: {
     backgroundColor: Colors.white,
     height: Metrics.button,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingHorizontal: Metrics.pad,
+    flexDirection: 'row',
   },
 
   listItem: {

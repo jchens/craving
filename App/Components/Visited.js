@@ -9,6 +9,7 @@ import { material } from 'react-native-typography'
 import { Feather, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import { Overlay, Button } from 'react-native-elements';
 import { Font } from 'expo';
+import { NavigationActions } from 'react-navigation';
 
 export default class Visited extends Component {
   constructor() {
@@ -177,7 +178,9 @@ export default class Visited extends Component {
                         </View>
 
                         <Button
-                          onPress={() => console.log('should run this.goToTruck')}
+                          onPress={() => this.props.navigation.dispatch(
+                            NavigationActions.navigate({routeName: 'HomeMap', params: {truck: profilesList.indexOf(item)}})
+                          )}
                           buttonStyle={[styles.circleButton, style={backgroundColor: Colors.orange}]}
                           containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.orange}]}
                           titleStyle={{
