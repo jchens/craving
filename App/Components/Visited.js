@@ -69,132 +69,136 @@ export default class Visited extends Component {
               <SectionList
                 renderItem={({item, index}) =>
 
-                <View style={[styles.listItem]}>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate('Profile')}
+                >
+                  <View style={[styles.listItem]}>
 
-                  {/* info: holding photo, info, and star*/}
-                  <View style={styles.info}>
+                    {/* info: holding photo, info, and star*/}
+                    <View style={styles.info}>
 
 
-                    {/* view to hold image for shadow*/}
-                    <View style={[styles.shadowSmall, style={
-                      flex: 1,
-                      backgroundColor: Colors.white,
-                      //borderRadius: Metrics.curve,
-                      borderWidth: 4,
-                      borderColor: Colors.white,
-
-                      shadowColor: Colors.black,
-                      shadowOpacity: Metrics.shadow * 0.85,
-                      shadowRadius: 5,
-                      shadowOffset: {width: 0, height: 4},
-                    }]}>
-                      <Image source={item.image} resizeMode='contain' style={{
+                      {/* view to hold image for shadow*/}
+                      <View style={[styles.shadowSmall, style={
+                        flex: 1,
+                        backgroundColor: Colors.white,
                         //borderRadius: Metrics.curve,
-                        aspectRatio: 1,
-                        width: undefined,
-                        height: undefined,
-                      }}/>
-                    </View>
+                        borderWidth: 4,
+                        borderColor: Colors.white,
 
-                    {/* info */}
-                    <View style={{
-                      flex: 2,
-                      paddingHorizontal: Metrics.pad,
-                    }}>
-
-                      {
-                        this.state.fontLoaded ? (
-                          <Text style={{
-                            fontSize: Metrics.font3,
-                            fontFamily: 'lato-black',
-                          }}> {item.name} </Text>
-                        ) : null
-                      }
-                      {
-                        this.state.fontLoaded ? (
-                          <Text style={{
-                            fontFamily: 'lato-regular',
-                            color: Colors.gray3,
-                            fontSize: Metrics.font5,
-                            paddingTop: 3,
-                            paddingBottom: 4,
-                          }}> {item.cuisine} </Text>
-                        ) : null
-                      }
-                      {
-                        this.state.fontLoaded ? (
-                          <Text style={{
-                            fontFamily: 'lato-regular',
-                            flexWrap: 'wrap',
-                            textAlign: 'left',
-                            fontSize: Metrics.font5,
-                          }}> {item.description} </Text>
-                        ) : null
-                      }
-                    </View>
-
-
-
-                    {/* buttom column */}
-                    <View style={{
-                      flexDirection: 'column',
-                      justifyContent: 'flex-start',
-                    }}>
-
-                      <Button
-                        key={index}
-                        buttonStyle={
-                          this.state.starArray[profilesList.indexOf(item)]
-                            ? [styles.circleButton, styles.glow, style={backgroundColor: Colors.yellow}]
-                            : [styles.circleButton, style={
-                              backgroundColor: Colors.gray5,
-                              borderWidth: 1,
-                              borderColor: Colors.gray6
-                            }]
-                        }
-                        containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.yellow}]}
-                        titleStyle={{
-                          color: Colors.white,
-                        }}
-                        onPress={() => this.toggleArray(item)}
-                        title=''
-                        icon={
-                          <FontAwesome
-                            name='star'
-                            size={Metrics.button/2}
-                            color= {Colors.white}
-                          />
-                        }
-                      />
-
-                      {/* for sake of padding in button column */}
-                      <View style={{
-                        height: Metrics.pad / 2,
-                      }}>
+                        shadowColor: Colors.black,
+                        shadowOpacity: Metrics.shadow * 0.85,
+                        shadowRadius: 5,
+                        shadowOffset: {width: 0, height: 4},
+                      }]}>
+                        <Image source={item.image} resizeMode='contain' style={{
+                          //borderRadius: Metrics.curve,
+                          aspectRatio: 1,
+                          width: undefined,
+                          height: undefined,
+                        }}/>
                       </View>
 
-                      <Button
-                        onPress={() => console.log('should run this.goToTruck')}
-                        buttonStyle={[styles.circleButton, style={backgroundColor: Colors.orange}]}
-                        containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.orange}]}
-                        titleStyle={{
-                          color: Colors.white,
-                          fontSize: Metrics.font4,
-                        }}
-                        title=''
-                        icon={
-                          <Feather
-                            name='map-pin'
-                            size={18}
-                            color='white'
-                          />
+                      {/* info */}
+                      <View style={{
+                        flex: 2,
+                        paddingHorizontal: Metrics.pad,
+                      }}>
+
+                        {
+                          this.state.fontLoaded ? (
+                            <Text style={{
+                              fontSize: Metrics.font3,
+                              fontFamily: 'lato-black',
+                            }}> {item.name} </Text>
+                          ) : null
                         }
-                      />
+                        {
+                          this.state.fontLoaded ? (
+                            <Text style={{
+                              fontFamily: 'lato-regular',
+                              color: Colors.gray3,
+                              fontSize: Metrics.font5,
+                              paddingTop: 3,
+                              paddingBottom: 4,
+                            }}> {item.cuisine} </Text>
+                          ) : null
+                        }
+                        {
+                          this.state.fontLoaded ? (
+                            <Text style={{
+                              fontFamily: 'lato-regular',
+                              flexWrap: 'wrap',
+                              textAlign: 'left',
+                              fontSize: Metrics.font5,
+                            }}> {item.description} </Text>
+                          ) : null
+                        }
+                      </View>
+
+
+
+                      {/* buttom column */}
+                      <View style={{
+                        flexDirection: 'column',
+                        justifyContent: 'flex-start',
+                      }}>
+
+                        <Button
+                          key={index}
+                          buttonStyle={
+                            this.state.starArray[profilesList.indexOf(item)]
+                              ? [styles.circleButton, styles.glow, style={backgroundColor: Colors.yellow}]
+                              : [styles.circleButton, style={
+                                backgroundColor: Colors.gray5,
+                                borderWidth: 1,
+                                borderColor: Colors.gray6
+                              }]
+                          }
+                          containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.yellow}]}
+                          titleStyle={{
+                            color: Colors.white,
+                          }}
+                          onPress={() => this.toggleArray(item)}
+                          title=''
+                          icon={
+                            <FontAwesome
+                              name='star'
+                              size={Metrics.button/2}
+                              color= {Colors.white}
+                            />
+                          }
+                        />
+
+                        {/* for sake of padding in button column */}
+                        <View style={{
+                          height: Metrics.pad / 2,
+                        }}>
+                        </View>
+
+                        <Button
+                          onPress={() => console.log('should run this.goToTruck')}
+                          buttonStyle={[styles.circleButton, style={backgroundColor: Colors.orange}]}
+                          containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.orange}]}
+                          titleStyle={{
+                            color: Colors.white,
+                            fontSize: Metrics.font4,
+                          }}
+                          title=''
+                          icon={
+                            <Feather
+                              name='map-pin'
+                              size={18}
+                              color='white'
+                            />
+                          }
+                        />
+                      </View>
+
                     </View>
 
                   </View>
-
-                </View>
+                </TouchableOpacity>
 
                 }
                 renderSectionHeader={({section: {title}}) => (
