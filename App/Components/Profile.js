@@ -207,6 +207,18 @@ export default class Profile extends Component {
       );
   }
 
+  goToTruck = () => {
+    const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+    const latLng = `${this.state.profile.latitude},${this.state.profile.longitude}`;
+    const label = 'Food Truck';
+    const url = Platform.select({
+      ios: `${scheme}${label}@${latLng}`,
+      android: `${scheme}${latLng}(${label})`
+    });
+    console.log(url),
+    Linking.openURL(url);
+  }
+
 
   handleDelete = index => {
      let tagsSelected = this.state.tagsSelected;
@@ -501,9 +513,10 @@ export default class Profile extends Component {
                 </View>
 
                 <Button
-                  onPress={() => this.props.navigation.dispatch(
-                    NavigationActions.navigate({routeName: 'HomeMap', params: {truck: profilesList.indexOf(truck)}})
-                  )}
+                  // onPress={() => this.props.navigation.dispatch(
+                  //   NavigationActions.navigate({routeName: 'HomeMap', params: {truck: profilesList.indexOf(truck)}})
+                  // )}
+                  onPress={() => this.goToTruck() }
                   buttonStyle={[styles.circleButton, style={backgroundColor: Colors.orange}]}
                   containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.orange}]}
                   titleStyle={{
