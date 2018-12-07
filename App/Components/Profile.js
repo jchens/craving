@@ -764,7 +764,7 @@ export default class Profile extends Component {
                           }}/>
                         </View>
 
-                        {/* info */}
+                        {/* info : name & date TODO: change to lato */}
                         <View style={{
                           flex: 2,
                           paddingHorizontal: Metrics.padSmall,
@@ -780,19 +780,6 @@ export default class Profile extends Component {
                           }}> {item.date} </Text>
                         </View>
 
-                      </View>
-
-                      {/* address, time*/}
-                      <View style={{
-                        paddingTop: Metrics.padSmall,
-                      }}>
-                        <Text style={{
-                          fontWeight: 'bold',
-                          flexWrap: 'wrap',
-                        }}>{item.time}</Text>
-                        <Text style={{
-                          flexWrap: 'wrap',
-                        }}>{item.address}</Text>
                       </View>
 
                       {/* tags!! */}
