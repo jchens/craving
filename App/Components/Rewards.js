@@ -5,6 +5,8 @@ import { Metrics, Colors, Images } from '../Themes'
 import {profilesList} from '../Themes/Profiles.js'
 
 import ProgressBarAnimated from 'react-native-progress-bar-animated';
+import { Feather, MaterialIcons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
+
 
 import { Font } from 'expo';
 
@@ -50,7 +52,9 @@ export default class Rewards extends Component {
       <View style={styles.container}>
 
         <View style={styles.reward}>
-          <Text style={styles.titleRewards}> Rewards</Text>
+          <View style={styles.titleContainer}>
+            <Text style={styles.titleRewards}> Rewards</Text>
+          </View>
 
           <View style={styles.progress}>
             <View style={{
@@ -183,16 +187,17 @@ export default class Rewards extends Component {
 
 
         <View style={styles.craving}>
-          <Text style={styles.titleCraving}> TODAYS CRAVING </Text>
+          <Text style={styles.titleCraving}> {"TODAY'S CRAVING"} </Text>
           <View style={styles.goals}>
 
             <View style={styles.card1}>
 
               <View style={styles.symbol}>
                 <View style={styles.circle}>
-                  <Image
-                    style={styles.star}
-                    source={Images.star}
+                  <FontAwesome
+                    name='star'
+                    size={Metrics.button/1.5}
+                    color= {'#0496FF'}
                   />
                 </View>
                 <Text style={styles.points}> + 10 PTS </Text>
@@ -204,9 +209,10 @@ export default class Rewards extends Component {
             <View style={styles.card2}>
               <View style={styles.symbol}>
                 <View style={styles.circle}>
-                  <Image
-                    style={styles.star}
-                    source={Images.star}
+                  <FontAwesome
+                    name='star'
+                    size={Metrics.button/1.5}
+                    color= {'#FF4D00'}
                   />
                 </View>
                 <Text style={styles.points}> + 10 PTS </Text>
@@ -218,9 +224,10 @@ export default class Rewards extends Component {
 
               <View style={styles.symbol}>
                 <View style={styles.circle}>
-                  <Image
-                    style={styles.star}
-                    source={Images.star}
+                  <FontAwesome
+                    name='star'
+                    size={Metrics.button/1.5}
+                    color= {'#FFD046'}
                   />
                 </View>
                 <Text style={styles.points}> + 10 PTS </Text>
@@ -245,10 +252,21 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   titleRewards: {
+    color: Colors.gray1,
+    fontSize: Metrics.font3,
+    paddingBottom: Metrics.pad / 2,
     fontFamily: 'lato-bold',
-    fontSize: 24,
-    marginLeft: 35,
-    marginTop: 25,
+
+  },
+  titleContainer: {
+    height: Metrics.nav * 1.25,
+    backgroundColor: Colors.gray7,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+
+    borderBottomWidth: 1,
+    borderColor: Colors.gray5,
   },
   titleCraving: {
     fontFamily: 'lato-bold',
