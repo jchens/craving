@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { createBottomTabNavigator, TabBarBottom, createAppContainer} from 'react-navigation';
 import HomeMap from './HomeMap';
-//import Rewards from './App/Components/Rewards';
+//import Rewards from './Rewards';
 import Visited from './Visited';
 import Followed from './Followed';
 import Profile from './Profile';
+import ProfileA from './ProfileA';
 import { Feather, MaterialIcons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { Font } from 'expo';

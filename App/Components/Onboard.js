@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
 
-import { Metrics, Colors, Images } from '../Themes';
+import { Colors } from '../Themes';
 
 export default class Onboard extends Component {
   doneCallback = () => {
@@ -24,8 +24,8 @@ export default class Onboard extends Component {
           {
             backgroundColor: Colors.yellow,
             image: <Image source={require('../Images/Onboarding/placeholder.png')} />,
-            title: 'Onboarding',
-            subtitle: 'Done with React Native Onboarding Swiper',
+            title: 'Welcome to Craving!',
+            subtitle: 'Discover, review, and track food trucks',
           },
           {
             backgroundColor: Colors.blue,

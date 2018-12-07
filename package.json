@@ -19,9 +19,10 @@
     "react-native-modal-datetime-picker": "^6.0.0",
     "react-native-multiple-tags": "0.0.4",
     "react-native-onboarding-swiper": "^0.10.0",
+    "react-native-progress-bar-animated": "^1.0.6",
     "react-native-snap-carousel": "^3.7.5",
     "react-native-typography": "^1.4.0",
-    "react-navigation": "^3.0.5",
+    "react-navigation": "^3.0.6",
     "yarn": "^1.12.3"
   },
   "devDependencies": {
