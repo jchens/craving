@@ -803,47 +803,50 @@ export default class Profile extends Component {
                         }}>{item.address}</Text>
                       </View>
 
-
+                      {/* tags!! */}
                       <View style={{
                         flexDirection: 'row',
                         alignItems: 'center',
                         flexWrap: 'wrap',
                         justifyContent: 'space-between',
-
                       }}>
-                        <View style={{
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                        }}>
-                          {
-                            item.positiveTags.map(tag =>
-                              <Button
-                               key={tag}
-                               title={tag}
-                               buttonStyle={styles.positiveTag}
-                               containerStyle={{ marginTop: 20 }}
-                              />
-                            )
-                          }
-                        </View>
+                        {
+                          item.positiveTags.map(tag =>
+                            <Button
+                             title= {tag}
+                             titleStyle={{
+                                 color: Colors.white,
+                                 fontWeight: 'bold',
+                             }}
+                             buttonStyle={[styles.tag, style={
+                               backgroundColor: Colors.orange,
+                             }]}
+                             containerStyle={styles.tagContainer}
+                            />
+                          )
+                        }
+                      </View>
 
-
-                        <View style={{
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                        }}>
-                          {
-                            item.negativeTags.map(tag =>
-                              <Button
-                               key={tag}
-                               title={tag}
-                               buttonStyle={styles.negativeTag}
-                               containerStyle={{ marginTop: 20 }}
-                              />
-                            )
-                          }
-                        </View>
-
+                      <View style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        flexWrap: 'wrap',
+                      }}>
+                        {
+                          item.negativeTags.map(tag =>
+                            <Button
+                             title= {tag}
+                             titleStyle={{
+                                 color: Colors.gray1,
+                                 fontWeight: 'bold',
+                             }}
+                             buttonStyle={[styles.tag, style={
+                               backgroundColor: Colors.gray5,
+                             }]}
+                             containerStyle={styles.tagContainer}
+                            />
+                          )
+                        }
                       </View>
 
 
@@ -1011,27 +1014,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  positiveTag: {
-    backgroundColor: Colors.orange,
-    width: 150,
+  tag: {
+    borderRadius: Metrics.button / 4,
     height: Metrics.button,
-    borderColor: "transparent",
-    borderWidth: 0,
-    borderRadius: 5,
-    // marginLeft: 10,
-    paddingHorizontal: Metrics.button/2,
-
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: Metrics.button/4,
   },
 
-  negativeTag: {
-    backgroundColor: Colors.gray4,
-    width: 150,
-    height: Metrics.button,
-    borderColor: "transparent",
-    borderWidth: 0,
-    borderRadius: 5,
-    // marginLeft: 10,
-    paddingHorizontal: Metrics.button/2,
+  tagContainer: {
+    backgroundColor: Colors.yellow,
+    paddingRight: Metrics.pad/2,
   },
-
 });
