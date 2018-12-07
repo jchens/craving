@@ -20,6 +20,8 @@ Used `npm install --save react-native-onboarding-swiper` to [implement the onboa
 
 Used `npm install --save react-native-tag-autocomplete` to [implement the tag system](https://github.com/JoeRoddy/react-native-tag-autocomplete).
 
+Used `npm install react-native-popup-menu --save` to [implement the popup](https://github.com/instea/react-native-popup-menu/blob/HEAD/doc/examples.md).
+
 Allow usage of location from instructions [here](https://stackoverflow.com/questions/48157185/info-plist-file-for-react-native-ios-app-using-expo-sdk?noredirect=1&lq=1).
 
 ## Instructions
@@ -45,6 +47,8 @@ npm install --save react-native-progress-bar-animated
 npm install --save react-native-onboarding-swiper
 
 npm install --save react-native-tag-autocomplete
+
+npm install react-native-popup-menu --save
 
 expo start
 ```
