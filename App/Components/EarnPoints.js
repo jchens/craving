@@ -10,13 +10,15 @@ export default class EarnPoints extends Component {
     super(props);
 
     this.state = {
-      isVisible: true,
+      isVisible: false,
+      source: '',
     };
   }
 
-  toggleVisibility = () => {
+  toggleVisibility = (source) => {
     this.setState({
-      isVisible: !this.state.isVisible
+      isVisible: !this.state.isVisible,
+      source: source
     });
   }
 
@@ -42,7 +44,7 @@ export default class EarnPoints extends Component {
         />
 
         <View>
-          <Text style={styles.description}>Thanks for {this.props.source}! </Text>
+          <Text style={styles.description}>Thanks for {this.state.source}! </Text>
           <Text style={styles.description}>You earned <Text style={styles.emphasis}>10 points.</Text></Text>
         </View>
 

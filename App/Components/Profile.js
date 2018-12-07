@@ -156,7 +156,6 @@ export default class Profile extends Component {
 
       isVisible: false,
       isDateTimePickerVisible: false,
-      isEarnPointsVisible: false,
       fontLoaded: false,
       sliderActiveSlide: 1,
     };
@@ -202,8 +201,8 @@ export default class Profile extends Component {
       temp[profilesList.indexOf(item)] = true;
       this.setState({
         checkIns: temp,
-        isEarnPointsVisible: !this.state.isEarnPointsVisible,
       });
+      this.child.toggleVisibility('checking in');
     }
   }
 
@@ -226,6 +225,12 @@ export default class Profile extends Component {
   /* TODO: implement */
   _handleAddPhoto = () => {
     console.log('uploading photo');
+    // If we can't get functionality, we can at least show the Earn Points overlay
+    // this.setState({
+    //   isEarnPointsVisible: !this.state.isEarnPointsVisible,
+    //   uploadedPhoto: true,
+    // });
+    this.child.toggleVisibility('uploading a photo');
   };
 
   _renderItem ({item, index}) {
@@ -252,7 +257,7 @@ export default class Profile extends Component {
       </View>
 
       {/* Earn Points overlay */}
-      {this.state.isEarnPointsVisible ? <EarnPoints source='checking in' /> : null }
+      <EarnPoints ref={(child) => {this.child = child}} />
 
         {/* Remind Overlay */}
         <Overlay
@@ -592,7 +597,7 @@ export default class Profile extends Component {
             }
             <Button
               onPress={ this._handleAddPhoto }
-              buttonStyle={[styles.circleButton, style={backgroundColor: 'rgba(0, 0, 0, 0)'}]}
+              buttonStyle={ [styles.circleButton, style={backgroundColor: 'rgba(0, 0, 0, 0)'}] }
               containerStyle={styles.buttonContainer}
               title=''
               icon={
