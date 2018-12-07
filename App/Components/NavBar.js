@@ -7,6 +7,7 @@ import Visited from './Visited';
 import Followed from './Followed';
 import Profile from './Profile';
 import ProfileA from './ProfileA';
+//import EarnPoints from './EarnPoints';
 import { Feather, MaterialIcons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { Font } from 'expo';
