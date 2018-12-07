@@ -203,17 +203,17 @@ class FitToCoordinates extends React.Component {
           loadingEnabled={true}
           showsUserLocation={true}
         >
-        {MARKERS.map((marker, i) => (
-          <Marker
-            key={i}
-            identifier={i.toString()}
-            coordinate={marker}
-            onPress={e => this.onMarkerClick(parseInt(e.nativeEvent.id))}
-            anchor={{ x: 0.5, y: 1 }}
-          >
-          <Image source={markerImg} style={{width: 40, height: 40 }} />
-          </Marker>
-        ))}
+          {MARKERS.map((marker, i) => (
+            <Marker
+              key={i}
+              identifier={i.toString()}
+              coordinate={marker}
+              onPress={e => this.onMarkerClick(parseInt(e.nativeEvent.id))}
+              anchor={{ x: 0.5, y: 1 }}
+            >
+              <Image source={markerImg} style={{width: 40, height: 40 }} />
+            </Marker>
+          ))}
         </MapView>
 
         {/* Had to move these components out of the map */}
