@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { createBottomTabNavigator, TabBarBottom, createAppContainer} from 'react-navigation';
 import HomeMap from './App/Components/HomeMap';
-//import Rewards from './App/Components/Rewards';
+import Rewards from './App/Components/Rewards';
 import Visited from './App/Components/Visited';
 import Followed from './App/Components/Followed';
 import Profile from './App/Components/Profile';
@@ -32,7 +32,7 @@ const TabNavigator = createBottomTabNavigator(
     //Rewards: Rewards,
 
     Rewards: {
-      screen: Followed,
+      screen: Rewards,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <Feather
