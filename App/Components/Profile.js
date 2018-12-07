@@ -818,7 +818,8 @@ export default class Profile extends Component {
                           {
                             item.positiveTags.map(tag =>
                               <Button
-                               title= {tag}
+                               key={tag}
+                               title={tag}
                                buttonStyle={styles.positiveTag}
                                containerStyle={{ marginTop: 20 }}
                               />
@@ -834,7 +835,8 @@ export default class Profile extends Component {
                           {
                             item.negativeTags.map(tag =>
                               <Button
-                               title= {tag}
+                               key={tag}
+                               title={tag}
                                buttonStyle={styles.negativeTag}
                                containerStyle={{ marginTop: 20 }}
                               />
