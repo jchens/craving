@@ -246,12 +246,15 @@ const styles = StyleSheet.create({
   },
   titleRewards: {
     fontFamily: 'lato-bold',
+    fontSize: 24,
     marginLeft: 35,
     marginTop: 25,
   },
   titleCraving: {
     fontFamily: 'lato-bold',
+    fontSize: 18,
     marginLeft: 35,
+
   },
   reward: {
     flex: 2,
@@ -326,9 +329,12 @@ const styles = StyleSheet.create({
 
   },
   text: {
-    fontFamily: 'lato-bold',    
+    fontFamily: 'lato-bold',
+    fontSize: 15,
+    textAlign: 'center',
+    lineHeight: 20,
     width: 125,
-    marginBottom: 15,
+    marginBottom: 10,
     marginLeft: 60,
     color: 'white',
   },
