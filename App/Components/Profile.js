@@ -206,7 +206,7 @@ export default class Profile extends Component {
   _renderItem ({item, index}) {
       return (
           <View style={styles.slide}>
-            <Image style={{flex: 1, width: 200, height: 200, resizeMode: 'contain'}} source={item.illustration}/>
+            <Image style={{flex: 1, width: 250, height: 250, resizeMode: 'contain'}} source={item.illustration}/>
           </View>
       );
   }
