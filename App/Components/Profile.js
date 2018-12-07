@@ -154,6 +154,7 @@ export default class Profile extends Component {
       isVisible: false,
       isDateTimePickerVisible: false,
       fontLoaded: false,
+      sliderActiveSlide: 1,
     };
   }
 
@@ -205,7 +206,7 @@ export default class Profile extends Component {
   _renderItem ({item, index}) {
       return (
           <View style={styles.slide}>
-            <Image source={item.illustration}/>
+            <Image style={{flex: 1, width: 200, height: 200, resizeMode: 'contain'}} source={item.illustration}/>
           </View>
       );
   }
@@ -315,7 +316,8 @@ export default class Profile extends Component {
         </Overlay>
 
 
-        <ScrollView>
+        {/* Not sure whether the contentContainerStyle is necessary. */}
+        <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}>
 
             {/* truck info header */}
             <View style={[styles.listItem]}>
@@ -533,8 +535,9 @@ export default class Profile extends Component {
             renderItem={this._renderItem}
             sliderWidth={width}
             itemWidth={200}
-            itemHeight={50}
             layout={'default'}
+            enableMomentum={true}
+                  activeSlideAlignment={'start'}
           />
 
 
@@ -789,7 +792,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    backgroundColor: Colors.orange,
+    backgroundColor: Colors.gray6,
   },
 
   titleContainer: {
