@@ -16,6 +16,7 @@ Used `npm i -S react-native-multiple-tags` to [implement the review tags](https:
 
 Used `npm install --save react-native-progress-bar-animated` to [implement the progress nar](https://www.npmjs.com/package/react-native-progress-bar-animated).
 
+Used `npm install --save react-native-onboarding-swiper` to [implement the onboarding swiper](https://www.npmjs.com/package/react-native-onboarding-swiper/v/0.10.0).
 
 Allow usage of location from instructions [here](https://stackoverflow.com/questions/48157185/info-plist-file-for-react-native-ios-app-using-expo-sdk?noredirect=1&lq=1).
 
@@ -38,6 +39,8 @@ npm install --save react-native-snap-carousel
 npm i -S react-native-multiple-tags
 
 npm install --save react-native-progress-bar-animated
+
+npm install --save react-native-onboarding-swiper
 
 expo start
 ```
