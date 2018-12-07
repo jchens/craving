@@ -93,7 +93,7 @@ const item =   {
       negativeTags: ["Oily", "Long Line"]
   }
 
-const truck = profilesList[6];
+const truck = profilesList[0];
 
 
 export default class Profile extends Component {
@@ -369,7 +369,6 @@ export default class Profile extends Component {
                     shadowOffset: {width: 0, height: 4},
                   }]}>
                     <Image source={truck.image} resizeMode='contain' style={{
-                      //borderRadius: Metrics.curve,
                       aspectRatio: 1,
                       width: undefined,
                       height: undefined,
@@ -822,15 +821,7 @@ export default class Profile extends Component {
                             item.positiveTags.map(tag =>
                               <Button
                                title= {tag}
-                               buttonStyle={{
-                                 backgroundColor: "#241E4E",
-                                 width: 150,
-                                 height: 45,
-                                 borderColor: "transparent",
-                                 borderWidth: 0,
-                                 borderRadius: 5,
-                                 marginLeft: 10
-                               }}
+                               buttonStyle={styles.positiveTag}
                                containerStyle={{ marginTop: 20 }}
                               />
                             )
@@ -846,15 +837,7 @@ export default class Profile extends Component {
                             item.negativeTags.map(tag =>
                               <Button
                                title= {tag}
-                               buttonStyle={{
-                                 backgroundColor: "#6A6876",
-                                 width: 150,
-                                 height: 45,
-                                 borderColor: "transparent",
-                                 borderWidth: 0,
-                                 borderRadius: 5,
-                                 marginLeft: 10
-                               }}
+                               buttonStyle={styles.negativeTag}
                                containerStyle={{ marginTop: 20 }}
                               />
                             )
@@ -1026,6 +1009,29 @@ const styles = StyleSheet.create({
     width: Metrics.button,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  positiveTag: {
+    backgroundColor: Colors.orange,
+    width: 150,
+    height: Metrics.button,
+    borderColor: "transparent",
+    borderWidth: 0,
+    borderRadius: 5,
+    // marginLeft: 10,
+    paddingHorizontal: Metrics.button/2,
+
+  },
+
+  negativeTag: {
+    backgroundColor: Colors.gray4,
+    width: 150,
+    height: Metrics.button,
+    borderColor: "transparent",
+    borderWidth: 0,
+    borderRadius: 5,
+    // marginLeft: 10,
+    paddingHorizontal: Metrics.button/2,
   },
 
 });
