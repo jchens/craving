@@ -160,9 +160,11 @@ export default class Rewards extends Component {
               </View>
 
 
-
-
             </View>
+
+
+
+
             <View style={styles.bar}>
 
               <ProgressBarAnimated
@@ -243,10 +245,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   titleRewards: {
+    fontFamily: 'lato-bold',
     marginLeft: 35,
     marginTop: 25,
   },
   titleCraving: {
+    fontFamily: 'lato-bold',
     marginLeft: 35,
   },
   reward: {
@@ -311,16 +315,18 @@ const styles = StyleSheet.create({
     borderRadius: 25,
   },
   star: {
-    backgroundColor: 'green',
+    backgroundColor: 'blue',
     height: 30,
     width: 30,
   },
   points: {
+    fontFamily: 'lato-bold',
     marginTop: 5,
     color: 'white',
 
   },
   text: {
+    fontFamily: 'lato-bold',    
     width: 125,
     marginBottom: 15,
     marginLeft: 60,
