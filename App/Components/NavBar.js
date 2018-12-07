@@ -42,6 +42,9 @@ const FollowedStack = createStackNavigator(
     },
     Profile: {
       screen: Profile
+    },
+    HomeMap: {
+      screen: HomeMap
     }
   },
   {
@@ -59,6 +62,9 @@ const VisitedStack = createStackNavigator(
     },
     Profile: {
       screen: Profile
+    },
+    HomeMap: {
+      screen: HomeMap
     }
   },
   {
