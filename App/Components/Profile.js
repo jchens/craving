@@ -46,6 +46,9 @@ const tags = [
   'lemon',
 ];
 
+const popularPositiveTags = ["Affordable", "Good food"];
+const popularNegativeTags = ["Long line", "Small portions"];
+
 
 const reviews = [
   {
@@ -200,7 +203,7 @@ export default class Profile extends Component {
   _renderItem ({item, index}) {
       return (
           <View style={styles.slide}>
-            <Image style={{flex: 1, width: 250, height: 250, resizeMode: 'contain'}} source={item.illustration}/>
+            <Image style={{flex: 1, aspectRatio: 1, width: undefined, height: undefined, resizeMode: 'contain'}} source={item.illustration}/>
           </View>
       );
   }
@@ -338,7 +341,7 @@ export default class Profile extends Component {
 
 
         {/* Not sure whether the contentContainerStyle is necessary. */}
-        <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}>
+        <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: 'center', alignItems: 'stretch'}}>
 
             {/* truck info header */}
             <View style={[styles.listItem]}>
@@ -367,6 +370,7 @@ export default class Profile extends Component {
                     shadowOffset: {width: 0, height: 4},
                   }]}>
                     <Image source={truck.image} resizeMode='contain' style={{
+                      flex: 1,
                       aspectRatio: 1,
                       width: undefined,
                       height: undefined,
@@ -375,7 +379,7 @@ export default class Profile extends Component {
 
                   {/* info */}
                   <View style={{
-                    flex: 2,
+                    flex: 3,
                     paddingHorizontal: Metrics.pad,
                   }}>
 
@@ -569,7 +573,6 @@ export default class Profile extends Component {
                 </View>
 
               </View>
-
             </View>
 
 
@@ -624,8 +627,7 @@ export default class Profile extends Component {
             }
           </View>
 
-
-
+          {/* most popular tags!! */}
           <View style={{
             flexDirection: 'row',
             flex: 1,
@@ -633,50 +635,54 @@ export default class Profile extends Component {
             alignItems: 'center',
             padding: Metrics.pad * 1.25,
           }}>
-            <Button
-             title= {'Affordable'}
-             titleStyle={{
-                 color: Colors.white,
-                 fontWeight: 'bold',
-             }}
-             buttonStyle={[styles.tag, style={
-               backgroundColor: Colors.orange,
-             }]}
-             containerStyle={styles.tagContainer}
-            />
-            <Button
-             title= {'Good food'}
-             titleStyle={{
-                 color: Colors.white,
-                 fontWeight: 'bold',
-             }}
-             buttonStyle={[styles.tag, style={
-               backgroundColor: Colors.orange,
-             }]}
-             containerStyle={styles.tagContainer}
-            />
-            <Button
-             title= {'Long line'}
-             titleStyle={{
-                 color: Colors.gray1,
-                 fontWeight: 'bold',
-             }}
-             buttonStyle={[styles.tag, style={
-               backgroundColor: Colors.gray5,
-             }]}
-             containerStyle={styles.tagContainer}
-            />
-            <Button
-             title= {'Small Portions'}
-             titleStyle={{
-                 color: Colors.gray1,
-                 fontWeight: 'bold',
-             }}
-             buttonStyle={[styles.tag, style={
-               backgroundColor: Colors.gray5,
-             }]}
-             containerStyle={styles.tagContainer}
-            />
+            <View style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              justifyContent: 'flex-start',
+              paddingBottom: Metrics.pad / 2,
+            }}>
+              {
+                popularPositiveTags.map(tag =>
+                  <Button
+                   key={tag}
+                   title= {tag}
+                   titleStyle={{
+                       color: Colors.orange,
+                       fontWeight: 'bold',
+                   }}
+                   buttonStyle={[styles.tag, style={
+                     backgroundColor: Colors.orange_frosty,
+                   }]}
+                   containerStyle={styles.tagContainer}
+                  />
+                )
+              }
+            </View>
+
+            <View style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+              flexWrap: 'wrap',
+            }}>
+              {
+                popularNegativeTags.map(tag =>
+                  <Button
+                   key={tag}
+                   title= {tag}
+                   titleStyle={{
+                       color: Colors.gray1,
+                       fontWeight: 'bold',
+                   }}
+                   buttonStyle={[styles.tag, style={
+                     backgroundColor: Colors.gray6,
+                   }]}
+                   containerStyle={styles.tagContainer}
+                  />
+                )
+              }
+            </View>
           </View>
 
           <View style={[styles.shadowSmall, styles.sectionHead]}>
@@ -832,10 +838,6 @@ export default class Profile extends Component {
                         }
                       </View>
 
-
-
-
-
                     </View>
 
                   </View>
@@ -860,7 +862,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    backgroundColor: Colors.gray6,
+    backgroundColor: Colors.white,
   },
 
   titleContainer: {
@@ -901,6 +903,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: Metrics.pad,
     flexDirection: 'row',
+    zIndex: 1,
   },
 
   listItem: {
