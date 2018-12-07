@@ -342,7 +342,7 @@ export default class Followed extends Component {
 
                     <Button
                       onPress={() => this.props.navigation.dispatch(
-                        NavigationActions.navigate({routeName: 'HomeMap', params: {truck: profilesList.indexOf(item)}})
+                        NavigationActions.navigate({routeName: 'HomeMapFollowed', params: {truck: profilesList.indexOf(item)}})
                       )}
                       buttonStyle={[styles.circleButton, style={backgroundColor: Colors.orange}]}
                       containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.orange}]}

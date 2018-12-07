@@ -179,7 +179,7 @@ export default class Visited extends Component {
 
                         <Button
                           onPress={() => this.props.navigation.dispatch(
-                            NavigationActions.navigate({routeName: 'HomeMap', params: {truck: profilesList.indexOf(item)}})
+                            NavigationActions.navigate({routeName: 'HomeMapVisited', params: {truck: profilesList.indexOf(item)}})
                           )}
                           buttonStyle={[styles.circleButton, style={backgroundColor: Colors.orange}]}
                           containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.orange}]}

@@ -43,7 +43,7 @@ const FollowedStack = createStackNavigator(
     Profile: {
       screen: Profile
     },
-    HomeMap: {
+    HomeMapFollowed: {
       screen: HomeMap
     }
   },
@@ -57,13 +57,13 @@ const FollowedStack = createStackNavigator(
 
 const VisitedStack = createStackNavigator(
   {
-    Followed: {
+    Visited: {
       screen: Visited
     },
     Profile: {
       screen: Profile
     },
-    HomeMap: {
+    HomeMapVisited: {
       screen: HomeMap
     }
   },
