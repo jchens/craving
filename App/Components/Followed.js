@@ -461,7 +461,7 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
 
     // TODO: change this to reveal some cool illustration
-    backgroundColor: Colors.orange,
+    backgroundColor: Colors.white,
 
   },
 

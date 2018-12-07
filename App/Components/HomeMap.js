@@ -663,7 +663,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'stretch',
     flexDirection: 'column',
-    backgroundColor: Colors.orange,
+    backgroundColor: Colors.white,
   },
   map: {
     //...StyleSheet.absoluteFillObject,
