@@ -57,6 +57,7 @@ const DEFAULT_PADDING = { top: 400, right: 400, bottom: 400, left: 400 };
 class FitToCoordinates extends React.Component {
   constructor(props) {
     super(props);
+    console.disableYellowBox = true;
 
     let arr = []
     for(let i = 0; i < 7; i++) {
