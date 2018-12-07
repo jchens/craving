@@ -7,7 +7,7 @@ import {
   ScrollView, Text,
   Linking, ActivityIndicator,
   TouchableOpacity, Image,
-  Platform } from 'react-native';
+  Platform, Keyboard } from 'react-native';
 import { Metrics, Colors, Images } from '../Themes';
 import {profilesList} from '../Themes/Profiles.js';
 import EarnPoints from './EarnPoints.js';
@@ -26,24 +26,22 @@ import MultipleTags from 'react-native-multiple-tags';
 import AutoTags from 'react-native-tag-autocomplete';
 
 
-
-
 const { width, height } = Dimensions.get('window');
 
 const tags = [
   'Affordable',
-  'Good Food',
-  'Small Portions',
-  'Long Line',
-  'guava',
-  'pineapple',
-  'orange',
-  'pear',
-  'date',
-  'strawberry',
-  'pawpaw',
-  'banana',
-  'apple',
+  'Good food',
+  'Small portions',
+  'Long line',
+  'Great carnitas',
+  'Greasy',
+  'Expensive',
+  'Great tacos',
+  'Short wait',
+  'Great burritos',
+  'Great tamales',
+  'Friendly staff',
+  'Tastes bland',
   'grape',
   'lemon',
 ];
@@ -55,32 +53,32 @@ const reviews = [
       icon: Images.stock1,
       friend: true,
       date: "2 days ago",
-      positiveTags: ["Great carnitas", "Friendly Staff"],
-      negativeTags: ["Oily", "Long Line"]
+      positiveTags: ["Great carnitas", "Affordable"],
+      negativeTags: ["Greasy", "Long line"]
   },
   {
       name: "Jerry Berry",
       icon: Images.stock2,
       friend: true,
       date: "2 days ago",
-      positiveTags: ["Great carnitas", "Friendly Staff"],
-      negativeTags: ["Oily", "Long Line"]
+      positiveTags: ["Great tacos", "Friendly staff"],
+      negativeTags: ["Long line", "Small portions"]
   },
   {
       name: "Thomas Hsieh",
       icon: Images.stock3,
       friend: true,
       date: "2 days ago",
-      positiveTags: ["Great carnitas", "Friendly Staff"],
-      negativeTags: ["Oily", "Long Line"]
+      positiveTags: ["Short wait", "Friendly staff"],
+      negativeTags: ["Greasy", "Tastes bland"]
   },
   {
       name: "Jessica Chen",
       icon: Images.stock4,
       friend: true,
       date: "2 days ago",
-      positiveTags: ["Great carnitas", "Friendly Staff"],
-      negativeTags: ["Oily", "Long Line"]
+      positiveTags: ["Great carnitas", "Great tacos"],
+      negativeTags: ["Long", "Small portions"]
   },
 ]
 
@@ -89,7 +87,7 @@ const item =   {
       icon: Images.sanjeet_food_truck,
       friend: true,
       date: "2 days ago",
-      positiveTags: ["Great carnitas", "Friendly Staff"],
+      positiveTags: ["Great carnitas", "Affordable"],
       negativeTags: ["Oily", "Long Line"]
   }
 
@@ -122,7 +120,7 @@ export default class Profile extends Component {
       fontLoaded: false,
       sliderActiveSlide: 1,
 
-      suggestions : [ {name:'Long line'}, {name:'Affordable'}, {name:'Friendly'}, {name:'Oily'}, {name:'Good food'}, {name:'Small portions'}, {name:'Expensive'},],
+      suggestions : [ {name:'Long line'}, {name:'Affordable'}, {name:'Friendly'}, {name:'Greasy'}, {name:'Good food'}, {name:'Small portions'}, {name:'Expensive'},],
       tagsSelected : []
     };
   }
