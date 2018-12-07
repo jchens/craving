@@ -32,7 +32,41 @@ const HomeStack = createStackNavigator(
       headerVisible: false
     }
   }
-)
+);
+
+const FollowedStack = createStackNavigator(
+  {
+    Followed: {
+      screen: Followed
+    },
+    Profile: {
+      screen: Profile
+    }
+  },
+  {
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false
+    }
+  }
+);
+
+const VisitedStack = createStackNavigator(
+  {
+    Followed: {
+      screen: Visited
+    },
+    Profile: {
+      screen: Profile
+    }
+  },
+  {
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false
+    }
+  }
+);
 
 /* Bottom tab navigator. */
 const TabNavigator = createBottomTabNavigator(
@@ -66,7 +100,7 @@ const TabNavigator = createBottomTabNavigator(
     },
 
     Followed: {
-      screen: Followed,
+      screen: FollowedStack,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <Feather
@@ -80,7 +114,7 @@ const TabNavigator = createBottomTabNavigator(
     },
 
     Visited: {
-      screen: Visited,
+      screen: VisitedStack,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <Feather
