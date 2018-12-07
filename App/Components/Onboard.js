@@ -35,27 +35,33 @@ export default class Onboard extends Component {
         pages={[
           {
             backgroundColor: Colors.yellow,
-            image: <Image source={require('../Images/Onboarding/placeholder.png')} />,
+            image: <Image style={{width: 0, height: 0, resizeMode: 'contain'}} source={require('../Images/Onboarding/onboarding1.png')} />,
             title: 'Welcome to Craving!',
             subtitle: 'Discover, review, and track food trucks',
           },
           {
             backgroundColor: Colors.blue,
-            image: <Image source={require('../Images/Onboarding/placeholder2.png')} />,
+            image: <Image style={{width: 300, height: 300, resizeMode: 'contain'}} source={require('../Images/Onboarding/onboarding0.png')} />,
+            title: 'Find Trucks',
+            subtitle: 'Use the map to find food trucks near you',
+          },
+          {
+            backgroundColor: Colors.orange,
+            image: <Image style={{width: 300, height: 300, resizeMode: 'contain'}} source={require('../Images/Onboarding/onboarding1.png')} />,
             title: 'Follow Trucks',
             subtitle: 'Click the star icon to add a truck to your Follow list',
           },
           {
-            backgroundColor: Colors.orange,
-            image: <Image source={require('../Images/Onboarding/placeholder3.png')} />,
+            backgroundColor: Colors.purple,
+            image: <Image style={{width: 300, height: 300, resizeMode: 'contain'}} source={require('../Images/Onboarding/onboarding2.png')} />,
             title: 'Set Reminders',
             subtitle: 'Click the bell icon to set a reminder about upcoming food trucks',
           },
           {
-            backgroundColor: Colors.purple,
-            image: <Image source={require('../Images/Onboarding/placeholder4.png')} />,
-            title: 'Some other feature',
-            subtitle: 'Description here',
+            backgroundColor: Colors.yellow,
+            image: <Image style={{width: 300, height: 300, resizeMode: 'contain'}} source={require('../Images/Onboarding/onboarding3.png')} />,
+            title: 'Check in at Trucks',
+            subtitle: 'Keep track of the trucks you\'ve visited',
           }
         ]}
       />
