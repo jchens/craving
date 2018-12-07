@@ -25,6 +25,7 @@ const HomeStack = createStackNavigator(
     }
   },
   {
+    mode: 'modal',
     /* These options hide the stack navigator at the top. */
     headerMode: 'none',
     navigationOptions: {
