@@ -30,14 +30,20 @@ export default class Onboard extends Component {
           {
             backgroundColor: Colors.blue,
             image: <Image source={require('../Images/Onboarding/placeholder2.png')} />,
-            title: 'Onboarding',
-            subtitle: 'Done with React Native Onboarding Swiper',
+            title: 'Follow Trucks',
+            subtitle: 'Click the star icon to add a truck to your Follow list',
           },
           {
             backgroundColor: Colors.orange,
             image: <Image source={require('../Images/Onboarding/placeholder3.png')} />,
-            title: 'Onboarding',
-            subtitle: 'Done with React Native Onboarding Swiper',
+            title: 'Set Reminders',
+            subtitle: 'Click the bell icon to set a reminder about upcoming food trucks',
+          },
+          {
+            backgroundColor: Colors.purple,
+            image: <Image source={require('../Images/Onboarding/placeholder4.png')} />,
+            title: 'Some other feature',
+            subtitle: 'Description here',
           }
         ]}
       />
