@@ -7,9 +7,10 @@ import {
   Dimensions,
   FlatList, SectionList,
   ScrollView,
-  Text, Linking, ActivityIndicator, TouchableOpacity, Image, Platform} from 'react-native'
-import { Metrics, Colors, Images } from '../Themes'
-import {profilesList} from '../Themes/Profiles.js'
+  Text, Linking, ActivityIndicator, TouchableOpacity, Image, Platform} from 'react-native';
+import { Metrics, Colors, Images } from '../Themes';
+import {profilesList} from '../Themes/Profiles.js';
+import EarnPoints from './EarnPoints.js';
 
 import { material } from 'react-native-typography'
 import { Feather, MaterialIcons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -150,9 +151,11 @@ export default class Profile extends Component {
       starArray: arr,
       remindArray: remind,
       activeReminderIndex: 0,
+      checkIns: [],
 
       isVisible: false,
       isDateTimePickerVisible: false,
+      isEarnPointsVisible: false,
       fontLoaded: false,
       sliderActiveSlide: 1,
     };
@@ -186,6 +189,16 @@ export default class Profile extends Component {
     })
   }
 
+  checkIn = (item) => {
+    console.log(profilesList.indexOf(item));
+    let temp = this.state.checkIns;
+    temp[profilesList.indexOf(item)] = !temp[profilesList.indexOf(item)]
+    this.setState({
+      checkIns: temp,
+      isEarnPointsVisible: !this.state.isEarnPointsVisible,
+    })
+  }
+
   _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
 
   _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
@@ -214,7 +227,6 @@ export default class Profile extends Component {
 
 
   render () {
-
     return (
       <View style={styles.container}>
 
@@ -226,6 +238,9 @@ export default class Profile extends Component {
           ) : null
         }
       </View>
+
+      {/* Earn Points overlay */}
+      {this.state.isEarnPointsVisible ? <EarnPoints source='checking in' /> : null }
 
         {/* Remind Overlay */}
         <Overlay
@@ -507,6 +522,38 @@ export default class Profile extends Component {
                   icon={
                     <MaterialCommunityIcons
                       name='bell'
+                      size={18}
+                      color='white'
+                    />
+                  }
+                />
+
+                {/* for spacing between buttons in button column */}
+                <View style={{
+                  height: Metrics.pad / 2,
+                }}>
+                </View>
+
+                <Button
+                  onPress={() => this.checkIn(truck)}
+                  buttonStyle={
+                    ((this.state.checkIns[profilesList.indexOf(truck)]) && (this.state.checkIns[profilesList.indexOf(truck)] !== 0))
+                      ? [styles.circleButton, style={backgroundColor: Colors.purple}]
+                      : [styles.circleButton, style={
+                        backgroundColor: Colors.gray5,
+                        borderWidth: 1,
+                        borderColor: Colors.gray6,
+                      }]
+                  }
+                  containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.purple}]}
+                  titleStyle={{
+                    color: Colors.white,
+                    fontSize: Metrics.font4,
+                  }}
+                  title=''
+                  icon={
+                    <MaterialCommunityIcons
+                      name='check-circle'
                       size={18}
                       color='white'
                     />

@@ -10,8 +10,14 @@ export default class EarnPoints extends Component {
     super(props);
 
     this.state = {
-      isVisible: false,
+      isVisible: true,
     };
+  }
+
+  toggleVisibility = () => {
+    this.setState({
+      isVisible: !this.state.isVisible
+    });
   }
 
   render() {
@@ -32,10 +38,11 @@ export default class EarnPoints extends Component {
         <Feather
           name='gift'
           size={Metrics.button}
-          color={Colors.blue}
+          color={Colors.orange}
         />
 
-        <Text style={styles.description}>You earned 10 points!</Text>
+        <Text style={styles.description}>Thanks for {this.props.source}!</Text>
+        <Text style={styles.description}>You earned 10 points.</Text>
 
         <Button
           buttonStyle={styles.button}
@@ -88,7 +95,7 @@ const styles = StyleSheet.create({
     header: {
       fontSize: 28,
       fontWeight: 'bold',
-      color: Colors.blue
+      color: Colors.black
     },
 
     description: {
