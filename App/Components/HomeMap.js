@@ -203,17 +203,17 @@ class FitToCoordinates extends React.Component {
           loadingEnabled={true}
           showsUserLocation={true}
         >
-        {MARKERS.map((marker, i) => (
-          <Marker
-            key={i}
-            identifier={i.toString()}
-            coordinate={marker}
-            onPress={e => this.onMarkerClick(parseInt(e.nativeEvent.id))}
-            anchor={{ x: 0.5, y: 1 }}
-          >
-          <Image source={markerImg} style={{width: 40, height: 40 }} />
-          </Marker>
-        ))}
+          {MARKERS.map((marker, i) => (
+            <Marker
+              key={i}
+              identifier={i.toString()}
+              coordinate={marker}
+              onPress={e => this.onMarkerClick(parseInt(e.nativeEvent.id))}
+              anchor={{ x: 0.5, y: 1 }}
+            >
+              <Image source={markerImg} style={{width: 40, height: 40 }} />
+            </Marker>
+          ))}
         </MapView>
 
         {/* Had to move these components out of the map */}
@@ -278,43 +278,46 @@ class FitToCoordinates extends React.Component {
         </TouchableOpacity>
 
         {/* TODO: overlapping w buttons for long descriptions */}
-        <View style={[styles.card, styles.shadow]}>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('Profile')}
+        >
+          <View style={[styles.card, styles.shadow]}>
 
-        {/* hold photo, info, and address (to the right is the button column)*/}
-          <View style={{
-            flex: 1,
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-          }}>
+          {/* hold photo, info, and address (to the right is the button column)*/}
+            <View style={{
+              flex: 1,
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
+            }}>
 
-            {/* info: holding photo, info*/}
-            <View style={styles.info}>
+              {/* info: holding photo, info*/}
+              <View style={styles.info}>
 
-              {/* view to hold image for shadow*/}
-              <View style={[styles.shadowSmall, style={
-                flex: 1,
-                backgroundColor: Colors.white,
-                borderWidth: 4,
-                borderColor: Colors.white,
+                {/* view to hold image for shadow*/}
+                <View style={[styles.shadowSmall, style={
+                  flex: 1,
+                  backgroundColor: Colors.white,
+                  borderWidth: 4,
+                  borderColor: Colors.white,
 
-                shadowColor: Colors.black,
-                shadowOpacity: Metrics.shadow * 0.85,
-                shadowRadius: 5,
-                shadowOffset: {width: 0, height: 4},
-              }]}>
-                <Image source={this.state.profile.image} resizeMode='contain' style={{
-                  aspectRatio: 1,
-                  width: undefined,
-                  height: undefined,
-                }}/>
-              </View>
+                  shadowColor: Colors.black,
+                  shadowOpacity: Metrics.shadow * 0.85,
+                  shadowRadius: 5,
+                  shadowOffset: {width: 0, height: 4},
+                }]}>
+                  <Image source={this.state.profile.image} resizeMode='contain' style={{
+                    aspectRatio: 1,
+                    width: undefined,
+                    height: undefined,
+                  }}/>
+                </View>
 
-              {/* info */}
-              <View style={{
-                flex: 2,
-                paddingHorizontal: Metrics.pad,
+                {/* info */}
+                <View style={{
+                  flex: 2,
+                  paddingHorizontal: Metrics.pad,
 
-              }}>
+                }}>
 
                 {
                   this.state.fontLoaded ? (
@@ -337,145 +340,147 @@ class FitToCoordinates extends React.Component {
                   ) : null
                 }
 
+                  {
+                    this.state.fontLoaded ? (
+                      <Text style={{
+                        fontFamily: 'lato-regular',
+                        flexWrap: 'wrap',
+                        textAlign: 'left',
+                        fontSize: Metrics.font5,
+                      }}> {this.state.profile.description} </Text>
+                    ) : null
+                  }
+                </View>
+
+              </View>
+
+              {/* address, time*/}
+              <View style={{
+                paddingTop: Metrics.pad,
+              }}>
+
+                {
+                  this.state.fontLoaded ? (
+                    <Text style={{
+                      fontFamily: 'lato-bold',
+                      flexWrap: 'wrap',
+                    }}>{this.state.profile.time}</Text>
+                  ) : null
+                }
+
                 {
                   this.state.fontLoaded ? (
                     <Text style={{
                       fontFamily: 'lato-regular',
                       flexWrap: 'wrap',
-                      textAlign: 'left',
-                      fontSize: Metrics.font5,
-                    }}> {this.state.profile.description} </Text>
+                    }}>{this.state.profile.address}</Text>
                   ) : null
                 }
+
               </View>
 
             </View>
 
-            {/* address, time*/}
+
+            {/* fake button column)
+              <View style={{
+                width: Metrics.padSmall / 2,
+              }}>
+              </View>
+            */}
+
+            {/* button column)*/}
             <View style={{
-              paddingTop: Metrics.pad,
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
             }}>
-
-              {
-                this.state.fontLoaded ? (
-                  <Text style={{
-                    fontFamily: 'lato-bold',
-                    flexWrap: 'wrap',
-                  }}>{this.state.profile.time}</Text>
-                ) : null
-              }
-
-              {
-                this.state.fontLoaded ? (
-                  <Text style={{
-                    fontFamily: 'lato-regular',
-                    flexWrap: 'wrap',
-                  }}>{this.state.profile.address}</Text>
-                ) : null
-              }
-
-            </View>
-
-          </View>
-
-
-          {/* fake button column)
-            <View style={{
-              width: Metrics.padSmall / 2,
-            }}>
-            </View>
-          */}
-
-          {/* button column)*/}
-          <View style={{
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-          }}>
-
-          <Button
-            buttonStyle={
-              this.state.starArray[profilesList.indexOf(this.state.profile)]
-                ? [styles.circleButton, styles.glow, style={backgroundColor: Colors.yellow}]
-                : [styles.circleButton, style={
-                  backgroundColor: Colors.gray5,
-                  borderWidth: 1,
-                  borderColor: Colors.gray6
-                }]
-            }
-            containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.yellow}]}
-            titleStyle={{
-              color: Colors.white,
-            }}
-            onPress={() => this.toggleArray(this.state.profile)}
-            title=''
-            icon={
-              <FontAwesome
-                name='star'
-                size={Metrics.button/2}
-                color= {Colors.white}
-              />
-            }
-          />
-
-            {/* for spacing between buttons in button column */}
-            <View style={{
-              height: Metrics.pad / 2,
-            }}>
-            </View>
 
             <Button
-              onPress={() => console.log('should run this.goToTruck')}
-              buttonStyle={[styles.circleButton, style={backgroundColor: Colors.orange}]}
-              containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.orange}]}
-              titleStyle={{
-                color: Colors.white,
-                fontSize: Metrics.font4,
-              }}
-              title=''
-              icon={
-                <Feather
-                  name='map-pin'
-                  size={18}
-                  color='white'
-                />
-              }
-            />
-
-            {/* for spacing between buttons in button column */}
-            <View style={{
-              height: Metrics.pad / 2,
-            }}>
-            </View>
-
-            <Button
-              onPress={() => this.toggleRemindArray(this.state.profile)}
               buttonStyle={
-                ((this.state.remindArray[profilesList.indexOf(this.state.profile)]) && (this.state.remindArray[profilesList.indexOf(this.state.profile)].localeCompare('None') !== 0))
-                  ? [styles.circleButton, style={backgroundColor: Colors.blue}]
+                this.state.starArray[profilesList.indexOf(this.state.profile)]
+                  ? [styles.circleButton, styles.glow, style={backgroundColor: Colors.yellow}]
                   : [styles.circleButton, style={
                     backgroundColor: Colors.gray5,
                     borderWidth: 1,
-                    borderColor: Colors.gray6,
+                    borderColor: Colors.gray6
                   }]
               }
-              containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.blue}]}
+              containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.yellow}]}
               titleStyle={{
                 color: Colors.white,
-                fontSize: Metrics.font4,
               }}
+              onPress={() => this.toggleArray(this.state.profile)}
               title=''
               icon={
-                <MaterialCommunityIcons
-                  name='bell'
-                  size={18}
-                  color='white'
+                <FontAwesome
+                  name='star'
+                  size={Metrics.button/2}
+                  color= {Colors.white}
                 />
               }
             />
+
+              {/* for spacing between buttons in button column */}
+              <View style={{
+                height: Metrics.pad / 2,
+              }}>
+              </View>
+
+              <Button
+                onPress={() => console.log('should run this.goToTruck')}
+                buttonStyle={[styles.circleButton, style={backgroundColor: Colors.orange}]}
+                containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.orange}]}
+                titleStyle={{
+                  color: Colors.white,
+                  fontSize: Metrics.font4,
+                }}
+                title=''
+                icon={
+                  <Feather
+                    name='map-pin'
+                    size={18}
+                    color='white'
+                  />
+                }
+              />
+
+              {/* for spacing between buttons in button column */}
+              <View style={{
+                height: Metrics.pad / 2,
+              }}>
+              </View>
+
+              <Button
+                onPress={() => this.toggleRemindArray(this.state.profile)}
+                buttonStyle={
+                  ((this.state.remindArray[profilesList.indexOf(this.state.profile)]) && (this.state.remindArray[profilesList.indexOf(this.state.profile)].localeCompare('None') !== 0))
+                    ? [styles.circleButton, style={backgroundColor: Colors.blue}]
+                    : [styles.circleButton, style={
+                      backgroundColor: Colors.gray5,
+                      borderWidth: 1,
+                      borderColor: Colors.gray6,
+                    }]
+                  }
+                containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.blue}]}
+                titleStyle={{
+                  color: Colors.white,
+                  fontSize: Metrics.font4,
+                }}
+                title=''
+                icon={
+                  <MaterialCommunityIcons
+                    name='bell'
+                    size={18}
+                    color='white'
+                  />
+                }
+              />
+            </View>
+
+
           </View>
-
-
-        </View>
+        </TouchableOpacity>
+        {/* This marks the end of the truck profile preview box. */}
 
         {/* Choose timeToSearch Overlay */}
         <Overlay
@@ -688,7 +693,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'center',
     // backgroundColor: Colors.yellow
-
   },
 
   searchBar: {
@@ -805,7 +809,6 @@ const styles = StyleSheet.create({
 
   buttonContainer: {
     borderRadius: Metrics.button,
-
   },
 
   buttonRow: {
