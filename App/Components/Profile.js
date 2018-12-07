@@ -794,7 +794,7 @@ export default class Profile extends Component {
                             <Button
                              title= {tag}
                              titleStyle={{
-                                 color: Colors.white,
+                                 color: Colors.orange,
                                  fontWeight: 'bold',
                              }}
                              buttonStyle={[styles.tag, style={
@@ -805,6 +805,11 @@ export default class Profile extends Component {
                           )
                         }
                       </View>
+
+                      {/* view for padding lol */}
+                      <View style={{
+                        height: Metrics.pad,
+                      }} />
 
                       <View style={{
                         flexDirection: 'row',
