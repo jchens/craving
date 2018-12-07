@@ -55,7 +55,6 @@ const DEFAULT_PADDING = { top: 400, right: 400, bottom: 400, left: 400 };
 
 class FitToCoordinates extends React.Component {
   constructor(props) {
-    console.log('map constructor');
     super(props);
 
     let arr = []
