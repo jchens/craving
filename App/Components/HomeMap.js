@@ -86,10 +86,8 @@ class FitToCoordinates extends React.Component {
     await Font.loadAsync({
       'lato-regular': require('../../assets/fonts/Lato-Regular.ttf'),
       'lato-bold': require('../../assets/fonts/Lato-Bold.ttf'),
-      'lato-light': require('../../assets/fonts/Lato-Light.ttf'),
-
+      'lato-black': require('../../assets/fonts/Lato-Black.ttf'),
     });
-
     this.setState({ fontLoaded: true });
   }
 
@@ -205,6 +203,8 @@ class FitToCoordinates extends React.Component {
           loadingEnabled={true}
           showsUserLocation={true}
         >
+
+          {/* TODO: add highlight when marker is clicked */}
           {MARKERS.map((marker, i) => (
             <Marker
               key={i}
@@ -213,7 +213,10 @@ class FitToCoordinates extends React.Component {
               onPress={e => this.onMarkerClick(parseInt(e.nativeEvent.id))}
               anchor={{ x: 0.5, y: 1 }}
             >
-            <Image source={markerImg} style={{width: 40, height: 40 }} />
+            <Image source={markerImg} style={{
+              width: 40,
+              height: 40
+            }} />
             </Marker>
           ))}
 
@@ -314,47 +317,79 @@ class FitToCoordinates extends React.Component {
               {/* info */}
               <View style={{
                 flex: 2,
-                paddingHorizontal: Metrics.padSmall,
+                paddingHorizontal: Metrics.pad,
+
               }}>
-                <Text style={{
-                  fontSize: Metrics.font3,
-                  fontWeight: 'bold',
-                }}> {this.state.profile.name} </Text>
-                <Text style={{
-                  color: Colors.gray3,
-                  fontSize: Metrics.font5,
-                  paddingVertical: 5
-                }}> {this.state.profile.cuisine} </Text>
-                <Text style={{
-                  flexWrap: 'wrap',
-                  textAlign: 'left',
-                  fontSize: Metrics.font5,
-                }}> {this.state.profile.description} </Text>
+
+                {
+                  this.state.fontLoaded ? (
+                    <Text style={{
+                      fontFamily: 'lato-black',
+                      fontSize: Metrics.font3,
+                    }}> {this.state.profile.name} </Text>
+                  ) : null
+                }
+
+                {
+                  this.state.fontLoaded ? (
+                    <Text style={{
+                      fontFamily: 'lato-regular',
+                      color: Colors.gray3,
+                      fontSize: Metrics.font5,
+                      paddingTop: 3,
+                      paddingBottom: 4,
+                    }}> {this.state.profile.cuisine} </Text>
+                  ) : null
+                }
+
+                {
+                  this.state.fontLoaded ? (
+                    <Text style={{
+                      fontFamily: 'lato-regular',
+                      flexWrap: 'wrap',
+                      textAlign: 'left',
+                      fontSize: Metrics.font5,
+                    }}> {this.state.profile.description} </Text>
+                  ) : null
+                }
               </View>
 
             </View>
 
             {/* address, time*/}
             <View style={{
-              paddingTop: Metrics.padSmall,
+              paddingTop: Metrics.pad,
             }}>
-              <Text style={{
-                fontWeight: 'bold',
-                flexWrap: 'wrap',
-              }}>{this.state.profile.time}</Text>
-              <Text style={{
-                flexWrap: 'wrap',
-              }}>{this.state.profile.address}</Text>
+
+              {
+                this.state.fontLoaded ? (
+                  <Text style={{
+                    fontFamily: 'lato-bold',
+                    flexWrap: 'wrap',
+                  }}>{this.state.profile.time}</Text>
+                ) : null
+              }
+
+              {
+                this.state.fontLoaded ? (
+                  <Text style={{
+                    fontFamily: 'lato-regular',
+                    flexWrap: 'wrap',
+                  }}>{this.state.profile.address}</Text>
+                ) : null
+              }
+
             </View>
 
           </View>
 
 
-          {/* fake button column)*/}
-          <View style={{
-            width: Metrics.padSmall / 2,
-          }}>
-          </View>
+          {/* fake button column)
+            <View style={{
+              width: Metrics.padSmall / 2,
+            }}>
+            </View>
+          */}
 
           {/* button column)*/}
           <View style={{
@@ -462,7 +497,8 @@ class FitToCoordinates extends React.Component {
           {
             this.state.fontLoaded ? (
               <Text style={{
-                fontFamily: 'lato-regular',
+                fontFamily: 'lato-bold',
+                color: Colors.gray1,
                 fontSize: Metrics.font3,
                 textAlign: 'center',
                 paddingBottom: Metrics.pad / 2,
@@ -495,9 +531,9 @@ class FitToCoordinates extends React.Component {
               this.state.fontLoaded ? (
                 <Text
                   style={{
+                    fontFamily: 'lato-regular',
                     paddingHorizontal: Metrics.pad,
                     color: Colors.orange,
-                    fontFamily: 'lato-regular',
                     fontSize: Metrics.font3,
                   }}>
                   {this.state.timeToSearch}
@@ -545,10 +581,11 @@ class FitToCoordinates extends React.Component {
           {
             this.state.fontLoaded ? (
               <Text style={{
-                fontFamily: 'lato-regular',
+                fontFamily: 'lato-bold',
+                color: Colors.gray1,
                 fontSize: Metrics.font3,
                 textAlign: 'center',
-                paddingBottom: Metrics.pad / 2,
+                paddingBottom: Metrics.pad,
               }}>Set a reminder</Text>
             ) : null
           }

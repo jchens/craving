@@ -14,6 +14,7 @@ import { Metrics, Colors, Images } from './App/Themes'
 import Icon from '@expo/vector-icons/MaterialCommunityIcons'
 
 const TabNavigator = createBottomTabNavigator(
+
   {
     HomeMap: {
       screen: HomeMap,
@@ -91,6 +92,8 @@ const TabNavigator = createBottomTabNavigator(
         flexDirection: 'row',
         height: Metrics.nav,
         backgroundColor: Colors.gray7,
+        alignItems: 'center',
+        justifyContent: 'center',
 
         // shadowColor: Colors.black,
         // shadowOpacity: Metrics.glow / 10,
@@ -107,41 +110,6 @@ const TabNavigator = createBottomTabNavigator(
 
 export default createAppContainer(TabNavigator);
 
-
-//Commented out for now, not sure if this code needs to be moved elsewhere
-//
-// export default class App extends React.Component {
-//
-//   state = {
-//     fontLoaded: false,
-//   };
-//
-//   async componentDidMount() {
-//     await Font.loadAsync({
-//       'lato-regular': require('./assets/fonts/Lato-Regular.ttf'),
-//       'lato-bold': require('./assets/fonts/Lato-Bold.ttf'),
-//       'lato-light': require('./assets/fonts/Lato-Light.ttf'),
-//
-//     });
-//
-//     this.setState({ fontLoaded: true });
-//   }
-//
-//
-//   render() {
-//     return (
-//       <View style={styles.container}>
-//         {
-//           this.state.fontLoaded ? (
-//             // <Text style={{fontFamily: 'lato-bold'}}>Hi!</Text>
-//             <HomeMap />
-//           ) : null
-//         }
-//       </View>
-//     );
-//   }
-// }
-//
 const styles = StyleSheet.create({
   container: {
       flex: 1,

@@ -8,6 +8,7 @@ import {profilesList} from '../Themes/Profiles.js'
 import { material } from 'react-native-typography'
 import { Feather, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import { Overlay, Button } from 'react-native-elements';
+import { Font } from 'expo';
 
 export default class Visited extends Component {
   constructor() {
@@ -25,7 +26,17 @@ export default class Visited extends Component {
     this.state = {
       starArray: arr,
       sectionListData: listData,
+      fontLoaded: false,
     };
+  }
+
+  async componentDidMount() {
+    await Font.loadAsync({
+      'lato-regular': require('../../assets/fonts/Lato-Regular.ttf'),
+      'lato-bold': require('../../assets/fonts/Lato-Bold.ttf'),
+      'lato-black': require('../../assets/fonts/Lato-Black.ttf'),
+    });
+    this.setState({ fontLoaded: true });
   }
 
   toggleArray = (item) => {
@@ -45,7 +56,11 @@ export default class Visited extends Component {
         <View style={styles.container}>
 
             <View style={styles.titleContainer}>
-              <Text style={styles.title}>{'Visited'}</Text>
+              {
+                this.state.fontLoaded ? (
+                  <Text style={styles.title}>{'Visited'}</Text>
+                ) : null
+              }
             </View>
 
             <View style={styles.listContainer}>
@@ -84,22 +99,38 @@ export default class Visited extends Component {
                     {/* info */}
                     <View style={{
                       flex: 2,
-                      paddingHorizontal: Metrics.padSmall,
+                      paddingHorizontal: Metrics.pad,
                     }}>
-                      <Text style={{
-                        fontSize: Metrics.font3,
-                        fontWeight: 'bold',
-                      }}> {item.name} </Text>
-                      <Text style={{
-                        color: Colors.gray3,
-                        fontSize: Metrics.font5,
-                        paddingVertical: 5
-                      }}> {item.cuisine} </Text>
-                      <Text style={{
-                        flexWrap: 'wrap',
-                        textAlign: 'left',
-                        fontSize: Metrics.font5,
-                      }}> {item.description} </Text>
+
+                      {
+                        this.state.fontLoaded ? (
+                          <Text style={{
+                            fontSize: Metrics.font3,
+                            fontFamily: 'lato-black',
+                          }}> {item.name} </Text>
+                        ) : null
+                      }
+                      {
+                        this.state.fontLoaded ? (
+                          <Text style={{
+                            fontFamily: 'lato-regular',
+                            color: Colors.gray3,
+                            fontSize: Metrics.font5,
+                            paddingTop: 3,
+                            paddingBottom: 4,
+                          }}> {item.cuisine} </Text>
+                        ) : null
+                      }
+                      {
+                        this.state.fontLoaded ? (
+                          <Text style={{
+                            fontFamily: 'lato-regular',
+                            flexWrap: 'wrap',
+                            textAlign: 'left',
+                            fontSize: Metrics.font5,
+                          }}> {item.description} </Text>
+                        ) : null
+                      }
                     </View>
 
 
@@ -175,10 +206,16 @@ export default class Visited extends Component {
 
 
                   }]}>
-                    <Text style={{
-                      fontWeight: 'bold',
-                      color: Colors.gray1,
-                    }}>{title}</Text>
+                    {
+                      this.state.fontLoaded ? (
+                        <Text style={{
+                          fontFamily: 'lato-bold',
+                          color: Colors.gray1,
+                          letterSpacing: 1,
+                          fontSize: Metrics.font5
+                        }}>{title}</Text>
+                      ) : null
+                    }
                   </View>
                 )}
 
@@ -219,10 +256,10 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    color: Colors.black,
+    color: Colors.gray1,
     fontSize: Metrics.font3,
     paddingBottom: Metrics.pad / 2,
-    fontWeight: 'bold',
+    fontFamily: 'lato-bold',
 
   },
 

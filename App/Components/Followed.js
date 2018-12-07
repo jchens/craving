@@ -34,6 +34,7 @@ export default class Followed extends Component {
 
       isVisible: false,
       isDateTimePickerVisible: false,
+      fontLoaded: false,
 
     };
   }
@@ -42,10 +43,8 @@ export default class Followed extends Component {
     await Font.loadAsync({
       'lato-regular': require('../../assets/fonts/Lato-Regular.ttf'),
       'lato-bold': require('../../assets/fonts/Lato-Bold.ttf'),
-      'lato-light': require('../../assets/fonts/Lato-Light.ttf'),
-
+      'lato-black': require('../../assets/fonts/Lato-Black.ttf'),
     });
-
     this.setState({ fontLoaded: true });
   }
 
@@ -117,9 +116,11 @@ export default class Followed extends Component {
             {
               this.state.fontLoaded ? (
                 <Text style={{
-                  fontFamily: 'lato-regular',
+                  fontFamily: 'lato-bold',
+                  color: Colors.gray1,
                   fontSize: Metrics.font3,
                   textAlign: 'center',
+                  paddingBottom: Metrics.pad,
                 }}>Set a reminder</Text>
               ) : null
             }
@@ -190,7 +191,11 @@ export default class Followed extends Component {
           </Overlay>
 
           <View style={[styles.titleContainer]}>
-            <Text style={styles.title}>{'Followed'}</Text>
+            {
+              this.state.fontLoaded ? (
+                <Text style={styles.title}>{'Followed'}</Text>
+              ) : null
+            }
           </View>
 
           <View style={styles.listContainer}>
@@ -235,48 +240,75 @@ export default class Followed extends Component {
                     {/* info */}
                     <View style={{
                       flex: 2,
-                      paddingHorizontal: Metrics.padSmall,
+                      paddingHorizontal: Metrics.pad,
                     }}>
-                      <Text style={{
-                        fontSize: Metrics.font3,
-                        fontWeight: 'bold',
-                      }}> {item.name} </Text>
-                      <Text style={{
-                        color: Colors.gray3,
-                        fontSize: Metrics.font5,
-                        paddingVertical: 5
-                      }}> {item.cuisine} </Text>
-                      <Text style={{
-                        flexWrap: 'wrap',
-                        textAlign: 'left',
-                        fontSize: Metrics.font5,
-                      }}> {item.description} </Text>
+
+                      {
+                        this.state.fontLoaded ? (
+                          <Text style={{
+                            fontSize: Metrics.font3,
+                            fontFamily: 'lato-black',
+                          }}> {item.name} </Text>
+                        ) : null
+                      }
+                      {
+                        this.state.fontLoaded ? (
+                          <Text style={{
+                            fontFamily: 'lato-regular',
+                            color: Colors.gray3,
+                            fontSize: Metrics.font5,
+                            paddingTop: 3,
+                            paddingBottom: 4,
+                          }}> {item.cuisine} </Text>
+                        ) : null
+                      }
+                      {
+                        this.state.fontLoaded ? (
+                          <Text style={{
+                            fontFamily: 'lato-regular',
+                            flexWrap: 'wrap',
+                            textAlign: 'left',
+                            fontSize: Metrics.font5,
+                          }}> {item.description} </Text>
+                        ) : null
+                      }
                     </View>
 
                   </View>
 
                   {/* address, time*/}
                   <View style={{
-                    paddingTop: Metrics.padSmall,
+                    paddingTop: Metrics.pad,
                   }}>
-                    <Text style={{
-                      fontWeight: 'bold',
-                      flexWrap: 'wrap',
-                    }}>{item.time}</Text>
-                    <Text style={{
-                      flexWrap: 'wrap',
-                    }}>{item.address}</Text>
+
+                    {
+                      this.state.fontLoaded ? (
+                        <Text style={{
+                          fontFamily: 'lato-bold',
+                          flexWrap: 'wrap',
+                        }}>{item.time}</Text>
+                      ) : null
+                    }
+
+
+                    {
+                      this.state.fontLoaded ? (
+                        <Text style={{
+                          fontFamily: 'lato-regular',
+                          flexWrap: 'wrap',
+                        }}>{item.address}</Text>
+                      ) : null
+                    }
                   </View>
 
                 </View>
 
 
                 {/* fake button column)*/}
-                <View style={{
-                  width: Metrics.padSmall / 2,
-                  backgroundColor: Colors.white,
-                }}>
-                </View>
+                  <View style={{
+                    width: Metrics.padSmall / 2,
+                  }}>
+                  </View>
 
                 {/* button column)*/}
                 <View style={{
@@ -380,10 +412,17 @@ export default class Followed extends Component {
                   shadowRadius: 5,
                   shadowOffset: {width: 0, height: 0},
                 }]}>
-                  <Text style={{
-                    fontWeight: 'bold',
-                    color: Colors.gray1,
-                  }}>{title}</Text>
+
+                  {
+                    this.state.fontLoaded ? (
+                      <Text style={{
+                        fontFamily: 'lato-bold',
+                        color: Colors.gray1,
+                        letterSpacing: 1,
+                        fontSize: Metrics.font5
+                      }}>{title}</Text>
+                    ) : null
+                  }
                 </View>
               )}
               sections={[
@@ -427,10 +466,10 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    color: Colors.black,
+    color: Colors.gray1,
     fontSize: Metrics.font3,
     paddingBottom: Metrics.pad / 2,
-    fontWeight: 'bold',
+    fontFamily: 'lato-bold',
   },
 
   listContainer: {
@@ -523,11 +562,11 @@ const styles = StyleSheet.create({
   },
 
   overlay: {
-    flex: 0.15,
+    flex: 0.11,
     justifyContent: 'space-evenly',
     alignItems: 'center',
     backgroundColor: Colors.white,
-
+    padding: Metrics.pad * 1.25,
     paddingBottom: Metrics.nav * 1.5,
 
   },
