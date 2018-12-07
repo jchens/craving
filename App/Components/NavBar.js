@@ -1,21 +1,20 @@
 import React, { Component } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native';
-import { createBottomTabNavigator, TabBarBottom, createAppContainer, createStackNavigator } from 'react-navigation';
-import HomeMap from './App/Components/HomeMap';
+import { createBottomTabNavigator, TabBarBottom, createAppContainer} from 'react-navigation';
+import HomeMap from './HomeMap';
 //import Rewards from './App/Components/Rewards';
-import Visited from './App/Components/Visited';
-import Followed from './App/Components/Followed';
-import Profile from './App/Components/Profile';
-import ProfileA from './App/Components/ProfileA';
+import Visited from './Visited';
+import Followed from './Followed';
+import Profile from './Profile';
 import { Feather, MaterialIcons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
-import Onboarding from 'react-native-onboarding-swiper';
 
 import { Font } from 'expo';
-import { Metrics, Colors, Images } from './App/Themes';
+import { Metrics, Colors, Images } from '../Themes';
 
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
-const StackNav = createStackNavigator(
+
+const TabNavigator = createBottomTabNavigator(
   {
     HomeMap: {
       screen: HomeMap,
@@ -33,7 +32,7 @@ const StackNav = createStackNavigator(
     //Rewards: Rewards,
 
     Rewards: {
-      screen: ProfileA,
+      screen: Followed,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <Feather
@@ -75,7 +74,7 @@ const StackNav = createStackNavigator(
 
   },
   {
-    initialRouteName: 'Rewards',
+    initialRouteName: 'HomeMap',
     order: ['HomeMap', 'Rewards', 'Followed', 'Visited'],
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
@@ -114,6 +113,6 @@ export default createAppContainer(TabNavigator);
 const styles = StyleSheet.create({
   container: {
       flex: 1,
-      backgroundColor: Colors.orange,
+      backgroundColor: Colors.yellow,
     },
 });

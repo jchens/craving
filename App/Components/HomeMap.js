@@ -34,7 +34,6 @@ const SPACE = 0.01;
 
 
 function createMarker(modifier = 1) {
-  console.log('create marker');
   return {
     latitude: profilesList[modifier - 1].latitude,
     longitude: profilesList[modifier - 1].longitude,
