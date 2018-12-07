@@ -763,11 +763,12 @@ export default class Profile extends Component {
                         }}>
                           <Text style={{
                             fontSize: Metrics.font3,
-                            fontWeight: 'bold',
+                            fontFamily: 'lato-bold',
                           }}> {item.name} </Text>
                           <Text style={{
                             color: Colors.gray3,
                             fontSize: Metrics.font5,
+                            fontFamily: 'lato-regular',
                             paddingVertical: 5
                           }}> {item.date} </Text>
                         </View>
