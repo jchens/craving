@@ -67,13 +67,13 @@ export default class Rewards extends Component {
                 backgroundColor: '#FF4D00',
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginTop: 16,
+                marginTop: 16.5,
                 marginRight: 26,
               }}>
                 <View style={{
-                  width: 10,
-                  height: 10,
-                  borderRadius: 5,
+                  width: 6,
+                  height: 6,
+                  borderRadius: 3,
                   backgroundColor: '#FF4D00',
                 }}>
                 </View>
@@ -86,14 +86,14 @@ export default class Rewards extends Component {
                 backgroundColor: '#FF4D00',
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginTop: 16,
+                marginTop: 16.5,
                 marginLeft: 25,
                 marginRight: 25,
               }}>
                 <View style={{
-                  width: 10,
-                  height: 10,
-                  borderRadius: 5,
+                  width: 6,
+                  height: 6,
+                  borderRadius: 3,
                   backgroundColor: '#FF4D00',
                 }}>
                 </View>
@@ -106,14 +106,14 @@ export default class Rewards extends Component {
                 backgroundColor: '#FF4D00',
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginTop: 16,
+                marginTop: 16.5,
                 marginLeft: 25,
                 marginRight: 25,
               }}>
                 <View style={{
-                  width: 10,
-                  height: 10,
-                  borderRadius: 5,
+                  width: 6,
+                  height: 6,
+                  borderRadius: 3,
                   backgroundColor: '#FF4D00',
                 }}>
                 </View>
@@ -126,14 +126,14 @@ export default class Rewards extends Component {
                 backgroundColor: '#FF4D00',
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginTop: 16,
+                marginTop: 16.5,
                 marginLeft: 25,
                 marginRight: 25,
               }}>
                 <View style={{
-                  width: 7,
-                  height: 7,
-                  borderRadius: 3.5,
+                  width: 6,
+                  height: 6,
+                  borderRadius: 3,
                   backgroundColor: 'white',
                   zIndex: 1,
                 }}>
@@ -147,13 +147,13 @@ export default class Rewards extends Component {
                 backgroundColor: '#FF4D00',
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginTop: 16,
+                marginTop: 16.5,
                 marginLeft: 26,
               }}>
                 <View style={{
-                  width: 7,
-                  height: 7,
-                  borderRadius: 3.5,
+                  width: 6,
+                  height: 6,
+                  borderRadius: 3,
                   backgroundColor: 'white',
                 }}>
                 </View>
