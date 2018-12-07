@@ -191,12 +191,19 @@ export default class Profile extends Component {
 
   checkIn = (item) => {
     console.log(profilesList.indexOf(item));
+
     let temp = this.state.checkIns;
-    temp[profilesList.indexOf(item)] = !temp[profilesList.indexOf(item)]
-    this.setState({
-      checkIns: temp,
-      isEarnPointsVisible: !this.state.isEarnPointsVisible,
-    })
+
+    var toggle = typeof temp[profilesList.indexOf(item)] == 'undefined';
+
+    /* Only toggles the button color the first time the button is clicked. */
+    if (toggle) {
+      temp[profilesList.indexOf(item)] = true;
+      this.setState({
+        checkIns: temp,
+        isEarnPointsVisible: !this.state.isEarnPointsVisible,
+      });
+    }
   }
 
   _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
@@ -431,8 +438,33 @@ export default class Profile extends Component {
                   }
                 </View>
 
-              </View>
+                <Button
+                  onPress={() => this.checkIn(truck)}
+                  buttonStyle={
+                    ((this.state.checkIns[profilesList.indexOf(truck)]) && (this.state.checkIns[profilesList.indexOf(truck)] !== 0))
+                      ? [styles.button, style={backgroundColor: Colors.orange}]
+                      : [styles.button, style={
+                        backgroundColor: Colors.gray5,
+                        borderWidth: 1,
+                        borderColor: Colors.gray6,
+                      }]
+                  }
+                  containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.orange, marginTop: Metrics.marginVertical * 1.5}]}
+                  titleStyle={{
+                    color: Colors.white,
+                    fontSize: Metrics.font4,
+                  }}
+                  title='Mark as visited'
+                  icon={
+                    <MaterialCommunityIcons
+                      name='check-circle'
+                      size={18}
+                      color='white'
+                    />
+                  }
+                />
 
+              </View>
 
               {/* fake button column)*/}
                 <View style={{
@@ -533,31 +565,6 @@ export default class Profile extends Component {
                 }}>
                 </View>
 
-                <Button
-                  onPress={() => this.checkIn(truck)}
-                  buttonStyle={
-                    ((this.state.checkIns[profilesList.indexOf(truck)]) && (this.state.checkIns[profilesList.indexOf(truck)] !== 0))
-                      ? [styles.circleButton, style={backgroundColor: Colors.purple}]
-                      : [styles.circleButton, style={
-                        backgroundColor: Colors.gray5,
-                        borderWidth: 1,
-                        borderColor: Colors.gray6,
-                      }]
-                  }
-                  containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.purple}]}
-                  titleStyle={{
-                    color: Colors.white,
-                    fontSize: Metrics.font4,
-                  }}
-                  title=''
-                  icon={
-                    <MaterialCommunityIcons
-                      name='check-circle'
-                      size={18}
-                      color='white'
-                    />
-                  }
-                />
               </View>
 
             </View>
