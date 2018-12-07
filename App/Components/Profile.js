@@ -710,7 +710,7 @@ export default class Profile extends Component {
               tagsSelected={this.state.tagsSelected}
               handleAddition={this.handleAddition}
               handleDelete={this.handleDelete}
-              placeholder="Add a contact.."
+              placeholder="Add a tag..."
               renderTags={this.renderTags}
             />
 
