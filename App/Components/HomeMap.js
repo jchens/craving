@@ -607,7 +607,7 @@ class FitToCoordinates extends React.Component {
             onConfirm={this._handleReminderPicked}
             onCancel={this._hideDateTimePicker}
             mode='datetime'
-            titleIOS='Pick a time to find trucks'
+            titleIOS='Set a reminder for this truck'
           />
 
           <View style={{
