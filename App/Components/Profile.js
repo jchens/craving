@@ -242,7 +242,7 @@ export default class Profile extends Component {
       <View style={styles.titleContainer}>
         {
           this.state.fontLoaded ? (
-            <Text style={styles.title}>{'Visited'}</Text>
+            <Text style={styles.title}>{'Profile'}</Text>
           ) : null
         }
       </View>
