@@ -17,6 +17,7 @@ import { Feather, MaterialIcons, FontAwesome, MaterialCommunityIcons } from '@ex
 import { Overlay, Button } from 'react-native-elements';
 import { Font } from 'expo';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import { NavigationActions } from 'react-navigation';
 
 import Carousel from 'react-native-snap-carousel';
 import { ENTRIES1 } from '../Themes/Pictures.js';
@@ -512,7 +513,9 @@ export default class Profile extends Component {
                 </View>
 
                 <Button
-                  onPress={() => console.log('should run this.goToTruck')}
+                  onPress={() => this.props.navigation.dispatch(
+                    NavigationActions.navigate({routeName: 'HomeMap', params: {truck: profilesList.indexOf(truck)}})
+                  )}
                   buttonStyle={[styles.circleButton, style={backgroundColor: Colors.orange}]}
                   containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.orange}]}
                   titleStyle={{

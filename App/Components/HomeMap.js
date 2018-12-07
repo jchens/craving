@@ -190,6 +190,16 @@ class FitToCoordinates extends React.Component {
   };
 
   render() {
+    if (typeof this.props.navigation.state.params != 'undefined') {
+      console.log(this.props.navigation.state.params);
+      this.setState({
+        profile: profilesList[this.props.navigation.state.params.truck]
+      });
+      this.goToTruck();
+      // Hacky way of restoring the original app state 
+      delete this.props.navigation.state.params;
+    }
+
     return (
       <View style={styles.container}>
         <MapView

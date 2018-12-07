@@ -8,6 +8,7 @@ import {
   Text, Linking, ActivityIndicator, TouchableOpacity, Image } from 'react-native'
 import { Metrics, Colors, Images } from '../Themes'
 import {profilesList} from '../Themes/Profiles.js'
+import { NavigationActions } from 'react-navigation';
 
 import { material } from 'react-native-typography'
 import { Feather, MaterialIcons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -340,7 +341,9 @@ export default class Followed extends Component {
                     </View>
 
                     <Button
-                      onPress={() => console.log('should run this.goToTruck')}
+                      onPress={() => this.props.navigation.dispatch(
+                        NavigationActions.navigate({routeName: 'HomeMap', params: {truck: profilesList.indexOf(item)}})
+                      )}
                       buttonStyle={[styles.circleButton, style={backgroundColor: Colors.orange}]}
                       containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.orange}]}
                       titleStyle={{
