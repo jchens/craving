@@ -152,7 +152,6 @@ class FitToCoordinates extends React.Component {
   }
 
   goToTruck = () => {
-    // openMap({ latitude: this.state.latitude, longitude: this.state.longitude });
     const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
     const latLng = `${this.state.profile.latitude},${this.state.profile.longitude}`;
     const label = 'Food Truck';
@@ -160,6 +159,7 @@ class FitToCoordinates extends React.Component {
       ios: `${scheme}${label}@${latLng}`,
       android: `${scheme}${latLng}(${label})`
     });
+    console.log(url),
     Linking.openURL(url);
   }
 
@@ -196,7 +196,7 @@ class FitToCoordinates extends React.Component {
         profile: profilesList[this.props.navigation.state.params.truck]
       });
       this.goToTruck();
-      // Hacky way of restoring the original app state 
+      // Hacky way of restoring the original app state
       delete this.props.navigation.state.params;
     }
 
