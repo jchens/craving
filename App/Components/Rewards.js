@@ -57,242 +57,260 @@ export default class Rewards extends Component {
     };
 
     return (
-      <View style={styles.container}>
+      <MenuProvider>
+        <View style={styles.container}>
 
-        <View style={styles.reward}>
-          <View style={styles.titleContainer}>
-            <Text style={styles.titleRewards}> Rewards</Text>
-          </View>
-
-          <View style={styles.progress}>
-            <View style={{
-              position: 'absolute',
-              marginTop: 45,
-
-            }}>
-              <Text  style={styles.points}> 50 PTS </Text>
-            </View>
-            <View style={{
-              position: 'absolute',
-              marginTop: 45,
-              paddingLeft: 300,
-
-            }}>
-              <Text  style={styles.points}> 100 PTS </Text>
-            </View>
-            <View style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              flex: 1,
-            }}>
-              <View style={{
-                width: 25,
-                height: 25,
-                borderRadius: 12.5,
-                backgroundColor: '#FF4D00',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 14.5,
-                marginRight: 26,
-              }}>
-                <View style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: 3,
-                  backgroundColor: '#FF4D00',
-                }}>
-                </View>
-              </View>
-
-              <View style={{
-                width: 25,
-                height: 25,
-                borderRadius: 12.5,
-                backgroundColor: '#FF4D00',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 16.5,
-                marginLeft: 25,
-                marginRight: 25,
-              }}>
-                <View style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: 3,
-                  backgroundColor: '#FF4D00',
-                }}>
-                </View>
-              </View>
-
-              <View style={{
-                width: 25,
-                height: 25,
-                borderRadius: 12.5,
-                backgroundColor: '#FF4D00',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 16.5,
-                marginLeft: 25,
-                marginRight: 25,
-              }}>
-                <View style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: 3,
-                  backgroundColor: '#FF4D00',
-                }}>
-                </View>
-              </View>
-
-              <View style={{
-                width: 25,
-                height: 25,
-                borderRadius: 12.5,
-                backgroundColor: '#FF4D00',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 16.5,
-                marginLeft: 25,
-                marginRight: 25,
-              }}>
-                <View style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: 3,
-                  backgroundColor: 'white',
-                  zIndex: 1,
-                }}>
-                </View>
-              </View>
-
-              <View style={{
-                width: 25,
-                height: 25,
-                borderRadius: 12.5,
-                backgroundColor: '#FF4D00',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 16.5,
-                marginLeft: 26,
-              }}>
-                <View style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: 3,
-                  backgroundColor: 'white',
-                }}>
-                </View>
-              </View>
-
-
+          <View style={styles.reward}>
+            <View style={styles.titleContainer}>
+              <Text style={styles.titleRewards}> Rewards</Text>
             </View>
 
+            <View style={styles.progress}>
+              <View style={{
+                position: 'absolute',
+                marginTop: 45,
 
-
-
-            <View style={styles.bar}>
-
-              <ProgressBarAnimated
-                {...progressCustomStyles}
-                width={barWidth}
-                height={8}
-                value={this.state.progressWithOnComplete}
-                onComplete={() => {
-                  Alert.alert('Hey!', 'onComplete event fired!');
-                }}
-              />
-            </View>
-          </View>
-
-        </View>
-
-
-        <View style={styles.craving}>
-          <View style={[styles.shadowSmall, styles.sectionHead]}>
-            {
-              this.state.fontLoaded ? (
-                <Text style={{
-                  fontFamily: 'lato-bold',
+              }}>
+                <Text  style={{
+                  fontFamily: 'lato-regular',
+                  marginTop: 5,
                   color: Colors.gray1,
-                  letterSpacing: 1,
-                  fontSize: Metrics.font5
-                }}>{"TODAY'S CRAVINGS"}</Text>
-              ) : null
-            }
+                }}> 50 PTS </Text>
+              </View>
+
+
+              <View style={{
+                position: 'absolute',
+                marginTop: 48,
+                paddingLeft: 300,
+
+              }}>
+                <Menu>
+                  <MenuTrigger style={{fontFamily: 'lato-bold'}} text='100 PTS' />
+                  <MenuOptions style={{backgroundColor: 'white'}}>
+                    <MenuOption onSelect={() => console.log('hi')} >
+                      <Text style={{textAlign: 'center', color: Colors.gray1}}>10% OFF</Text>
+                    </MenuOption>
+                  </MenuOptions>
+                </Menu>
+              </View>
+
+
+
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                flex: 1,
+              }}>
+                <View style={{
+                  width: 25,
+                  height: 25,
+                  borderRadius: 12.5,
+                  backgroundColor: '#FF4D00',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: 14.5,
+                  marginRight: 26,
+                }}>
+                  <View style={{
+                    width: 6,
+                    height: 6,
+                    borderRadius: 3,
+                    backgroundColor: '#FF4D00',
+                  }}>
+                  </View>
+                </View>
+
+                <View style={{
+                  width: 25,
+                  height: 25,
+                  borderRadius: 12.5,
+                  backgroundColor: '#FF4D00',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: 16.5,
+                  marginLeft: 25,
+                  marginRight: 25,
+                }}>
+                  <View style={{
+                    width: 6,
+                    height: 6,
+                    borderRadius: 3,
+                    backgroundColor: '#FF4D00',
+                  }}>
+                  </View>
+                </View>
+
+                <View style={{
+                  width: 25,
+                  height: 25,
+                  borderRadius: 12.5,
+                  backgroundColor: '#FF4D00',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: 16.5,
+                  marginLeft: 25,
+                  marginRight: 25,
+                }}>
+                  <View style={{
+                    width: 6,
+                    height: 6,
+                    borderRadius: 3,
+                    backgroundColor: '#FF4D00',
+                  }}>
+                  </View>
+                </View>
+
+                <View style={{
+                  width: 25,
+                  height: 25,
+                  borderRadius: 12.5,
+                  backgroundColor: '#FF4D00',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: 16.5,
+                  marginLeft: 25,
+                  marginRight: 25,
+                }}>
+                  <View style={{
+                    width: 6,
+                    height: 6,
+                    borderRadius: 3,
+                    backgroundColor: 'white',
+                    zIndex: 1,
+                  }}>
+                  </View>
+                </View>
+
+                <View style={{
+                  width: 25,
+                  height: 25,
+                  borderRadius: 12.5,
+                  backgroundColor: '#FF4D00',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: 16.5,
+                  marginLeft: 26,
+                }}>
+                  <View style={{
+                    width: 6,
+                    height: 6,
+                    borderRadius: 3,
+                    backgroundColor: 'white',
+                  }}>
+                  </View>
+                </View>
+
+
+              </View>
+
+
+
+
+
+              <View style={styles.bar}>
+
+                <ProgressBarAnimated
+                  {...progressCustomStyles}
+                  width={barWidth}
+                  height={8}
+                  value={this.state.progressWithOnComplete}
+                  onComplete={() => {
+                    Alert.alert('Hey!', 'onComplete event fired!');
+                  }}
+                />
+              </View>
+            </View>
+
           </View>
-          <View style={styles.goals}>
 
-            <View style={styles.listItem}>
 
-              <View style={[styles.symbol]}>
-                <View style={styles.symbolContainer}>
-                  <AntDesign
-                    name='find'
-                    size={Metrics.button/1.5}
-                    color= {Colors.white}
-                  />
-                </View>
-                <Text style={styles.points}> + 10 PTS </Text>
-              </View>
-
-              <View style={styles.textContainer}>
-                {
-                  this.state.fontLoaded ? (
-                    <Text style={styles.text}>Find a food truck nearby</Text>
-                  ) : null
-                }
-              </View>
+          <View style={styles.craving}>
+            <View style={[styles.shadowSmall, styles.sectionHead]}>
+              {
+                this.state.fontLoaded ? (
+                  <Text style={{
+                    fontFamily: 'lato-bold',
+                    color: Colors.gray1,
+                    letterSpacing: 1,
+                    fontSize: Metrics.font5
+                  }}>{"TODAY'S CRAVINGS"}</Text>
+                ) : null
+              }
             </View>
+            <View style={styles.goals}>
 
-            <View style={styles.listItem}>
+              <View style={styles.listItem}>
 
-              <View style={[styles.symbol]}>
-                <View style={styles.symbolContainer}>
-                  <Feather
-                    name='check-circle'
-                    size={Metrics.button/1.5}
-                    color= {Colors.white}
-                  />
+                <View style={[styles.symbol]}>
+                  <View style={styles.symbolContainer}>
+                    <AntDesign
+                      name='find'
+                      size={Metrics.button/1.5}
+                      color= {Colors.white}
+                    />
+                  </View>
+                  <Text style={styles.points}> + 10 PTS </Text>
                 </View>
-                <Text style={styles.points}> + 10 PTS </Text>
-              </View>
 
-              <View style={styles.textContainer}>
-                {
-                  this.state.fontLoaded ? (
-                    <Text style={styles.text}>Visit a food truck</Text>
-                  ) : null
-                }
-              </View>
-            </View>
-
-            <View style={styles.listItem}>
-              <View style={[styles.symbol]}>
-                <View style={styles.symbolContainer}>
-                  <MaterialCommunityIcons
-                    name='comment-text-outline'
-                    size={Metrics.button/1.5}
-                    color= {Colors.white}
-                  />
+                <View style={styles.textContainer}>
+                  {
+                    this.state.fontLoaded ? (
+                      <Text style={styles.text}>Find a food truck nearby</Text>
+                    ) : null
+                  }
                 </View>
-                <Text style={styles.points}> + 10 PTS </Text>
               </View>
 
-              <View style={styles.textContainer}>
-                {
-                  this.state.fontLoaded ? (
-                    <Text style={styles.text}>Leave a review</Text>
-                  ) : null
-                }
+              <View style={styles.listItem}>
+
+                <View style={[styles.symbol]}>
+                  <View style={styles.symbolContainer}>
+                    <Feather
+                      name='check-circle'
+                      size={Metrics.button/1.5}
+                      color= {Colors.white}
+                    />
+                  </View>
+                  <Text style={styles.points}> + 10 PTS </Text>
+                </View>
+
+                <View style={styles.textContainer}>
+                  {
+                    this.state.fontLoaded ? (
+                      <Text style={styles.text}>Visit a food truck</Text>
+                    ) : null
+                  }
+                </View>
               </View>
+
+              <View style={styles.listItem}>
+                <View style={[styles.symbol]}>
+                  <View style={styles.symbolContainer}>
+                    <MaterialCommunityIcons
+                      name='comment-text-outline'
+                      size={Metrics.button/1.5}
+                      color= {Colors.white}
+                    />
+                  </View>
+                  <Text style={styles.points}> + 10 PTS </Text>
+                </View>
+
+                <View style={styles.textContainer}>
+                  {
+                    this.state.fontLoaded ? (
+                      <Text style={styles.text}>Leave a review</Text>
+                    ) : null
+                  }
+                </View>
+              </View>
+
             </View>
 
           </View>
 
         </View>
-
-      </View>
-
+      </MenuProvider>
     );
 
   }
