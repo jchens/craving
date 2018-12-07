@@ -442,14 +442,13 @@ export default class Profile extends Component {
                   onPress={() => this.checkIn(truck)}
                   buttonStyle={
                     ((this.state.checkIns[profilesList.indexOf(truck)]) && (this.state.checkIns[profilesList.indexOf(truck)] !== 0))
-                      ? [styles.button, style={backgroundColor: Colors.orange}]
-                      : [styles.button, style={
+                      ? [styles.button, style={
                         backgroundColor: Colors.gray5,
                         borderWidth: 1,
-                        borderColor: Colors.gray6,
-                      }]
+                        borderColor: Colors.gray6}]
+                      : [styles.button, style={backgroundColor: Colors.orange}]
                   }
-                  containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.orange, marginTop: Metrics.marginVertical * 1.5}]}
+                  containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.gray5, marginTop: Metrics.marginVertical * 1.5}]}
                   titleStyle={{
                     color: Colors.white,
                     fontSize: Metrics.font4,
@@ -461,6 +460,9 @@ export default class Profile extends Component {
                       size={18}
                       color='white'
                     />
+                  }
+                  disabled={((this.state.checkIns[profilesList.indexOf(truck)]) && (this.state.checkIns[profilesList.indexOf(truck)] !== 0))
+                    ? true : false
                   }
                 />
 
