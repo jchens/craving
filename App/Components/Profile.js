@@ -270,6 +270,7 @@ export default class Profile extends Component {
                }]
             }
            containerStyle={styles.tagContainer}
+           onPress={this.handleDelete}
           />
         )
       }
