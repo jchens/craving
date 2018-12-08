@@ -231,9 +231,29 @@ export default class Profile extends Component {
      this.setState({ tagsSelected: this.state.tagsSelected.concat([suggestion]) });
   }
 
-
-
-
+  renderTags = tags => {
+    return (
+      <View style={ styles.customTagsContainer }>
+      {
+        tags.map(tag =>
+          <Button
+           key={tag.name}
+           title= {tag.name}
+           titleStyle={{
+               color: Colors.orange,
+               fontWeight: 'bold',
+           }}
+           buttonStyle={[styles.tag, style={
+             backgroundColor: Colors.orange_frosty,
+             marginBottom: Metrics.pad / 2,
+           }]}
+           containerStyle={styles.tagContainer}
+          />
+        )
+      }
+      </View>
+    );
+  }
 
   render () {
     return (
@@ -283,8 +303,6 @@ export default class Profile extends Component {
             mode='datetime'
             titleIOS='Set a reminder for this truck'
           />
-
-
 
           <View style={{
             flexDirection: 'row',
@@ -731,12 +749,13 @@ export default class Profile extends Component {
           <View style={styles.myTagsContainer}>
             <View style={styles.autocompleteContainer}>
               <AutoTags
-                style={styles.autogtags}
+                style={styles.autoTags}
                 suggestions={this.state.suggestions}
                 tagsSelected={this.state.tagsSelected}
                 placeholder="Add a tag..."
                 handleAddition={this.handleAddition}
                 handleDelete={this.handleDelete}
+                renderTags={this.renderTags}
               />
             </View>
             <View style={styles.bottomPaddingContainer}>
@@ -1032,12 +1051,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  autoTagsWrapper: {
-    height: 100,
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-
   tag: {
     borderRadius: Metrics.button / 4,
     height: Metrics.button,
@@ -1064,8 +1077,20 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
 
+  autoTags: {
+    fontSize: 14
+  },
+
   bottomPaddingContainer: {
     height: 100,
     backgroundColor: Colors.orange,
+  },
+
+  customTagsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+    backgroundColor: "white",
+    width: 300
   },
 });
