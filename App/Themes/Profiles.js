@@ -97,27 +97,27 @@ const profilesList = [
         {
             title: 'Twister',
             subtitle: 'Look at these yummy tacos!',
-            illustration: require('../Images/Food/truck2_1.jpg')
+            illustration: require('../Images/Food/truck3_1.jpg')
         },
         {
             title: 'Twister',
             subtitle: 'Look at these yummy tacos!',
-            illustration: require('../Images/Food/truck2_2.jpg')
+            illustration: require('../Images/Food/truck3_2.jpg')
         },
         {
             title: 'Twister',
             subtitle: 'Getting food at a food truck!',
-            illustration: require('../Images/Food/truck2_3.jpg')
+            illustration: require('../Images/Food/truck3_3.jpg')
         },
         {
             title: 'Twiser Truck',
             subtitle: 'Paying for food',
-            illustration: require('../Images/Food/truck2_4.jpg')
+            illustration: require('../Images/Food/truck3_4.jpg')
         },
         {
             title: 'Food Truck',
             subtitle: 'Cute sign and truck!',
-            illustration: require('../Images/Food/truck2_5.jpg')
+            illustration: require('../Images/Food/truck3_5.jpg')
         },
     ],
 
@@ -138,27 +138,27 @@ const profilesList = [
         {
             title: 'Twister',
             subtitle: 'Look at these yummy tacos!',
-            illustration: require('../Images/Food/truck2_1.jpg')
+            illustration: require('../Images/Food/truck4_1.jpg')
         },
         {
             title: 'Twister',
             subtitle: 'Look at these yummy tacos!',
-            illustration: require('../Images/Food/truck2_2.jpg')
+            illustration: require('../Images/Food/truck4_2.jpg')
         },
         {
             title: 'Twister',
             subtitle: 'Getting food at a food truck!',
-            illustration: require('../Images/Food/truck2_3.jpg')
+            illustration: require('../Images/Food/truck4_3.jpg')
         },
         {
             title: 'Twiser Truck',
             subtitle: 'Paying for food',
-            illustration: require('../Images/Food/truck2_4.jpg')
+            illustration: require('../Images/Food/truck4_4.jpg')
         },
         {
             title: 'Food Truck',
             subtitle: 'Cute sign and truck!',
-            illustration: require('../Images/Food/truck2_5.jpg')
+            illustration: require('../Images/Food/truck4_5.jpg')
         },
     ],
   },
@@ -259,27 +259,27 @@ const profilesList = [
         {
             title: 'Twister',
             subtitle: 'Look at these yummy tacos!',
-            illustration: require('../Images/Food/truck2_1.jpg')
+            illustration: require('../Images/Food/tri_1.jpg')
         },
         {
             title: 'Twister',
             subtitle: 'Look at these yummy tacos!',
-            illustration: require('../Images/Food/truck2_2.jpg')
+            illustration: require('../Images/Food/tri_2.jpeg')
         },
         {
             title: 'Twister',
             subtitle: 'Getting food at a food truck!',
-            illustration: require('../Images/Food/truck2_3.jpg')
+            illustration: require('../Images/Food/tri_3.jpg')
         },
         {
             title: 'Twiser Truck',
             subtitle: 'Paying for food',
-            illustration: require('../Images/Food/truck2_4.jpg')
+            illustration: require('../Images/Food/tri_4.jpg')
         },
         {
             title: 'Food Truck',
             subtitle: 'Cute sign and truck!',
-            illustration: require('../Images/Food/truck2_5.jpg')
+            illustration: require('../Images/Food/tri_5.jpg')
         },
     ],
   },
