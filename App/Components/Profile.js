@@ -4,7 +4,7 @@ import {
   StyleSheet, SafeAreaView,
   View, Dimensions,
   FlatList, SectionList,
-  ScrollView, Text,
+  ScrollView, Text, TextInput,
   Linking, ActivityIndicator,
   TouchableOpacity, Image,
   Platform, Keyboard } from 'react-native';
@@ -45,6 +45,9 @@ const tags = [
   'grape',
   'lemon',
 ];
+
+const popularPositiveTags = ["Affordable", "Good food"];
+const popularNegativeTags = ["Long line", "Small portions"];
 
 
 const reviews = [
@@ -200,7 +203,7 @@ export default class Profile extends Component {
   _renderItem ({item, index}) {
       return (
           <View style={styles.slide}>
-            <Image style={{flex: 1, width: 250, height: 250, resizeMode: 'contain'}} source={item.illustration}/>
+            <Image style={{flex: 1, aspectRatio: 1, width: undefined, height: undefined, resizeMode: 'contain'}} source={item.illustration}/>
           </View>
       );
   }
@@ -221,7 +224,7 @@ export default class Profile extends Component {
   handleDelete = index => {
      let tagsSelected = this.state.tagsSelected;
      tagsSelected.splice(index, 1);
-     this.setState({ tagsSelected });
+     this.setState({ tagsSelected: tagsSelected });
   }
 
   handleAddition = suggestion => {
@@ -343,10 +346,17 @@ export default class Profile extends Component {
 
 
         {/* Not sure whether the contentContainerStyle is necessary. */}
-        <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}>
+        <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: 'center', alignItems: 'stretch'}}>
+
+          {/* truck info header + check in button*/}
+          <View style={[styles.listItem]}>
 
             {/* truck info header */}
-            <View style={[styles.listItem]}>
+            <View style={{
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+              backgroundColor: Colors.white,
+            }}>
 
               {/* hold photo, info, and address (to the right is the button column)*/}
               <View style={{
@@ -440,35 +450,6 @@ export default class Profile extends Component {
                     ) : null
                   }
                 </View>
-
-                <Button
-                  onPress={() => this.checkIn(truck)}
-                  buttonStyle={
-                    ((this.state.checkIns[profilesList.indexOf(truck)]) && (this.state.checkIns[profilesList.indexOf(truck)] !== 0))
-                      ? [styles.button, style={
-                        backgroundColor: Colors.gray5,
-                        borderWidth: 1,
-                        borderColor: Colors.gray6}]
-                      : [styles.button, style={backgroundColor: Colors.orange}]
-                  }
-                  containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.gray5, marginTop: Metrics.marginVertical * 1.5}]}
-                  titleStyle={{
-                    color: Colors.white,
-                    fontSize: Metrics.font4,
-                  }}
-                  title='Mark as visited'
-                  icon={
-                    <MaterialCommunityIcons
-                      name='check-circle'
-                      size={18}
-                      color='white'
-                    />
-                  }
-                  disabled={((this.state.checkIns[profilesList.indexOf(truck)]) && (this.state.checkIns[profilesList.indexOf(truck)] !== 0))
-                    ? true : false
-                  }
-                />
-
               </View>
 
               {/* fake button column)*/}
@@ -483,30 +464,30 @@ export default class Profile extends Component {
                 justifyContent: 'flex-start',
               }}>
 
-              <Button
-                buttonStyle={
-                  this.state.starArray[profilesList.indexOf(truck)]
-                    ? [styles.circleButton, styles.glow, style={backgroundColor: Colors.yellow}]
-                    : [styles.circleButton, style={
-                      backgroundColor: Colors.gray5,
-                      borderWidth: 1,
-                      borderColor: Colors.gray6
-                    }]
-                }
-                containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.yellow}]}
-                titleStyle={{
-                  color: Colors.white,
-                }}
-                onPress={() => this.toggleArray(truck)}
-                title=''
-                icon={
-                  <FontAwesome
-                    name='star'
-                    size={Metrics.button/2}
-                    color= {Colors.white}
-                  />
-                }
-              />
+                <Button
+                  buttonStyle={
+                    this.state.starArray[profilesList.indexOf(truck)]
+                      ? [styles.circleButton, styles.glow, style={backgroundColor: Colors.yellow}]
+                      : [styles.circleButton, style={
+                        backgroundColor: Colors.gray5,
+                        borderWidth: 1,
+                        borderColor: Colors.gray6
+                      }]
+                  }
+                  containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.yellow}]}
+                  titleStyle={{
+                    color: Colors.white,
+                  }}
+                  onPress={() => this.toggleArray(truck)}
+                  title=''
+                  icon={
+                    <FontAwesome
+                      name='star'
+                      size={Metrics.button/2}
+                      color= {Colors.white}
+                    />
+                  }
+                />
 
                 {/* for spacing between buttons in button column */}
                 <View style={{
@@ -566,16 +547,44 @@ export default class Profile extends Component {
                     />
                   }
                 />
-
-                {/* for spacing between buttons in button column */}
-                <View style={{
-                  height: Metrics.pad / 2,
-                }}>
-                </View>
-
               </View>
-
             </View>
+
+            <Button
+              onPress={() => this.checkIn(truck)}
+              disabled={((this.state.checkIns[profilesList.indexOf(truck)]) && (this.state.checkIns[profilesList.indexOf(truck)] !== 0))}
+
+              buttonStyle={[styles.button, style={backgroundColor: Colors.orange}]}
+              disabledStyle={[styles.button, style={
+                borderWidth: 1,
+                borderColor: Colors.gray5,
+                backgroundColor: Colors.white,
+              }]}
+              titleStyle={{
+                color: Colors.white,
+                fontSize: Metrics.font4,
+                fontWeight: 'bold',
+              }}
+              disabledTitleStyle={{
+                color: Colors.gray5,
+                fontSize: Metrics.font4,
+                fontWeight: 'bold',
+              }}
+              containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.white, marginTop: Metrics.marginVertical * 1.5}]}
+              title='Mark as visited'
+              icon={
+                <MaterialCommunityIcons
+                  name='check-circle'
+                  size={18}
+                  color='white'
+                />
+              }
+              disabled={((this.state.checkIns[profilesList.indexOf(truck)]) && (this.state.checkIns[profilesList.indexOf(truck)] !== 0))
+                ? true : false
+              }
+            />
+          </View>
+
 
 
           <View style={[styles.shadowSmall, styles.sectionHead]}>
@@ -629,8 +638,7 @@ export default class Profile extends Component {
             }
           </View>
 
-
-
+          {/* most popular tags!! */}
           <View style={{
             flexDirection: 'row',
             flex: 1,
@@ -638,50 +646,54 @@ export default class Profile extends Component {
             alignItems: 'center',
             padding: Metrics.pad * 1.25,
           }}>
-            <Button
-             title= {'Affordable'}
-             titleStyle={{
-                 color: Colors.white,
-                 fontWeight: 'bold',
-             }}
-             buttonStyle={[styles.tag, style={
-               backgroundColor: Colors.orange,
-             }]}
-             containerStyle={styles.tagContainer}
-            />
-            <Button
-             title= {'Good food'}
-             titleStyle={{
-                 color: Colors.white,
-                 fontWeight: 'bold',
-             }}
-             buttonStyle={[styles.tag, style={
-               backgroundColor: Colors.orange,
-             }]}
-             containerStyle={styles.tagContainer}
-            />
-            <Button
-             title= {'Long line'}
-             titleStyle={{
-                 color: Colors.gray1,
-                 fontWeight: 'bold',
-             }}
-             buttonStyle={[styles.tag, style={
-               backgroundColor: Colors.gray5,
-             }]}
-             containerStyle={styles.tagContainer}
-            />
-            <Button
-             title= {'Small Portions'}
-             titleStyle={{
-                 color: Colors.gray1,
-                 fontWeight: 'bold',
-             }}
-             buttonStyle={[styles.tag, style={
-               backgroundColor: Colors.gray5,
-             }]}
-             containerStyle={styles.tagContainer}
-            />
+            <View style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              justifyContent: 'flex-start',
+              paddingBottom: Metrics.pad / 2,
+            }}>
+              {
+                popularPositiveTags.map(tag =>
+                  <Button
+                   key={tag}
+                   title= {tag}
+                   titleStyle={{
+                       color: Colors.orange,
+                       fontWeight: 'bold',
+                   }}
+                   buttonStyle={[styles.tag, style={
+                     backgroundColor: Colors.orange_frosty,
+                   }]}
+                   containerStyle={styles.tagContainer}
+                  />
+                )
+              }
+            </View>
+
+            <View style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+              flexWrap: 'wrap',
+            }}>
+              {
+                popularNegativeTags.map(tag =>
+                  <Button
+                   key={tag}
+                   title= {tag}
+                   titleStyle={{
+                       color: Colors.gray1,
+                       fontWeight: 'bold',
+                   }}
+                   buttonStyle={[styles.tag, style={
+                     backgroundColor: Colors.gray6,
+                   }]}
+                   containerStyle={styles.tagContainer}
+                  />
+                )
+              }
+            </View>
           </View>
 
           <View style={[styles.shadowSmall, styles.sectionHead]}>
@@ -699,16 +711,19 @@ export default class Profile extends Component {
 
 
 
-          <View>
-            <AutoTags
-              suggestions={this.state.suggestions}
-              tagsSelected={this.state.tagsSelected}
-              handleAddition={this.handleAddition}
-              handleDelete={this.handleDelete}
-              placeholder="Add a tag..."
-              renderTags={this.renderTags}
-            />
-
+          <View style={styles.myTagsContainer}>
+            <View style={styles.autocompleteContainer}>
+              <AutoTags
+                style={styles.autogtags}
+                suggestions={this.state.suggestions}
+                tagsSelected={this.state.tagsSelected}
+                placeholder="Add a tag..."
+                handleAddition={this.handleAddition}
+                handleDelete={this.handleDelete}
+              />
+            </View>
+            <View style={styles.bottomPaddingContainer}>
+            </View>
           </View>
 
           <View style={[styles.shadowSmall, styles.sectionHead]}>
@@ -754,7 +769,6 @@ export default class Profile extends Component {
                           shadowOffset: {width: 0, height: 4},
                         }]}>
                           <Image source={item.icon} resizeMode='contain' style={{
-                            //borderRadius: Metrics.curve,
                             aspectRatio: 1,
                             width: undefined,
                             height: undefined,
@@ -768,7 +782,7 @@ export default class Profile extends Component {
                         }}>
                           <Text style={{
                             fontSize: Metrics.font3,
-                            fontFamily: 'lato-bold',
+                            fontFamily: 'lato-black',
                           }}> {item.name} </Text>
                           <Text style={{
                             color: Colors.gray3,
@@ -838,10 +852,6 @@ export default class Profile extends Component {
                         }
                       </View>
 
-
-
-
-
                     </View>
 
                   </View>
@@ -866,7 +876,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    backgroundColor: Colors.gray6,
+    backgroundColor: Colors.white,
   },
 
   titleContainer: {
@@ -907,17 +917,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: Metrics.pad,
     flexDirection: 'row',
+    zIndex: 1,
+
+    borderTopWidth: 1,
+    borderTopColor: Colors.gray6,
   },
 
   listItem: {
-    paddingVertical: Metrics.pad * 1.25,
-    flexDirection: 'row',
+    padding: Metrics.pad * 1.25,
+    flexDirection: 'column',
     justifyContent: 'space-evenly',
     backgroundColor: Colors.white,
 
     borderColor: Colors.gray6,
     borderBottomWidth: 1,
-    paddingHorizontal: Metrics.pad * 1.25,
   },
 
   info: {
@@ -976,7 +989,6 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
 
-
   overlayContainer: {
     flexDirection: 'column',
     justifyContent: 'flex-end',
@@ -1003,6 +1015,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
+  autoTagsWrapper: {
+    height: 100,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+
   tag: {
     borderRadius: Metrics.button / 4,
     height: Metrics.button,
@@ -1014,5 +1032,23 @@ const styles = StyleSheet.create({
   tagContainer: {
     //backgroundColor: Colors.yellow,
     paddingRight: Metrics.pad/2,
+  },
+
+  myTagsContainer: {
+    flex: 1,
+    alignItems: 'center',
+  },
+
+  autocompleteContainer: {
+    flex: 1,
+    marginTop: Metrics.pad * 1.5,
+    marginLeft: Metrics.pad * 1.5,
+    marginRight: Metrics.pad * 1.5,
+    zIndex: 1,
+  },
+
+  bottomPaddingContainer: {
+    height: 100,
+    backgroundColor: Colors.orange,
   },
 });

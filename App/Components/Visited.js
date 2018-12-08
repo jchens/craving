@@ -282,6 +282,8 @@ const styles = StyleSheet.create({
     height: Metrics.button,
     justifyContent: 'center',
     paddingHorizontal: Metrics.pad,
+    alignItems: 'center',
+
   },
 
   listItem: {
