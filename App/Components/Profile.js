@@ -234,6 +234,14 @@ export default class Profile extends Component {
   }
 
   renderTags = tags => {
+    if (tags.length > 0) {
+      if (this.state.isPositiveReview) {
+        tags[tags.length - 1]['state'] = 'positive';
+      } else {
+        tags[tags.length - 1]['state'] = 'negative';
+      }
+    }
+
     return (
       <View style={ styles.customTagsContainer }>
       {
@@ -241,14 +249,26 @@ export default class Profile extends Component {
           <Button
            key={tag.name}
            title= {tag.name}
-           titleStyle={{
-               color: Colors.orange,
+           titleStyle={ tag.state == 'positive'
+             ? {
+                color: Colors.orange,
+                fontWeight: 'bold',
+             }
+             : {
+              color: Colors.gray1,
                fontWeight: 'bold',
-           }}
-           buttonStyle={[styles.tag, style={
-             backgroundColor: Colors.orange_frosty,
-             marginBottom: Metrics.pad / 2,
-           }]}
+             }
+           }
+           buttonStyle={ tag.state == 'positive'
+             ? [styles.tag, style={
+                 backgroundColor: Colors.orange_frosty,
+                 marginBottom: Metrics.pad / 2,
+               }]
+             : [styles.tag, style={
+                 backgroundColor: Colors.gray6,
+                 marginBottom: Metrics.pad / 2,
+               }]
+            }
            containerStyle={styles.tagContainer}
           />
         )
