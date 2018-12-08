@@ -73,7 +73,7 @@ export default class Rewards extends Component {
               }}>
                 <Text  style={{
                   fontFamily: 'lato-bold',
-                  marginTop: 5,
+                  paddingTop: 5,
                   color: Colors.gray1,
                 }}> 50 PTS </Text>
               </View>
@@ -86,7 +86,17 @@ export default class Rewards extends Component {
 
               }}>
                 <Menu>
-                  <MenuTrigger style={{fontFamily: 'lato-bold'}} text='100 PTS' />
+                  <MenuTrigger text='100 PTS' customStyles={{
+                    triggerText: {
+                      fontFamily: 'lato-bold',
+                      color: Colors.gray1,
+                    },
+                    triggerOuterWrapper: {
+                      //padding: Metrics.pad,
+                      //paddingTop: 5,
+                      backgroundColor: Colors.white,
+                    },
+                  }} />
                   <MenuOptions style={{backgroundColor: 'white'}}>
                     <MenuOption onSelect={() => console.log('hi')} >
                       <Text style={{textAlign: 'center', color: Colors.gray1}}>10% OFF</Text>
@@ -186,11 +196,16 @@ export default class Rewards extends Component {
                   width: 25,
                   height: 25,
                   borderRadius: 12.5,
-                  backgroundColor: '#FF4D00',
+                  backgroundColor: Colors.orange,
                   justifyContent: 'center',
                   alignItems: 'center',
                   marginTop: 16.5,
                   marginLeft: 26,
+
+                  // shadow for circle
+                  shadowColor: Colors.orange,
+                  shadowOpacity: Metrics.glow / 2,
+                  shadowRadius: 10,
                 }}>
                   <View style={{
                     width: 6,
@@ -451,4 +466,5 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     marginBottom: 10,
   },
+
 });
