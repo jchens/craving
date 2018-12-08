@@ -778,7 +778,7 @@ export default class Profile extends Component {
                         }}>
                           <Text style={{
                             fontSize: Metrics.font3,
-                            fontFamily: 'lato-bold',
+                            fontFamily: 'lato-black',
                           }}> {item.name} </Text>
                           <Text style={{
                             color: Colors.gray3,
@@ -914,6 +914,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: Metrics.pad,
     flexDirection: 'row',
     zIndex: 1,
+
+    borderTopWidth: 1,
+    borderTopColor: Colors.gray6,
   },
 
   listItem: {
