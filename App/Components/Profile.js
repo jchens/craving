@@ -4,7 +4,7 @@ import {
   StyleSheet, SafeAreaView,
   View, Dimensions,
   FlatList, SectionList,
-  ScrollView, Text,
+  ScrollView, Text, TextInput,
   Linking, ActivityIndicator,
   TouchableOpacity, Image,
   Platform, Keyboard } from 'react-native';
@@ -224,7 +224,7 @@ export default class Profile extends Component {
   handleDelete = index => {
      let tagsSelected = this.state.tagsSelected;
      tagsSelected.splice(index, 1);
-     this.setState({ tagsSelected });
+     this.setState({ tagsSelected: tagsSelected });
   }
 
   handleAddition = suggestion => {
@@ -707,16 +707,19 @@ export default class Profile extends Component {
 
 
 
-          <View>
-            <AutoTags
-              suggestions={this.state.suggestions}
-              tagsSelected={this.state.tagsSelected}
-              handleAddition={this.handleAddition}
-              handleDelete={this.handleDelete}
-              placeholder="Add a tag..."
-              renderTags={this.renderTags}
-            />
-
+          <View style={styles.myTagsContainer}>
+            <View style={styles.autocompleteContainer}>
+              <AutoTags
+                style={styles.autogtags}
+                suggestions={this.state.suggestions}
+                tagsSelected={this.state.tagsSelected}
+                placeholder="Add a tag..."
+                handleAddition={this.handleAddition}
+                handleDelete={this.handleDelete}
+              />
+            </View>
+            <View style={styles.bottomPaddingContainer}>
+            </View>
           </View>
 
           <View style={[styles.shadowSmall, styles.sectionHead]}>
@@ -979,7 +982,6 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
 
-
   overlayContainer: {
     flexDirection: 'column',
     justifyContent: 'flex-end',
@@ -1006,6 +1008,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
+  autoTagsWrapper: {
+    height: 100,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+
   tag: {
     borderRadius: Metrics.button / 4,
     height: Metrics.button,
@@ -1017,5 +1025,23 @@ const styles = StyleSheet.create({
   tagContainer: {
     //backgroundColor: Colors.yellow,
     paddingRight: Metrics.pad/2,
+  },
+
+  myTagsContainer: {
+    flex: 1,
+    alignItems: 'center',
+  },
+
+  autocompleteContainer: {
+    flex: 1,
+    marginTop: Metrics.pad * 1.5,
+    marginLeft: Metrics.pad * 1.5,
+    marginRight: Metrics.pad * 1.5,
+    zIndex: 1,
+  },
+
+  bottomPaddingContainer: {
+    height: 100,
+    backgroundColor: Colors.orange,
   },
 });
