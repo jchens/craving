@@ -71,7 +71,9 @@ export default class Visited extends Component {
                 renderItem={({item, index}) =>
 
                 <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('Profile')}
+                  onPress={() => this.props.navigation.navigate('Profile', {
+                    item: item,
+                  })}
                 >
                   <View style={[styles.listItem]}>
 

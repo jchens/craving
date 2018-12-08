@@ -196,7 +196,9 @@ export default class Followed extends Component {
               renderItem={({item, index}) =>
 
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Profile')}
+                onPress={() => this.props.navigation.navigate('Profile',{
+                  item: item,
+                })}
               >
                 <View style={[styles.listItem]}>
                 {/* hold photo, info, and address (to the right is the button column)*/}

@@ -233,6 +233,11 @@ export default class Profile extends Component {
 
 
   render () {
+
+    const { navigation } = this.props;
+    const item = navigation.getParam('item', 'NO-ITEM');
+
+
     return (
       <View style={styles.container}>
 
@@ -366,7 +371,7 @@ export default class Profile extends Component {
                     shadowRadius: 5,
                     shadowOffset: {width: 0, height: 4},
                   }]}>
-                    <Image source={truck.image} resizeMode='contain' style={{
+                    <Image source={item.image} resizeMode='contain' style={{
                       aspectRatio: 1,
                       width: undefined,
                       height: undefined,
@@ -384,7 +389,7 @@ export default class Profile extends Component {
                         <Text style={{
                           fontSize: Metrics.font3,
                           fontFamily: 'lato-black',
-                        }}> {truck.name} </Text>
+                        }}> {item.name} </Text>
                       ) : null
                     }
                     {
@@ -395,7 +400,7 @@ export default class Profile extends Component {
                           fontSize: Metrics.font5,
                           paddingTop: 3,
                           paddingBottom: 4,
-                        }}> {truck.cuisine} </Text>
+                        }}> {item.cuisine} </Text>
                       ) : null
                     }
                     {
@@ -405,7 +410,7 @@ export default class Profile extends Component {
                           flexWrap: 'wrap',
                           textAlign: 'left',
                           fontSize: Metrics.font5,
-                        }}> {truck.description} </Text>
+                        }}> {item.description} </Text>
                       ) : null
                     }
                   </View>
@@ -421,7 +426,7 @@ export default class Profile extends Component {
                     this.state.fontLoaded ? (
                       <Text style={{
                         fontFamily: 'lato-bold',
-                      }}>{truck.time}</Text>
+                      }}>{item.time}</Text>
                     ) : null
                   }
 
@@ -431,7 +436,7 @@ export default class Profile extends Component {
                       <Text style={{
                         fontFamily: 'lato-regular',
                         flexWrap: 'wrap',
-                      }}>{truck.address}</Text>
+                      }}>{item.address}</Text>
                     ) : null
                   }
                 </View>
@@ -600,7 +605,7 @@ export default class Profile extends Component {
           </View>
 
           <Carousel
-            data={ENTRIES1}
+            data={item.foodPhotos}
             renderItem={this._renderItem}
             sliderWidth={width}
             itemWidth={200}
