@@ -1,31 +1,5 @@
 # craving_app
 
-## 3rd party components
-
-Used `npm install react-native-maps --save` to use the Google Maps API.
-
-Used `npm install --save react-native-elements@beta` to use [React Native Elements](https://react-native-training.github.io/react-native-elements/docs/getting_started.html).
-
-Used `npm install yarn add react-native-typography` to use [React Native typography](https://github.com/hectahertz/react-native-typography).
-
-Used `npm install --save react-native-modal-datetime-picker` to [pick a date & time](https://github.com/mmazzarolo/react-native-modal-datetime-picker).
-
-Used `npm install --save react-native-modal-datetime-picker` to [implement the bottom navbar](https://github.com/react-navigation/react-navigation).
-
-Used `npm install --save react-native-snap-carousel` to [implement the photo carousel](https://www.npmjs.com/package/react-native-snap-carousel).
-
-Used `npm i -S react-native-multiple-tags` to [implement the review tags](https://github.com/caleb-tolu/react-native-multiple-tags).
-
-Used `npm install --save react-native-progress-bar-animated` to [implement the progress nar](https://www.npmjs.com/package/react-native-progress-bar-animated).
-
-Used `npm install --save react-native-onboarding-swiper` to [implement the onboarding swiper](https://www.npmjs.com/package/react-native-onboarding-swiper/v/0.10.0).
-
-Used `npm install --save react-native-tag-autocomplete` to [implement the tag system](https://github.com/JoeRoddy/react-native-tag-autocomplete).
-
-Used `npm install react-native-popup-menu --save` to [implement the popup](https://github.com/instea/react-native-popup-menu/blob/HEAD/doc/examples.md).
-
-Allow usage of location from instructions [here](https://stackoverflow.com/questions/48157185/info-plist-file-for-react-native-ios-app-using-expo-sdk?noredirect=1&lq=1).
-
 ## Installation Instructions
 
 Download the .zip from our website, and navigate to the folder containing the project:
@@ -70,4 +44,30 @@ No special operating instructions.
 - Users can add duplicate tags to a review; there is no edge case handling
 - We envisioned many animated transitions (between screens, when overlays pop up, etc) that were not implemented
 
+
+## 3rd Party Components used
+
+Used `npm install react-native-maps --save` to use [the Google Maps API](https://github.com/react-native-community/react-native-maps).
+
+Used `npm install --save react-native-elements@beta` to use [React Native Elements](https://react-native-training.github.io/react-native-elements/docs/getting_started.html).
+
+Used `npm install yarn add react-native-typography` to use [React Native typography](https://github.com/hectahertz/react-native-typography).
+
+Used `npm install --save react-native-modal-datetime-picker` to [pick a date & time](https://github.com/mmazzarolo/react-native-modal-datetime-picker).
+
+Used `npm install --save react-native-modal-datetime-picker` to [implement the bottom navbar](https://github.com/react-navigation/react-navigation).
+
+Used `npm install --save react-native-snap-carousel` to [implement the photo carousel](https://www.npmjs.com/package/react-native-snap-carousel).
+
+Used `npm i -S react-native-multiple-tags` to [implement the review tags](https://github.com/caleb-tolu/react-native-multiple-tags).
+
+Used `npm install --save react-native-progress-bar-animated` to [implement the progress nar](https://www.npmjs.com/package/react-native-progress-bar-animated).
+
+Used `npm install --save react-native-onboarding-swiper` to [implement the onboarding swiper](https://www.npmjs.com/package/react-native-onboarding-swiper/v/0.10.0).
+
+Used `npm install --save react-native-tag-autocomplete` to [implement the tag system](https://github.com/JoeRoddy/react-native-tag-autocomplete).
+
+Used `npm install react-native-popup-menu --save` to [implement the popup](https://github.com/instea/react-native-popup-menu/blob/HEAD/doc/examples.md).
+
+Allow usage of location from instructions [here](https://stackoverflow.com/questions/48157185/info-plist-file-for-react-native-ios-app-using-expo-sdk?noredirect=1&lq=1).
 
