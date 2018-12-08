@@ -1,4 +1,7 @@
-# craving_app
+# Craving
+Find a food truck, calm a craving.
+
+We noticed through our needfinding that food trucks, despite being a source of good, cheap, and convenient food, were being underutilized, and people's approach to finding food trucks varied quite a bit from the typical food discovery process. Since there weren't any food truck finder apps available, we decided to make one, focusing on redesigning the food discovery process to be tailored towards food trucks.
 
 ## Installation Instructions
 
