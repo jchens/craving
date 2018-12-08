@@ -98,10 +98,41 @@ class FitToCoordinates extends React.Component {
   // also not able to move map now
   searchComplete = () => {
     // case-insensitive
-    if (this.state.text.localeCompare('taco') === 0) {
-      console.log(input);
+    this.setState({
+      text: (this.state.text).toLowerCase()
+    });
+
+    console.log(this.state.text);
+    if (this.state.text.includes('taco')) {
       this.onMarkerClick(0);
     }
+    if ((this.state.text.includes('barbecue'))
+    || (this.state.text.includes('capelos'))
+    || (this.state.text.includes('capelos'))
+    || (this.state.text.includes('capelos'))
+    || (this.state.text.includes('capelos')))
+    {
+      this.onMarkerClick(1);
+    }
+    if ((this.state.text.includes('twister'))
+    || (this.state.text.includes('chinese'))
+    || (this.state.text.includes('bay')))
+    {
+      this.onMarkerClick(2);
+    }
+    if ((this.state.text.includes('cheesesteak'))
+    || (this.state.text.includes('asian fusion')))
+    {
+      this.onMarkerClick(3);
+    }
+    if ((this.state.text.includes('waffle'))
+    || (this.state.text.includes('roost'))
+    || (this.state.text.includes('chicken'))
+    || (this.state.text.includes('sourthern')))
+    {
+      this.onMarkerClick(4);
+    }
+
   }
 
   fitAllMarkers = () => {
@@ -246,7 +277,7 @@ class FitToCoordinates extends React.Component {
               }}
               placeholder="I'm craving..."
               placeholderTextColor={Colors.gray3}
-              onSubmitEditing={() => this.searchComplete}
+              onSubmitEditing={this.searchComplete}
               />
 
               {/* clock icon */}
