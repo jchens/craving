@@ -596,14 +596,18 @@ export default class Profile extends Component {
             }
             <Button
               onPress={ this._handleAddPhoto }
-              buttonStyle={ [styles.circleButton, style={backgroundColor: 'rgba(0, 0, 0, 0)'}] }
+              buttonStyle={ [styles.circleButton, style={
+                backgroundColor: Colors.orange,
+                height: Metrics.button * 1.5,
+                width: Metrics.button * 1.5,
+              }]}
               containerStyle={styles.buttonContainer}
               title=''
               icon={
                 <Feather
                   name='plus'
-                  size={20}
-                  color={Colors.gray3}
+                  size={Metrics.button * 0.75}
+                  color={Colors.white}
                 />
               }
             />

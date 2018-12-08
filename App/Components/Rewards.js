@@ -368,12 +368,14 @@ const styles = StyleSheet.create({
   progress: {
     alignItems: 'center',
     flex: 1,
+    backgroundColor: Colors.yellow,
+
   },
   bar: {
     position: 'absolute',
-    paddingTop:25,
-    zIndex: 0,
-
+    paddingTop: 25,
+    zIndex: 1,
+    backgroundColor: Colors.purple,
   },
   craving: {
     flex: 8,
