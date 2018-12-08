@@ -291,7 +291,9 @@ class FitToCoordinates extends React.Component {
 
         {/* TODO: overlapping w buttons for long descriptions */}
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Profile')}
+          onPress={() => this.props.navigation.navigate('Profile', {
+            item: this.state.profile
+          })}
         >
           <View style={[styles.card, styles.shadow]}>
 

@@ -124,7 +124,9 @@ export default class Profile extends Component {
       sliderActiveSlide: 1,
 
       suggestions : [ {name:'Long line'}, {name:'Affordable'}, {name:'Friendly'}, {name:'Greasy'}, {name:'Good food'}, {name:'Small portions'}, {name:'Expensive'},],
-      tagsSelected : []
+      tagsSelected : [],
+
+      isPositiveReview: true,
     };
   }
 
@@ -231,11 +233,56 @@ export default class Profile extends Component {
      this.setState({ tagsSelected: this.state.tagsSelected.concat([suggestion]) });
   }
 
+  renderTags = tags => {
+    if (tags.length > 0) {
+      if (this.state.isPositiveReview) {
+        tags[tags.length - 1]['state'] = 'positive';
+      } else {
+        tags[tags.length - 1]['state'] = 'negative';
+      }
+    }
 
-
-
+    return (
+      <View style={ styles.customTagsContainer }>
+      {
+        tags.map(tag =>
+          <Button
+           key={tag.name}
+           title= {tag.name}
+           titleStyle={ tag.state == 'positive'
+             ? {
+                color: Colors.orange,
+                fontWeight: 'bold',
+             }
+             : {
+              color: Colors.gray1,
+               fontWeight: 'bold',
+             }
+           }
+           buttonStyle={ tag.state == 'positive'
+             ? [styles.tag, style={
+                 backgroundColor: Colors.orange_frosty,
+                 marginBottom: Metrics.pad / 2,
+               }]
+             : [styles.tag, style={
+                 backgroundColor: Colors.gray6,
+                 marginBottom: Metrics.pad / 2,
+               }]
+            }
+           containerStyle={styles.tagContainer}
+          />
+        )
+      }
+      </View>
+    );
+  }
 
   render () {
+
+    const { navigation } = this.props;
+    const item = navigation.getParam('item', 'NO-ITEM');
+
+
     return (
       <View style={styles.container}>
 
@@ -283,8 +330,6 @@ export default class Profile extends Component {
             mode='datetime'
             titleIOS='Set a reminder for this truck'
           />
-
-
 
           <View style={{
             flexDirection: 'row',
@@ -376,8 +421,7 @@ export default class Profile extends Component {
                     shadowRadius: 5,
                     shadowOffset: {width: 0, height: 4},
                   }]}>
-                    <Image source={truck.image} resizeMode='contain' style={{
-                      flex: 1,
+                    <Image source={item.image} resizeMode='contain' style={{
                       aspectRatio: 1,
                       width: undefined,
                       height: undefined,
@@ -395,7 +439,7 @@ export default class Profile extends Component {
                         <Text style={{
                           fontSize: Metrics.font3,
                           fontFamily: 'lato-black',
-                        }}> {truck.name} </Text>
+                        }}> {item.name} </Text>
                       ) : null
                     }
                     {
@@ -406,7 +450,7 @@ export default class Profile extends Component {
                           fontSize: Metrics.font5,
                           paddingTop: 3,
                           paddingBottom: 4,
-                        }}> {truck.cuisine} </Text>
+                        }}> {item.cuisine} </Text>
                       ) : null
                     }
                     {
@@ -416,7 +460,7 @@ export default class Profile extends Component {
                           flexWrap: 'wrap',
                           textAlign: 'left',
                           fontSize: Metrics.font5,
-                        }}> {truck.description} </Text>
+                        }}> {item.description} </Text>
                       ) : null
                     }
                   </View>
@@ -432,7 +476,7 @@ export default class Profile extends Component {
                     this.state.fontLoaded ? (
                       <Text style={{
                         fontFamily: 'lato-bold',
-                      }}>{truck.time}</Text>
+                      }}>{item.time}</Text>
                     ) : null
                   }
 
@@ -442,7 +486,7 @@ export default class Profile extends Component {
                       <Text style={{
                         fontFamily: 'lato-regular',
                         flexWrap: 'wrap',
-                      }}>{truck.address}</Text>
+                      }}>{item.address}</Text>
                     ) : null
                   }
                 </View>
@@ -614,7 +658,7 @@ export default class Profile extends Component {
           </View>
 
           <Carousel
-            data={ENTRIES1}
+            data={item.foodPhotos}
             renderItem={this._renderItem}
             sliderWidth={width}
             itemWidth={200}
@@ -708,7 +752,7 @@ export default class Profile extends Component {
               ) : null
             }
             <Button
-              onPress={ this._handleAddPhoto }
+              onPress={ () => this.setState( {isPositiveReview: !this.state.isPositiveReview }) }
               buttonStyle={ [styles.circleButton, style={
                 backgroundColor: Colors.orange,
                 height: Metrics.button * 1.5,
@@ -716,12 +760,17 @@ export default class Profile extends Component {
               }]}
               containerStyle={styles.buttonContainer}
               title=''
-              icon={
-                <Feather
-                  name='check'
-                  size={Metrics.button * 0.75}
-                  color={Colors.white}
-                />
+              icon={ this.state.isPositiveReview
+                ? <Feather
+                    name='check'
+                    size={Metrics.button * 0.75}
+                    color={Colors.white}
+                  />
+                : <Feather
+                    name='x'
+                    size={Metrics.button * 0.75}
+                    color={Colors.white}
+                  />
               }
             />
           </View>
@@ -731,12 +780,13 @@ export default class Profile extends Component {
           <View style={styles.myTagsContainer}>
             <View style={styles.autocompleteContainer}>
               <AutoTags
-                style={styles.autogtags}
+                style={styles.autoTags}
                 suggestions={this.state.suggestions}
                 tagsSelected={this.state.tagsSelected}
                 placeholder="Add a tag..."
                 handleAddition={this.handleAddition}
                 handleDelete={this.handleDelete}
+                renderTags={this.renderTags}
               />
             </View>
             <View style={styles.bottomPaddingContainer}>
@@ -1032,12 +1082,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  autoTagsWrapper: {
-    height: 100,
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-
   tag: {
     borderRadius: Metrics.button / 4,
     height: Metrics.button,
@@ -1064,8 +1108,20 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
 
+  autoTags: {
+    fontSize: 14
+  },
+
   bottomPaddingContainer: {
     height: 100,
     backgroundColor: Colors.orange,
+  },
+
+  customTagsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+    backgroundColor: "white",
+    width: 300
   },
 });

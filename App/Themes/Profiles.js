@@ -12,6 +12,33 @@ const profilesList = [
     visit: "TODAY",
     latitude: 37.4275,
     longitude: -122.1697,
+    foodPhotos: [
+        {
+            title: 'Tacos',
+            subtitle: 'Look at these yummy tacos!',
+            illustration: require('../Images/Food/truck1_1.jpg')
+        },
+        {
+            title: 'Tacos',
+            subtitle: 'Look at these yummy tacos!',
+            illustration: require('../Images/Food/truck1_2.jpg')
+        },
+        {
+            title: 'Food Truck',
+            subtitle: 'Getting food at a food truck!',
+            illustration: require('../Images/Food/truck1_3.jpg')
+        },
+        {
+            title: 'Food Truck',
+            subtitle: 'Paying for food',
+            illustration: require('../Images/Food/truck1_4.jpg')
+        },
+        {
+            title: 'Food Truck',
+            subtitle: 'Cute sign and truck!',
+            illustration: require('../Images/Food/truck1_5.jpg')
+        },
+    ],
   },
 
   {
@@ -26,6 +53,33 @@ const profilesList = [
     visit: "YESTERDAY",
     latitude: 37.4375,
     longitude: -122.1797,
+    foodPhotos: [
+        {
+            title: 'Twister',
+            subtitle: 'Look at these yummy tacos!',
+            illustration: require('../Images/Food/truck2_1.jpg')
+        },
+        {
+            title: 'Twister',
+            subtitle: 'Look at these yummy tacos!',
+            illustration: require('../Images/Food/truck2_2.jpg')
+        },
+        {
+            title: 'Twister',
+            subtitle: 'Getting food at a food truck!',
+            illustration: require('../Images/Food/truck2_3.jpg')
+        },
+        {
+            title: 'Twiser Truck',
+            subtitle: 'Paying for food',
+            illustration: require('../Images/Food/truck2_4.jpg')
+        },
+        {
+            title: 'Food Truck',
+            subtitle: 'Cute sign and truck!',
+            illustration: require('../Images/Food/truck2_5.jpg')
+        },
+    ],
   },
   {
     image: require('../Images/FTProfiles/i_love_cheesesteak.jpg'),
@@ -39,6 +93,34 @@ const profilesList = [
     visit: "3 DAYS AGO",
     latitude: 37.4475,
     longitude: -122.1897,
+    foodPhotos: [
+        {
+            title: 'Twister',
+            subtitle: 'Look at these yummy tacos!',
+            illustration: require('../Images/Food/truck3_1.jpg')
+        },
+        {
+            title: 'Twister',
+            subtitle: 'Look at these yummy tacos!',
+            illustration: require('../Images/Food/truck3_2.jpg')
+        },
+        {
+            title: 'Twister',
+            subtitle: 'Getting food at a food truck!',
+            illustration: require('../Images/Food/truck3_3.jpg')
+        },
+        {
+            title: 'Twiser Truck',
+            subtitle: 'Paying for food',
+            illustration: require('../Images/Food/truck3_4.jpg')
+        },
+        {
+            title: 'Food Truck',
+            subtitle: 'Cute sign and truck!',
+            illustration: require('../Images/Food/truck3_5.jpg')
+        },
+    ],
+
   },
   {
     image: require('../Images/FTProfiles/the_waffle_roost.png'),
@@ -52,6 +134,33 @@ const profilesList = [
     visit: "4 DAYS AGO",
     latitude: 37.4175,
     longitude: -122.1597,
+    foodPhotos: [
+        {
+            title: 'Twister',
+            subtitle: 'Look at these yummy tacos!',
+            illustration: require('../Images/Food/truck4_1.jpg')
+        },
+        {
+            title: 'Twister',
+            subtitle: 'Look at these yummy tacos!',
+            illustration: require('../Images/Food/truck4_2.jpg')
+        },
+        {
+            title: 'Twister',
+            subtitle: 'Getting food at a food truck!',
+            illustration: require('../Images/Food/truck4_3.jpg')
+        },
+        {
+            title: 'Twiser Truck',
+            subtitle: 'Paying for food',
+            illustration: require('../Images/Food/truck4_4.jpg')
+        },
+        {
+            title: 'Food Truck',
+            subtitle: 'Cute sign and truck!',
+            illustration: require('../Images/Food/truck4_5.jpg')
+        },
+    ],
   },
   {
     image: require('../Images/FTProfiles/oaxacan_kitchen_mobile.jpg'),
@@ -65,6 +174,34 @@ const profilesList = [
     visit: "1 WEEK AGO",
     latitude: 37.42,
     longitude: -122.1710,
+    foodPhotos: [
+        {
+            title: 'Twister',
+            subtitle: 'Look at these yummy tacos!',
+            illustration: require('../Images/Food/truck2_1.jpg')
+        },
+        {
+            title: 'Twister',
+            subtitle: 'Look at these yummy tacos!',
+            illustration: require('../Images/Food/truck2_2.jpg')
+        },
+        {
+            title: 'Twister',
+            subtitle: 'Getting food at a food truck!',
+            illustration: require('../Images/Food/truck2_3.jpg')
+        },
+        {
+            title: 'Twiser Truck',
+            subtitle: 'Paying for food',
+            illustration: require('../Images/Food/truck2_4.jpg')
+        },
+        {
+            title: 'Food Truck',
+            subtitle: 'Cute sign and truck!',
+            illustration: require('../Images/Food/truck2_5.jpg')
+        },
+    ],
+
   },
   {
     image: require('../Images/FTProfiles/akita_gourmet.png'),
@@ -78,6 +215,33 @@ const profilesList = [
     visit: "2 WEEKS AGO",
     latitude: 37.41,
     longitude: -122.18,
+    foodPhotos: [
+        {
+            title: 'Twister',
+            subtitle: 'Look at these yummy tacos!',
+            illustration: require('../Images/Food/truck2_1.jpg')
+        },
+        {
+            title: 'Twister',
+            subtitle: 'Look at these yummy tacos!',
+            illustration: require('../Images/Food/truck2_2.jpg')
+        },
+        {
+            title: 'Twister',
+            subtitle: 'Getting food at a food truck!',
+            illustration: require('../Images/Food/truck2_3.jpg')
+        },
+        {
+            title: 'Twiser Truck',
+            subtitle: 'Paying for food',
+            illustration: require('../Images/Food/truck2_4.jpg')
+        },
+        {
+            title: 'Food Truck',
+            subtitle: 'Cute sign and truck!',
+            illustration: require('../Images/Food/truck2_5.jpg')
+        },
+    ],
   },
   {
     image: require('../Images/FTProfiles/trijeet.jpeg'),
@@ -91,6 +255,33 @@ const profilesList = [
     visit: "1 MONTH AGO",
     latitude: 37.4275,
     longitude: -122.172,
+    foodPhotos: [
+        {
+            title: 'Twister',
+            subtitle: 'Look at these yummy tacos!',
+            illustration: require('../Images/Food/tri_1.jpg')
+        },
+        {
+            title: 'Twister',
+            subtitle: 'Look at these yummy tacos!',
+            illustration: require('../Images/Food/tri_2.jpeg')
+        },
+        {
+            title: 'Twister',
+            subtitle: 'Getting food at a food truck!',
+            illustration: require('../Images/Food/tri_3.jpg')
+        },
+        {
+            title: 'Twiser Truck',
+            subtitle: 'Paying for food',
+            illustration: require('../Images/Food/tri_4.jpg')
+        },
+        {
+            title: 'Food Truck',
+            subtitle: 'Cute sign and truck!',
+            illustration: require('../Images/Food/tri_5.jpg')
+        },
+    ],
   },
 ]
 
