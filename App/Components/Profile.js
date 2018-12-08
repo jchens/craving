@@ -632,13 +632,13 @@ export default class Profile extends Component {
               }}
               containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.white, marginTop: Metrics.marginVertical * 1.5}]}
               title='Mark as visited'
-              icon={
-                <MaterialCommunityIcons
-                  name='check-circle'
-                  size={18}
-                  color='white'
-                />
-              }
+              // icon={
+              //   <MaterialCommunityIcons
+              //     name='check-circle'
+              //     size={18}
+              //     color='white'
+              //   />
+              // }
               disabled={((this.state.checkIns[profilesList.indexOf(truck)]) && (this.state.checkIns[profilesList.indexOf(truck)] !== 0))
                 ? true : false
               }
