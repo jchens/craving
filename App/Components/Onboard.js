@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
 import { NavigationActions, StackActions } from 'react-navigation';
+import { Metrics, Colors, Images } from '../Themes'
 
-import { Colors } from '../Themes';
 
 /* Disables being able to go back to the onboarding screens from the main app. */
 const resetAction = StackActions.reset({
@@ -32,6 +32,9 @@ export default class Onboard extends Component {
       <Onboarding
         onDone={() => this.doneCallback()}
         onSkip={() => this.skipCallback()}
+        containerStyles={{
+          padding: Metrics.pad * 1.25,
+        }}
         pages={[
           {
             backgroundColor: '#ec5b29',
