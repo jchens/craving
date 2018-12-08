@@ -851,10 +851,12 @@ export default class Profile extends Component {
                   color: Colors.gray1,
                   letterSpacing: 1,
                   fontSize: Metrics.font5
-                }}>ALL REVIEWS</Text>
+                }}>COMMUNITY REVIEWS</Text>
               ) : null
             }
           </View>
+
+          {/* friend's reviews! */}
           <View>
             <FlatList
               data={reviews}
@@ -869,22 +871,40 @@ export default class Profile extends Component {
                       justifyContent: 'flex-start',
                     }}>
 
-                      {/* info: holding photo, info*/}
+                      {/* info: holding friend's photo, info*/}
                       <View style={styles.info}>
 
-                        {/* view to hold image for shadow*/}
-                        <View style={[styles.shadowSmall, style={
-                          flex: 1,
-                          backgroundColor: Colors.white,
-                          //borderRadius: Metrics.curve,
-                          borderWidth: 4,
-                          borderColor: Colors.white,
+                        {/* view to hold friends image for shadow*/}
+                        <View style={
+                          (item.friend === true)
+                            ? [styles.shadowSmall, style={
+                              flex: 1,
+                              borderWidth: 4,
 
-                          shadowColor: Colors.black,
-                          shadowOpacity: Metrics.shadow * 0.75,
-                          shadowRadius: 5,
-                          shadowOffset: {width: 0, height: 4},
-                        }]}>
+                              backgroundColor: Colors.yellow,
+                              borderColor: Colors.yellow,
+
+                              shadowColor: Colors.yellow,
+                              shadowOpacity: Metrics.shadow * 0.85,
+                              shadowRadius: 5,
+                              shadowOffset: {width: 0, height: 4},
+                              }
+                            ]
+                            : [styles.shadowSmall, style={
+                              flex: 1,
+                              borderWidth: 4,
+
+                              backgroundColor: Colors.white,
+                              borderColor: Colors.white,
+                              borderWidth: 1,
+                              borderColor: Colors.gray6,
+
+                              shadowColor: Colors.black,
+                              shadowOpacity: Metrics.shadow * 0.85,
+                              shadowRadius: 5,
+                              shadowOffset: {width: 0, height: 4},
+                            }]
+                        }>
                           <Image source={item.icon} resizeMode='contain' style={{
                             aspectRatio: 1,
                             width: undefined,
