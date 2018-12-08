@@ -127,6 +127,7 @@ export default class Profile extends Component {
       tagsSelected : [],
 
       isPositiveReview: true,
+      submittedReview: false,
     };
   }
 
@@ -295,6 +296,16 @@ export default class Profile extends Component {
         {name}
       </Text>
     );
+  };
+
+  submitReview = item => {
+    if (this.state.tagsSelected.length > 0) {
+      this.setState({
+        submittedReview: !this.state.submittedReview,
+        tagsSelected: [],
+      });
+      this.child.toggleVisibility('submitting a review');
+    }
   };
 
   render () {
@@ -808,6 +819,29 @@ export default class Profile extends Component {
             <View style={styles.bottomPaddingContainer}>
             </View>
           </View>
+          <Button
+            onPress={() => this.submitReview()}
+            disabled={(this.state.submittedReview || this.state.tagsSelected.length == 0)}
+
+            buttonStyle={[styles.button, style={backgroundColor: Colors.orange, marginHorizontal: 60, marginVertical: 20}]}
+            disabledStyle={[styles.button, style={
+              borderWidth: 1,
+              borderColor: Colors.gray5,
+              backgroundColor: Colors.white,
+            }]}
+            titleStyle={{
+              color: Colors.white,
+              fontSize: Metrics.font4,
+              fontWeight: 'bold',
+            }}
+            disabledTitleStyle={{
+              color: Colors.gray5,
+              fontSize: Metrics.font4,
+              fontWeight: 'bold',
+            }}
+            containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.white, marginTop: Metrics.marginVertical * 1.5}]}
+            title='Submit Review'
+          />
 
           <View style={[styles.shadowSmall, styles.sectionHead]}>
             {
