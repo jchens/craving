@@ -707,6 +707,23 @@ export default class Profile extends Component {
                 }}>ADD MY REVIEW</Text>
               ) : null
             }
+            <Button
+              onPress={ this._handleAddPhoto }
+              buttonStyle={ [styles.circleButton, style={
+                backgroundColor: Colors.orange,
+                height: Metrics.button * 1.5,
+                width: Metrics.button * 1.5,
+              }]}
+              containerStyle={styles.buttonContainer}
+              title=''
+              icon={
+                <Feather
+                  name='check'
+                  size={Metrics.button * 0.75}
+                  color={Colors.white}
+                />
+              }
+            />
           </View>
 
 
