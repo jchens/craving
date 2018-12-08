@@ -6,7 +6,7 @@ import {profilesList} from '../Themes/Profiles.js'
 
 import ProgressBarAnimated from 'react-native-progress-bar-animated';
 import { Feather, MaterialIcons, FontAwesome, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
-
+const { width, height } = Dimensions.get('window');
 
 import { Font } from 'expo';
 import { MenuProvider } from 'react-native-popup-menu';
@@ -72,7 +72,7 @@ export default class Rewards extends Component {
 
               }}>
                 <Text  style={{
-                  fontFamily: 'lato-regular',
+                  fontFamily: 'lato-bold',
                   marginTop: 5,
                   color: Colors.gray1,
                 }}> 50 PTS </Text>
@@ -224,6 +224,10 @@ export default class Rewards extends Component {
 
           </View>
 
+          {/* fake view for padding before today's cravings */}
+          <View style={{
+            height: Metrics.pad,
+          }} />
 
           <View style={styles.craving}>
             <View style={[styles.shadowSmall, styles.sectionHead]}>
@@ -247,7 +251,7 @@ export default class Rewards extends Component {
                     <AntDesign
                       name='find'
                       size={Metrics.button/1.5}
-                      color= {Colors.white}
+                      color= {Colors.gray1}
                     />
                   </View>
                   <Text style={styles.points}> + 10 PTS </Text>
@@ -269,7 +273,7 @@ export default class Rewards extends Component {
                     <Feather
                       name='check-circle'
                       size={Metrics.button/1.5}
-                      color= {Colors.white}
+                      color= {Colors.gray1}
                     />
                   </View>
                   <Text style={styles.points}> + 10 PTS </Text>
@@ -290,7 +294,7 @@ export default class Rewards extends Component {
                     <MaterialCommunityIcons
                       name='comment-text-outline'
                       size={Metrics.button/1.5}
-                      color= {Colors.white}
+                      color= {Colors.gray1}
                     />
                   </View>
                   <Text style={styles.points}> + 10 PTS </Text>
@@ -368,14 +372,11 @@ const styles = StyleSheet.create({
   progress: {
     alignItems: 'center',
     flex: 1,
-    backgroundColor: Colors.yellow,
-
   },
   bar: {
     position: 'absolute',
     paddingTop: 25,
     zIndex: 1,
-    backgroundColor: Colors.purple,
   },
   craving: {
     flex: 8,
@@ -415,12 +416,12 @@ const styles = StyleSheet.create({
   },
 
   symbolContainer: {
-    backgroundColor: Colors.orange,
+    backgroundColor: Colors.gray6,
     alignItems: 'center',
     justifyContent: 'center',
-    height: 50,
-    width: 50,
-    borderRadius: 25,
+    height: Metrics.button * 1.5,
+    width: Metrics.button * 1.5,
+    borderRadius: Metrics.button,
   },
 
   points: {
@@ -437,13 +438,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    fontFamily: 'lato-bold',
-    fontSize: Metrics.font4,
+    fontFamily: 'lato-black',
+    fontSize: Metrics.font3,
     textAlign: 'center',
-    // lineHeight: 20,
-    width: 125,
-    // marginBottom: 10,
-    // marginLeft: 60,
+    width: width / 3,
     color: Colors.gray1,
   },
 
