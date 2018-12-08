@@ -245,9 +245,9 @@ export default class Profile extends Component {
     return (
       <View style={ styles.customTagsContainer }>
       {
-        tags.map(tag =>
+        tags.map((tag, index) =>
           <Button
-           key={tag.name}
+           key={tag.name + index}
            title= {tag.name}
            titleStyle={ tag.state == 'positive'
              ? {
@@ -286,6 +286,15 @@ export default class Profile extends Component {
     this.handleAddition(tag);
   };
 
+  customRenderSuggestion = suggestion => {
+    //override suggestion render the drop down
+    const name = suggestion.name;
+    return (
+      <Text style={{ fontSize: 16, paddingTop: 5, paddingLeft: 3 }}>
+        {name}
+      </Text>
+    );
+  };
 
   render () {
 
@@ -635,8 +644,6 @@ export default class Profile extends Component {
             />
           </View>
 
-
-
           <View style={[styles.shadowSmall, styles.sectionHead]}>
             {
               this.state.fontLoaded ? (
@@ -676,8 +683,6 @@ export default class Profile extends Component {
             enableMomentum={true}
                   activeSlideAlignment={'start'}
           />
-
-
 
           <View style={[styles.shadowSmall, styles.sectionHead]}>
             {
@@ -785,8 +790,6 @@ export default class Profile extends Component {
             />
           </View>
 
-
-
           <View style={styles.myTagsContainer}>
             <View style={styles.autocompleteContainer}>
               <AutoTags
@@ -798,6 +801,7 @@ export default class Profile extends Component {
                 handleDelete={this.handleDelete}
                 renderTags={this.renderTags}
                 onCustomTagCreated={this.onCustomTagCreated}
+                renderSuggestion={this.customRenderSuggestion}
               />
             </View>
             <View style={styles.bottomPaddingContainer}>
@@ -1120,7 +1124,7 @@ const styles = StyleSheet.create({
   },
 
   autoTags: {
-    fontSize: 14
+    fontSize: 16
   },
 
   bottomPaddingContainer: {
