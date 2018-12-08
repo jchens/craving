@@ -59,8 +59,8 @@ export default class EarnPoints extends Component {
           icon={
             <Feather
             name='x'
-            size={20}
-            color={Colors.grey4}
+            size={Metrics.button / 2}
+            color={Colors.white}
             />
           }
           onPress={() => this.setState({
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
       paddingRight: Metrics.button / 4,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: Colors.gray6,
+      backgroundColor: Colors.gray1,
     },
 
     buttonContainer: {
