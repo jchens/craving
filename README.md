@@ -1,5 +1,7 @@
 # craving_app
 
+## 3rd party components
+
 Used `npm install react-native-maps --save` to use the Google Maps API.
 
 Used `npm install --save react-native-elements@beta` to use [React Native Elements](https://react-native-training.github.io/react-native-elements/docs/getting_started.html).
@@ -24,9 +26,9 @@ Used `npm install react-native-popup-menu --save` to [implement the popup](https
 
 Allow usage of location from instructions [here](https://stackoverflow.com/questions/48157185/info-plist-file-for-react-native-ios-app-using-expo-sdk?noredirect=1&lq=1).
 
-## Instructions
+## Installation Instructions
 
-Navigate to the folder containing the project:
+Download the .zip from our website, and navigate to the folder containing the project:
 ```
 npm install react-native-maps --save
 
@@ -52,3 +54,20 @@ npm install react-native-popup-menu --save
 
 expo start
 ```
+Afterwards, scan the QR code with your phone (and install Expo if needed) to see our prototype!
+
+## Operating Instructions
+No special operating instructions.
+
+## Implementation Limitations
+- The prototype does not contain concepts of user accounts
+  - Onboarding happens every time you launch the prototype
+- All of the data in the app is hard-coded (dates, locations, profiles, etc.) 
+  - Search on the map is hard-coded
+- Changes in state do not persist across different views
+  - I.e. following/unfollowing a truck does not persist, setting a reminder does not persist
+  - Users can go through the flow of adding a review, but the review data is not saved anywhere and the screen does not update to include the user’s review
+- Users can add duplicate tags to a review; there is no edge case handling
+- We envisioned many animated transitions (between screens, when overlays pop up, etc) that were not implemented
+
+
