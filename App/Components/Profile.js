@@ -124,7 +124,9 @@ export default class Profile extends Component {
       sliderActiveSlide: 1,
 
       suggestions : [ {name:'Long line'}, {name:'Affordable'}, {name:'Friendly'}, {name:'Greasy'}, {name:'Good food'}, {name:'Small portions'}, {name:'Expensive'},],
-      tagsSelected : []
+      tagsSelected : [],
+
+      isPositiveReview: true,
     };
   }
 
@@ -730,7 +732,7 @@ export default class Profile extends Component {
               ) : null
             }
             <Button
-              onPress={ this._handleAddPhoto }
+              onPress={ () => this.setState( {isPositiveReview: !this.state.isPositiveReview }) }
               buttonStyle={ [styles.circleButton, style={
                 backgroundColor: Colors.orange,
                 height: Metrics.button * 1.5,
@@ -738,12 +740,17 @@ export default class Profile extends Component {
               }]}
               containerStyle={styles.buttonContainer}
               title=''
-              icon={
-                <Feather
-                  name='check'
-                  size={Metrics.button * 0.75}
-                  color={Colors.white}
-                />
+              icon={ this.state.isPositiveReview
+                ? <Feather
+                    name='check'
+                    size={Metrics.button * 0.75}
+                    color={Colors.white}
+                  />
+                : <Feather
+                    name='x'
+                    size={Metrics.button * 0.75}
+                    color={Colors.white}
+                  />
               }
             />
           </View>
