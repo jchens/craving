@@ -548,30 +548,25 @@ export default class Profile extends Component {
 
             <Button
               onPress={() => this.checkIn(truck)}
-              buttonStyle={
-                ((this.state.checkIns[profilesList.indexOf(truck)]) && (this.state.checkIns[profilesList.indexOf(truck)] !== 0))
-                  ? [styles.button, style={
-                    backgroundColor: Colors.white,
-                    borderWidth: 1,
-                    borderColor: Colors.gray6}]
-                  // button = on
-                  : [styles.button, style={backgroundColor: Colors.orange}]
-              }
-              containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.gray5, marginTop: Metrics.marginVertical * 1.5}]}
-              titleStyle={
-                ((this.state.checkIns[profilesList.indexOf(truck)]) && (this.state.checkIns[profilesList.indexOf(truck)] !== 0))
-                  ? {
-                      color: Colors.gray6,
-                      fontSize: Metrics.font4,
-                      fontWeight: 'bold',
-                    }
-                  // button = on
-                  : {
-                    color: Colors.white,
-                    fontSize: Metrics.font4,
-                    fontWeight: 'bold',
-                    }
-              }
+              disabled={((this.state.checkIns[profilesList.indexOf(truck)]) && (this.state.checkIns[profilesList.indexOf(truck)] !== 0))}
+
+              buttonStyle={[styles.button, style={backgroundColor: Colors.orange}]}
+              disabledStyle={[styles.button, style={
+                borderWidth: 1,
+                borderColor: Colors.gray5,
+                backgroundColor: Colors.white,
+              }]}
+              titleStyle={{
+                color: Colors.white,
+                fontSize: Metrics.font4,
+                fontWeight: 'bold',
+              }}
+              disabledTitleStyle={{
+                color: Colors.gray5,
+                fontSize: Metrics.font4,
+                fontWeight: 'bold',
+              }}
+              containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.white, marginTop: Metrics.marginVertical * 1.5}]}
               title='Mark as visited'
               icon={
                 <MaterialCommunityIcons
