@@ -280,7 +280,8 @@ const styles = StyleSheet.create({
     height: Metrics.button,
     justifyContent: 'center',
     paddingHorizontal: Metrics.pad,
-    flexDirection: 'row',
+    alignItems: 'center',
+
   },
 
   listItem: {

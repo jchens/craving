@@ -343,8 +343,15 @@ export default class Profile extends Component {
         {/* Not sure whether the contentContainerStyle is necessary. */}
         <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: 'center', alignItems: 'stretch'}}>
 
+          {/* truck info header + check in button*/}
+          <View style={[styles.listItem]}>
+
             {/* truck info header */}
-            <View style={[styles.listItem]}>
+            <View style={{
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+              backgroundColor: Colors.white,
+            }}>
 
               {/* hold photo, info, and address (to the right is the button column)*/}
               <View style={{
@@ -379,7 +386,7 @@ export default class Profile extends Component {
 
                   {/* info */}
                   <View style={{
-                    flex: 3,
+                    flex: 2,
                     paddingHorizontal: Metrics.pad,
                   }}>
 
@@ -439,35 +446,6 @@ export default class Profile extends Component {
                     ) : null
                   }
                 </View>
-
-                <Button
-                  onPress={() => this.checkIn(truck)}
-                  buttonStyle={
-                    ((this.state.checkIns[profilesList.indexOf(truck)]) && (this.state.checkIns[profilesList.indexOf(truck)] !== 0))
-                      ? [styles.button, style={
-                        backgroundColor: Colors.gray5,
-                        borderWidth: 1,
-                        borderColor: Colors.gray6}]
-                      : [styles.button, style={backgroundColor: Colors.orange}]
-                  }
-                  containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.gray5, marginTop: Metrics.marginVertical * 1.5}]}
-                  titleStyle={{
-                    color: Colors.white,
-                    fontSize: Metrics.font4,
-                  }}
-                  title='Mark as visited'
-                  icon={
-                    <MaterialCommunityIcons
-                      name='check-circle'
-                      size={18}
-                      color='white'
-                    />
-                  }
-                  disabled={((this.state.checkIns[profilesList.indexOf(truck)]) && (this.state.checkIns[profilesList.indexOf(truck)] !== 0))
-                    ? true : false
-                  }
-                />
-
               </View>
 
               {/* fake button column)*/}
@@ -482,30 +460,30 @@ export default class Profile extends Component {
                 justifyContent: 'flex-start',
               }}>
 
-              <Button
-                buttonStyle={
-                  this.state.starArray[profilesList.indexOf(truck)]
-                    ? [styles.circleButton, styles.glow, style={backgroundColor: Colors.yellow}]
-                    : [styles.circleButton, style={
-                      backgroundColor: Colors.gray5,
-                      borderWidth: 1,
-                      borderColor: Colors.gray6
-                    }]
-                }
-                containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.yellow}]}
-                titleStyle={{
-                  color: Colors.white,
-                }}
-                onPress={() => this.toggleArray(truck)}
-                title=''
-                icon={
-                  <FontAwesome
-                    name='star'
-                    size={Metrics.button/2}
-                    color= {Colors.white}
-                  />
-                }
-              />
+                <Button
+                  buttonStyle={
+                    this.state.starArray[profilesList.indexOf(truck)]
+                      ? [styles.circleButton, styles.glow, style={backgroundColor: Colors.yellow}]
+                      : [styles.circleButton, style={
+                        backgroundColor: Colors.gray5,
+                        borderWidth: 1,
+                        borderColor: Colors.gray6
+                      }]
+                  }
+                  containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.yellow}]}
+                  titleStyle={{
+                    color: Colors.white,
+                  }}
+                  onPress={() => this.toggleArray(truck)}
+                  title=''
+                  icon={
+                    <FontAwesome
+                      name='star'
+                      size={Metrics.button/2}
+                      color= {Colors.white}
+                    />
+                  }
+                />
 
                 {/* for spacing between buttons in button column */}
                 <View style={{
@@ -565,15 +543,49 @@ export default class Profile extends Component {
                     />
                   }
                 />
-
-                {/* for spacing between buttons in button column */}
-                <View style={{
-                  height: Metrics.pad / 2,
-                }}>
-                </View>
-
               </View>
             </View>
+
+            <Button
+              onPress={() => this.checkIn(truck)}
+              buttonStyle={
+                ((this.state.checkIns[profilesList.indexOf(truck)]) && (this.state.checkIns[profilesList.indexOf(truck)] !== 0))
+                  ? [styles.button, style={
+                    backgroundColor: Colors.white,
+                    borderWidth: 1,
+                    borderColor: Colors.gray6}]
+                  // button = on
+                  : [styles.button, style={backgroundColor: Colors.orange}]
+              }
+              containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.gray5, marginTop: Metrics.marginVertical * 1.5}]}
+              titleStyle={
+                ((this.state.checkIns[profilesList.indexOf(truck)]) && (this.state.checkIns[profilesList.indexOf(truck)] !== 0))
+                  ? {
+                      color: Colors.gray6,
+                      fontSize: Metrics.font4,
+                      fontWeight: 'bold',
+                    }
+                  // button = on
+                  : {
+                    color: Colors.white,
+                    fontSize: Metrics.font4,
+                    fontWeight: 'bold',
+                    }
+              }
+              title='Mark as visited'
+              icon={
+                <MaterialCommunityIcons
+                  name='check-circle'
+                  size={18}
+                  color='white'
+                />
+              }
+              disabled={((this.state.checkIns[profilesList.indexOf(truck)]) && (this.state.checkIns[profilesList.indexOf(truck)] !== 0))
+                ? true : false
+              }
+            />
+          </View>
+
 
 
           <View style={[styles.shadowSmall, styles.sectionHead]}>
@@ -755,7 +767,6 @@ export default class Profile extends Component {
                           shadowOffset: {width: 0, height: 4},
                         }]}>
                           <Image source={item.icon} resizeMode='contain' style={{
-                            //borderRadius: Metrics.curve,
                             aspectRatio: 1,
                             width: undefined,
                             height: undefined,
@@ -908,14 +919,13 @@ const styles = StyleSheet.create({
   },
 
   listItem: {
-    paddingVertical: Metrics.pad * 1.25,
-    flexDirection: 'row',
+    padding: Metrics.pad * 1.25,
+    flexDirection: 'column',
     justifyContent: 'space-evenly',
     backgroundColor: Colors.white,
 
     borderColor: Colors.gray6,
     borderBottomWidth: 1,
-    paddingHorizontal: Metrics.pad * 1.25,
   },
 
   info: {
