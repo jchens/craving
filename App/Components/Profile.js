@@ -277,6 +277,16 @@ export default class Profile extends Component {
     );
   }
 
+  onCustomTagCreated = userInput => {
+    //user pressed enter, create a new tag from their input
+    const tag = {
+      name: userInput,
+      state: this.state.isPositiveReview
+    };
+    this.handleAddition(tag);
+  };
+
+
   render () {
 
     const { navigation } = this.props;
@@ -787,6 +797,7 @@ export default class Profile extends Component {
                 handleAddition={this.handleAddition}
                 handleDelete={this.handleDelete}
                 renderTags={this.renderTags}
+                onCustomTagCreated={this.onCustomTagCreated}
               />
             </View>
             <View style={styles.bottomPaddingContainer}>
