@@ -42,8 +42,6 @@ const tags = [
   'Great tamales',
   'Friendly staff',
   'Tastes bland',
-  'grape',
-  'lemon',
 ];
 
 const popularPositiveTags = ["Affordable", "Good food"];
@@ -128,6 +126,7 @@ export default class Profile extends Component {
 
       isPositiveReview: true,
       submittedReview: false,
+      profile: null,
     };
   }
 
@@ -195,11 +194,6 @@ export default class Profile extends Component {
   /* TODO: implement */
   _handleAddPhoto = () => {
     console.log('uploading photo');
-    // If we can't get functionality, we can at least show the Earn Points overlay
-    // this.setState({
-    //   isEarnPointsVisible: !this.state.isEarnPointsVisible,
-    //   uploadedPhoto: true,
-    // });
     this.child.toggleVisibility('uploading a photo');
   };
 
@@ -210,19 +204,6 @@ export default class Profile extends Component {
           </View>
       );
   }
-
-  goToTruck = () => {
-    const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
-    const latLng = `${this.state.profile.latitude},${this.state.profile.longitude}`;
-    const label = 'Food Truck';
-    const url = Platform.select({
-      ios: `${scheme}${label}@${latLng}`,
-      android: `${scheme}${latLng}(${label})`
-    });
-    console.log(url),
-    Linking.openURL(url);
-  }
-
 
   handleDelete = index => {
      let tagsSelected = this.state.tagsSelected;
@@ -312,7 +293,6 @@ export default class Profile extends Component {
 
     const { navigation } = this.props;
     const item = navigation.getParam('item', 'NO-ITEM');
-
 
     return (
       <View style={styles.container}>
@@ -417,7 +397,7 @@ export default class Profile extends Component {
 
 
         {/* Not sure whether the contentContainerStyle is necessary. */}
-        <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: 'center', alignItems: 'stretch'}}>
+        <ScrollView contentContainerStyle={{flexGrow: 1, justifyContent: 'center', alignItems: 'stretch', backgroundColor: Colors.white}}>
 
           {/* truck info header + check in button*/}
           <View style={[styles.listItem]}>
@@ -426,7 +406,6 @@ export default class Profile extends Component {
             <View style={{
               flexDirection: 'row',
               justifyContent: 'space-evenly',
-              backgroundColor: Colors.white,
             }}>
 
               {/* hold photo, info, and address (to the right is the button column)*/}
@@ -567,10 +546,9 @@ export default class Profile extends Component {
                 </View>
 
                 <Button
-                  // onPress={() => this.props.navigation.dispatch(
-                  //   NavigationActions.navigate({routeName: 'HomeMap', params: {truck: profilesList.indexOf(truck)}})
-                  // )}
-                  onPress={() => this.goToTruck() }
+                  onPress={() => this.props.navigation.dispatch(
+                    NavigationActions.navigate({routeName: 'HomeMap', params: {truck: profilesList.indexOf(truck)}})
+                  )}
                   buttonStyle={[styles.circleButton, style={backgroundColor: Colors.orange}]}
                   containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.orange}]}
                   titleStyle={{
@@ -604,7 +582,7 @@ export default class Profile extends Component {
                         borderColor: Colors.gray6,
                       }]
                   }
-                  containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.blue}]}
+                  containerStyle={[styles.buttonContainer]}
                   titleStyle={{
                     color: Colors.white,
                     fontSize: Metrics.font4,
@@ -643,13 +621,6 @@ export default class Profile extends Component {
               }}
               containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.white, marginTop: Metrics.marginVertical * 1.5}]}
               title='Mark as visited'
-              // icon={
-              //   <MaterialCommunityIcons
-              //     name='check-circle'
-              //     size={18}
-              //     color='white'
-              //   />
-              // }
               disabled={((this.state.checkIns[profilesList.indexOf(truck)]) && (this.state.checkIns[profilesList.indexOf(truck)] !== 0))
                 ? true : false
               }
@@ -802,46 +773,50 @@ export default class Profile extends Component {
             />
           </View>
 
-          <View style={styles.myTagsContainer}>
-            <View style={styles.autocompleteContainer}>
-              <AutoTags
-                style={styles.autoTags}
-                suggestions={this.state.suggestions}
-                tagsSelected={this.state.tagsSelected}
-                placeholder="Add a tag..."
-                handleAddition={this.handleAddition}
-                handleDelete={this.handleDelete}
-                renderTags={this.renderTags}
-                onCustomTagCreated={this.onCustomTagCreated}
-                renderSuggestion={this.customRenderSuggestion}
-              />
+          <View style={{
+            paddingHorizontal: Metrics.buttom * 1.25,
+          }}>
+            <View style={styles.myTagsContainer}>
+              <View style={styles.autocompleteContainer}>
+                <AutoTags
+                  style={styles.autoTags}
+                  suggestions={this.state.suggestions}
+                  tagsSelected={this.state.tagsSelected}
+                  placeholder="Add a tag..."
+                  handleAddition={this.handleAddition}
+                  handleDelete={this.handleDelete}
+                  renderTags={this.renderTags}
+                  onCustomTagCreated={this.onCustomTagCreated}
+                  renderSuggestion={this.customRenderSuggestion}
+                />
+              </View>
+              <View style={styles.bottomPaddingContainer}>
+              </View>
             </View>
-            <View style={styles.bottomPaddingContainer}>
-            </View>
-          </View>
-          <Button
-            onPress={() => this.submitReview()}
-            disabled={(this.state.submittedReview || this.state.tagsSelected.length == 0)}
+            <Button
+              onPress={() => this.submitReview()}
+              disabled={(this.state.submittedReview || this.state.tagsSelected.length == 0)}
 
-            buttonStyle={[styles.button, style={backgroundColor: Colors.orange, marginHorizontal: 60, marginVertical: 20}]}
-            disabledStyle={[styles.button, style={
-              borderWidth: 1,
-              borderColor: Colors.gray5,
-              backgroundColor: Colors.white,
-            }]}
-            titleStyle={{
-              color: Colors.white,
-              fontSize: Metrics.font4,
-              fontWeight: 'bold',
-            }}
-            disabledTitleStyle={{
-              color: Colors.gray5,
-              fontSize: Metrics.font4,
-              fontWeight: 'bold',
-            }}
-            containerStyle={[styles.buttonContainer, style={backgroundColor: Colors.white, marginTop: Metrics.marginVertical * 1.5}]}
-            title='Submit Review'
-          />
+              buttonStyle={[styles.button, style={backgroundColor: Colors.orange, marginHorizontal: 60, marginVertical: 20}]}
+              disabledStyle={[styles.button, style={
+                borderWidth: 1,
+                borderColor: Colors.gray5,
+                backgroundColor: Colors.white,
+              }]}
+              titleStyle={{
+                color: Colors.white,
+                fontSize: Metrics.font4,
+                fontWeight: 'bold',
+              }}
+              disabledTitleStyle={{
+                color: Colors.gray5,
+                fontSize: Metrics.font4,
+                fontWeight: 'bold',
+              }}
+              containerStyle={[styles.buttonContainer, style={marginBottom: Metrics.button * .25}]}
+              title='Submit Review'
+            />
+          </View>
 
           <View style={[styles.shadowSmall, styles.sectionHead]}>
             {
@@ -864,7 +839,7 @@ export default class Profile extends Component {
                   <View style={[styles.listItem]}>
 
 
-                  {/* hold photo, info, and address (to the right is the button column)*/}
+                  {/* hold photo, name, date of review*/}
                     <View style={{
                       flex: 1,
                       flexDirection: 'column',
@@ -1064,8 +1039,6 @@ const styles = StyleSheet.create({
     padding: Metrics.pad * 1.25,
     flexDirection: 'column',
     justifyContent: 'space-evenly',
-    backgroundColor: Colors.white,
-
     borderColor: Colors.gray6,
     borderBottomWidth: 1,
   },
@@ -1172,9 +1145,7 @@ const styles = StyleSheet.create({
 
   autocompleteContainer: {
     flex: 1,
-    marginTop: Metrics.pad * 1.5,
-    marginLeft: Metrics.pad * 1.5,
-    marginRight: Metrics.pad * 1.5,
+    padding: Metrics.pad * 1.5,
     zIndex: 1,
   },
 

@@ -363,7 +363,7 @@ const styles = StyleSheet.create({
     height: Metrics.button,
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: Metrics.pad,
+    paddingHorizontal: Metrics.pad * 1.25,
     flexDirection: 'row',
   },
 

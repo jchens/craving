@@ -281,8 +281,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     height: Metrics.button,
     justifyContent: 'center',
-    paddingHorizontal: Metrics.pad,
-    alignItems: 'center',
+    paddingHorizontal: Metrics.pad * 1.25,
 
   },
 
