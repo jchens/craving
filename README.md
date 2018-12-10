@@ -1,5 +1,6 @@
 # Craving
 Find a food truck, calm a craving.
+
 [Final report of our design process](http://web.stanford.edu/class/cs147/projects/ArtsCulture/Craving/reports/final.pdf)
 
 
