@@ -3,12 +3,21 @@ Find a food truck, calm a craving.
 
 [Final report of our design process](http://web.stanford.edu/class/cs147/projects/ArtsCulture/Craving/reports/final.pdf)
 
+[Experience the hi-fi prototype here](https://expo.io/@jchens/Craving)
 
-Food trucks are often a reliable source of good, cheap, and convenient food. However we noticed through our needfinding that food trucks, due to their unreliable schedule, were being overlooked as a food source, and people's approach to finding food trucks varied quite a bit from the typical food discovery process. Since there weren't any food truck finder apps available, we decided to make one, focusing on redesigning the food discovery process to be tailored towards food trucks. Including features like the ability to:
-- Find & keep track of trucks nearby
-- Set reminders
-- See reviews that aren't just walls of text
+## Imagine this
+It’s lunch time. You just got out of a late class and you’re starving. But you’re sick of Coupa, you’re out of meal plan dollars – it’s not going well. So where do you go?
+
+### Enter, food trucks.
+
+Food trucks, serving good, cheap, and convenient food, are perfect for on-the-go college students and working young adults. But due to their changing schedules and locations, they’re sometimes hard to find. But, there isn’t an existing food truck finder app. So we decided to build one, redesigning the food discovery process to focus on connecting consumers to food trucks they love.
+
+- Find & track trucks near you
+- Read reviews that aren’t just a wall of text
 - Be rewarded with discounts
+
+![Craving Features](https://github.com/jchens/craving-app/blob/master/App/Images/mockup.png "Craving Features")
+
 
 
 ## Installation Instructions
