@@ -145,9 +145,7 @@ class FitToCoordinates extends React.Component {
   }
 
   onMarkerClick(index) {
-    // input = index at profiles list
-    console.log(index);
-    console.log(profilesList[index].name);
+    // input = index within profilesList
     this.map.fitToCoordinates([
       {
         latitude: profilesList[index].latitude,
@@ -163,8 +161,6 @@ class FitToCoordinates extends React.Component {
   }
 
   toggleArray = (item) => {
-    console.log(profilesList.indexOf(item));
-
     let temp = this.state.starArray;
     temp[profilesList.indexOf(item)] = !temp[profilesList.indexOf(item)]
     this.setState({
@@ -320,7 +316,8 @@ class FitToCoordinates extends React.Component {
           />
         </TouchableOpacity>
 
-        {/* TODO: overlapping w buttons for long descriptions */}
+
+        {/* truck profile card */}
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Profile', {
             item: this.state.profile
@@ -425,14 +422,6 @@ class FitToCoordinates extends React.Component {
               </View>
 
             </View>
-
-
-            {/* fake button column)
-              <View style={{
-                width: Metrics.padSmall / 2,
-              }}>
-              </View>
-            */}
 
             {/* button column)*/}
             <View style={{
